@@ -1,10 +1,11 @@
-#include "VirtualSSD.h"
+﻿#include "VirtualSSD.h"
 
 using namespace std;
 
 void VirtualSSD::write(int lba, int data)
 {
-
+	if (cache.find(lba) != cache.end()) cache.erase(lba);
+	cache.insert({ lba, data });
 }
 
 std::string VirtualSSD::read(int lba)
