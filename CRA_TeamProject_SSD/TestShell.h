@@ -1,5 +1,6 @@
-#pragma once
+﻿#pragma once
 
+#include "TestApplication.cpp"
 #include <vector>
 #include <string>
 
@@ -12,4 +13,6 @@ public:
 	void run();
 	vector<string> parse(const string& command);
 	void execute(const vector<string>& args);
+
+	TestApplication* app;
 };
