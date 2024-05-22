@@ -53,3 +53,52 @@ TEST(TestCaseName, shell_fullread_calls_ssd_read_multiple_times)
 	testApp.fullread();
 
 }
+
+TEST(MockISSDTest, SSDWriteExcute) {
+	MockISSD mock;
+	TestApplication ta;
+	ta.set_ssd(&mock);
+
+	EXPECT_CALL(mock, write(0, string("0")))
+		.Times(1)
+		;
+	ta.write(0, string("0"));
+}
+
+TEST(MockISSDTest, SSDWriteLbaException) {
+	MockISSD mock;
+	TestApplication ta;
+	ta.set_ssd(&mock);
+
+	EXPECT_CALL(mock, write(-1, string("0")))
+		.Times(1)
+		;
+	ta.write(-1, string("0"));
+
+	EXPECT_THROW(ta, exception);
+}
+
+TEST(MockISSDTest, SSDWriteLbaException2) {
+	MockISSD mock;
+	TestApplication ta;
+	ta.set_ssd(&mock);
+
+	EXPECT_CALL(mock, write(100, string("0")))
+		.Times(1)
+		;
+	ta.write(100, string("0"));
+
+	EXPECT_THROW(ta, exception);
+}
+
+TEST(MockISSDTest, SSDFullWriteSuccess) {
+	MockISSD mock;
+	TestApplication ta;
+	ta.set_ssd(&mock);
+
+	EXPECT_CALL(mock, write(_,string("0")))
+		.Times(LBA_COUNT)
+		;
+
+	ta.fullwrite(string("0"));
+}
