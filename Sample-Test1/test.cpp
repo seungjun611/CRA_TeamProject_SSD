@@ -61,7 +61,6 @@ TEST_F(ISSDTestFixture, shell_fullread_calls_ssd_read_multiple_times)
 {
 	EXPECT_CALL(mockISSD, read(_)).Times(LBA_COUNT);
 	testApp.fullread();
-
 }
 
 TEST_F(ISSDTestFixture, SimpleWrite)
@@ -69,10 +68,20 @@ TEST_F(ISSDTestFixture, SimpleWrite)
 	TestShell testShell(&mockISSD);
 
 	EXPECT_CALL(mockISSD, write(LBA_NORMAL, DATA_NORMAL))
-		.Times(1)
-    ;
+    .Times(1);
 
 	testShell.run("write " + to_string(LBA_NORMAL) + " " + DATA_NORMAL);
+}
+
+TEST(TestCaseName, SingleRead)
+{
+	MockISSD mock;
+	TestShell shell(&mock);
+
+	EXPECT_CALL(mock, read(3))
+		.Times(1);
+
+	shell.run("read 3");
 }
 
 TEST_F(ISSDTestFixture, SSDWriteExcute) {

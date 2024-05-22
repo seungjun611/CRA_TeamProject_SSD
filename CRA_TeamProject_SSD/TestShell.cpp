@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <stdexcept>
 
 TestShell::TestShell(ISSD* ssd) :
     _app{new TestApplication()}
@@ -14,6 +15,15 @@ TestShell::TestShell(ISSD* ssd) :
 void TestShell::run(const string& command)
 {
     std::vector<std::string> args = parse(command);
+
+    try {
+        check(args);
+    }
+    catch (std::invalid_argument e)
+    {
+        throw e;
+    }
+
     execute(args);
 }
 
@@ -27,6 +37,38 @@ vector<string> TestShell::parse(const string& command) {
     return args;
 }
 
+void TestShell::check(const vector<string>& args)
+{
+    if (args[0] == "write") {
+        if (args.size() != 3) {
+            throw std::invalid_argument("write command 는 3개의 argument 가 주어져야 한다");
+        }
+
+        int lba = std::stoi(args[1]);
+        if (lba < 0 || lba > 100) {
+            throw std::invalid_argument("lba 값은 0 이상 100 미만이어야 한다");
+        }
+
+        if (args[2][0] != '0' || args[2][1] != 'x') {
+            throw std::invalid_argument("data type 은 hex 여야 한다");
+        }
+
+        if (args[2].size() != 10) {
+            throw std::invalid_argument("data 의 자리수는 8이어야 한다");
+        }
+    }
+    else if (args[0] == "read") {
+        if (args.size() != 2) {
+            throw std::invalid_argument("read command 는 2개의 argument 가 주어져야 한다");
+        }
+
+        int lba = std::stoi(args[1]);
+        if (lba < 0 || lba > 100) {
+            throw std::invalid_argument("lba 값은 0 이상 100 미만이어야 한다");
+        }
+    }
+}
+
 void TestShell::execute(const vector<string>& args)
 {
     if (args.empty()) {
@@ -38,7 +80,7 @@ void TestShell::execute(const vector<string>& args)
     }
     else if (args[0] == "read")
     {
-        cout << "READ" << endl;
+        _app->read(std::stoi(args[1]));
     }
     else if (args[0] == "exit")
     {
