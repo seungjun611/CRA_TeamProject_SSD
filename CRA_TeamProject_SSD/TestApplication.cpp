@@ -10,7 +10,7 @@ const int MAX_LBA = 99;
 
 class TestApplication {
 public:
-	void write(int lba, int data) {
+	void write(int lba, string data) {
 		ssd->write(lba, data);
 	}
 
@@ -27,7 +27,7 @@ public:
 		std::cout << "******************HELP**************" << std::endl;
 	}
 
-	void fullwrite(int data) {
+	void fullwrite(string data) {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
 			ssd->write(lba, data);
 		}
