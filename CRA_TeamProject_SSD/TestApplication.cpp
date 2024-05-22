@@ -3,7 +3,10 @@
 #include "ISSD.h"
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <iomanip>
+#include <vector>
+#include <stdexcept>
 
 using namespace std;
 
@@ -71,6 +74,50 @@ public:
 
 	void set_ssd(ISSD* ssd_) {
 		ssd = ssd_;
+	}
+
+	void setLbaRepeatly(const std::vector<int> lbas, const string value, const int repeat)
+	{
+		int cnt = 0;
+		do {
+			for (auto lba : lbas) {
+				ssd->write(lba, value);
+			}
+		} while (cnt++ < repeat);
+	}
+	bool runTestApp2()
+	{
+		setLbaRepeatly({ 0,1,2,3,4,5 }, "0xAAAABBBB", 30);
+		setLbaRepeatly({ 0,1,2,3,4,5 }, "0x12345678", 1);
+		for (int i = 0; i < 6; i++)
+		{
+			string readData = getLba(i);
+			if (readData != "0x12345678") {
+				cout << "[FAIL] Data mismatch. Expect = " << "0x12345678" << ", Actual = " << readData << endl;
+				return false;
+			}
+		}
+
+		cout << "[SUCCESS]" << endl;
+		return true;
+	}
+
+	string getLba(const int lba)
+	{
+		ssd->read(lba);
+		string value = readFile("result.txt");
+		return value;
+	}
+
+	string readFile(const string fileName) {
+		std::ifstream file(fileName);
+		if (!file.is_open()) {
+			throw exception("파일을 열 수 없습니다.");
+		}
+		std::string line;
+		std::getline(file, line);
+		file.close();
+		return line;
 	}
 
 	ISSD* ssd;

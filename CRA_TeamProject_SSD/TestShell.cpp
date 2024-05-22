@@ -89,6 +89,9 @@ void TestShell::check(const vector<string>& args)
             throw std::invalid_argument("fullread command 는 1개의 argument 가 주어져야 한다");
         }
     }
+    else if (args[0] == "testapp1" || args[0] == "testapp2") {
+
+    }
     else
     {
         throw std::invalid_argument("지원하지 않는 command 이다");
@@ -127,6 +130,10 @@ void TestShell::execute(const vector<string>& args)
     else if (args[0] == "testapp1")
     {
         _app->runTestApp1();
+    }
+    else if (args[0] == "testapp2")
+    {
+        _app->runTestApp2();      
     }
 
     return;
