@@ -1,10 +1,13 @@
-#include "VirtualSSD.h"
+﻿#include "VirtualSSD.h"
 
 using namespace std;
 
-void VirtualSSD::write(int lba, int data)
+void VirtualSSD::write(int lba, string data)
 {
-
+	if (cache.find(lba) != cache.end()) {
+		cache.erase(lba);
+	}
+	cache.insert({ lba, data });
 }
 
 std::string VirtualSSD::read(int lba)
@@ -26,8 +29,8 @@ void VirtualSSD::internalFlush()
 		throw exception_ptr();
 	}
 
-	for (map<int, int>::iterator it = cache.begin(); it != cache.end(); it++) {
-		string line = to_string((*it).first).append(",").append(to_string((*it).second));
+	for (map<int, string>::iterator it = cache.begin(); it != cache.end(); it++) {
+		string line = to_string((*it).first).append(",").append((*it).second).append("\n");
 		fwrite(line.c_str(), sizeof(char), line.length(), fp);
 	}
 	fclose(fp);
