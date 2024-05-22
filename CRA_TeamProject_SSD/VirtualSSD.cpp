@@ -49,9 +49,6 @@ void VirtualSSD::internalFlush()
 void VirtualSSD::writeFile(const string fileName, const string data)
 {
 	std::ofstream file(fileName);
-	if (!file.is_open()) {
-
-	}
 	file << data;
 	file.close();
 }
