@@ -90,7 +90,9 @@ void TestShell::check(const vector<string>& args)
         }
     }
     else if (args[0] == "exit") {
-        throw std::exception("EXIT PROGRAM");
+        if (args.size() != 1) {
+            throw std::invalid_argument("EXIT 는 1개의 argument 가 주어져야 한다");
+        }
     }
     else if (args[0] == "testapp1") {
         if (args.size() != 1) {

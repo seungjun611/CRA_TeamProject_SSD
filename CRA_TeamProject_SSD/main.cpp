@@ -18,7 +18,7 @@ int main()
         }
         catch(std::exception e)
         {
-            if (std::string(e.what()) == "EXIT PROGRAM") {
+            if (std::string(e.what()) == "프로그램을 종료합니다") {
                 return 0;
             }
             cout << e.what() << endl;
