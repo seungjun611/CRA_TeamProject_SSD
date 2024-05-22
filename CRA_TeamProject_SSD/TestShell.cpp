@@ -1,4 +1,4 @@
-#include "ISSD.h"
+ï»¿#include "ISSD.h"
 #include <iostream>
 
 const int MIN_LBA = 0;
@@ -15,7 +15,7 @@ public:
 	}
 
 	void exit() {
-		//TBD. cache °ª ÀúÀå
+		//TBD. cache ê°’ ì €ìž¥
 	}
 
 	void help() {
