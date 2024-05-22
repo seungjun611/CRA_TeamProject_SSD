@@ -9,10 +9,10 @@ using namespace std;
 class TestShell
 {
 public:
-	TestShell() = default;
-	void run();
+	TestShell(ISSD* ssd);
+	void run(const string& command);
 	vector<string> parse(const string& command);
 	void execute(const vector<string>& args);
 
-	TestApplication* app;
+	TestApplication* _app;
 };

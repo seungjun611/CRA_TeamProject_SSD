@@ -7,17 +7,16 @@
 
 using namespace std;
 
-void TestShell::run()
+TestShell::TestShell(ISSD* ssd) :
+    _app{ new TestApplication() }
 {
-    std::string command;
+    _app->set_ssd(ssd);
+}
 
-    while (true) {
-        std::cout << "$ ";
-        std::getline(std::cin, command);
-
-        std::vector<std::string> args = parse(command);
-        execute(args);
-    }
+void TestShell::run(const string& command)
+{
+    std::vector<std::string> args = parse(command);
+    execute(args);
 }
 
 vector<string> TestShell::parse(const string& command) {
@@ -37,7 +36,7 @@ void TestShell::execute(const vector<string>& args)
     }
 
     if (args[0] == "write") {
-        cout << "WRITE" << endl;
+        _app->write(std::stoi(args[1]), std::stoi(args[2]));
     }
     else if (args[0] == "read")
     {
