@@ -56,6 +56,10 @@ void TestShell::execute(const vector<string>& args)
     {
 
     }
+    else if (args[0] == "testapp1")
+    {
+        _app->runTestApp1();
+    }
 
     return;
 }

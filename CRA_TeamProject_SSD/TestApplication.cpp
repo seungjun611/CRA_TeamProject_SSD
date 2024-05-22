@@ -2,6 +2,8 @@
 
 #include "ISSD.h"
 #include <iostream>
+#include <sstream>
+#include <iomanip>
 
 using namespace std;
 
@@ -36,6 +38,34 @@ public:
 	void fullread() {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
 			ssd->read(lba);
+		}
+	}
+
+	string makeRandomDataPattern() {
+		srand((unsigned int)time(NULL));
+		stringstream dataStream;
+
+		dataStream << setfill('0') << std::setw(8) << std::hex << rand() % 0xFFFFFFF;
+
+		return string("0x").append(dataStream.str());
+	}
+
+	void runTestApp1() {
+		string writeData = makeRandomDataPattern();
+
+		fullwrite(writeData);
+		fullReadVerify(writeData);
+	}
+
+	void fullReadVerify(const std::string& writeData)
+	{
+		string readData;
+
+		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
+			if ((readData = ssd->read(lba)) != writeData) {
+				cout << "[FAIL] Data mismatch. Expect = " << writeData << ", Actual = " << readData << endl;
+				return;
+			}
 		}
 	}
 
