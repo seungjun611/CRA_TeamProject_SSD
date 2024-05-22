@@ -12,7 +12,16 @@ void VirtualSSD::write(int lba, string data)
 
 std::string VirtualSSD::read(int lba)
 {
-	return std::string("temp");
+	string retCacheValue;
+	if (cache.find(lba) == cache.end()) {
+		retCacheValue = INIT_VALUE;
+	}
+	else {
+		retCacheValue = cache[lba];
+	}
+
+	writeFile(RESULT_FILE_NAME, retCacheValue);
+	return retCacheValue;
 }
 
 VirtualSSD::~VirtualSSD()
@@ -34,5 +43,16 @@ void VirtualSSD::internalFlush()
 		fwrite(line.c_str(), sizeof(char), line.length(), fp);
 	}
 	fclose(fp);
+}
+
+
+void VirtualSSD::writeFile(const string fileName, const string data)
+{
+	std::ofstream file(fileName);
+	if (!file.is_open()) {
+
+	}
+	file << data;
+	file.close();
 }
 
