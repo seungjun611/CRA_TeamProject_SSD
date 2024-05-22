@@ -63,6 +63,7 @@ TEST(TestCaseName, SimpleWrite)
 		.Times(1);
 
 	shell.run("write 3 0xAAAAAAAA");
+}
 
 TEST(MockISSDTest, SSDWriteExcute) {
 	MockISSD mock;
