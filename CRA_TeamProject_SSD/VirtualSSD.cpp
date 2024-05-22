@@ -1,14 +1,23 @@
-#include "SSD.h"
+#include "ISSD.h"
 #include <string>
+#include <map>
 
-class VirtualSSD : public SSD
+using namespace std;
+
+class VirtualSSD : public ISSD
 {
 public:
-	void write(int lba, std::string data) override;
+	void write(int lba, int data) override;
 	std::string read(int lba) override;
+	~VirtualSSD() {
+		// cache ->nand.txt
+	}
+
+private:
+	map<int, int> cache;
 };
 
-void VirtualSSD::write(int lba, std::string data)
+void VirtualSSD::write(int lba, int data)
 {
 
 }
