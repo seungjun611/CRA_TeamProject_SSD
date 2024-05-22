@@ -1,6 +1,6 @@
 ﻿#include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "../CRA_TeamProject_SSD/TestShell.h"
+#include "../CRA_TeamProject_SSD/TestShell.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
 
 using namespace std;
@@ -53,6 +53,16 @@ TEST(TestCaseName, shell_fullread_calls_ssd_read_multiple_times)
 	testApp.fullread();
 
 }
+
+TEST(TestCaseName, SimpleWrite)
+{
+	MockISSD mock;
+	TestShell shell(&mock);
+
+	EXPECT_CALL(mock, write(3, string("0xAAAAAAAA")))
+		.Times(1);
+
+	shell.run("write 3 0xAAAAAAAA");
 
 TEST(MockISSDTest, SSDWriteExcute) {
 	MockISSD mock;
