@@ -41,7 +41,7 @@ void TestShell::check(const vector<string>& args)
 {
     if (args[0] == "write") {
         if (args.size() != 3) {
-            throw std::invalid_argument("number or arguments are not 3");
+            throw std::invalid_argument("write command 는 3개의 argument 가 주어져야 한다");
         }
 
         int lba = std::stoi(args[1]);
@@ -55,6 +55,16 @@ void TestShell::check(const vector<string>& args)
 
         if (args[2].size() != 10) {
             throw std::invalid_argument("data 의 자리수는 8이어야 한다");
+        }
+    }
+    else if (args[0] == "read") {
+        if (args.size() != 2) {
+            throw std::invalid_argument("read command 는 2개의 argument 가 주어져야 한다");
+        }
+
+        int lba = std::stoi(args[1]);
+        if (lba < 0 || lba > 100) {
+            throw std::invalid_argument("lba 값은 0 이상 100 미만이어야 한다");
         }
     }
 }
