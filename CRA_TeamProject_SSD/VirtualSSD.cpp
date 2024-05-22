@@ -1,6 +1,5 @@
 #include "ISSD.h"
 #include <string>
-#include <vector>
 #include <map>
 
 using namespace std;
@@ -15,7 +14,7 @@ public:
 	}
 
 private:
-	vector<map<int, int>> cache;
+	map<int, int> cache;
 };
 
 void VirtualSSD::write(int lba, int data)
