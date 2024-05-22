@@ -12,9 +12,10 @@ public:
 	TestShell() = default;
 	TestShell(ISSD* ssd);
 
-	void run(const string& command);
+	bool run(const string& command);
 	vector<string> parse(const string& command);
-	void execute(const vector<string>& args);
+	bool execute(const vector<string>& args);
+	bool validCheck(const vector<string>& args);
 
 private:
 	TestApplication* _app;

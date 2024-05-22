@@ -11,10 +11,10 @@ TestShell::TestShell(ISSD* ssd) :
     _app->set_ssd(ssd);
 }
 
-void TestShell::run(const string& command)
+bool TestShell::run(const string& command)
 {
     std::vector<std::string> args = parse(command);
-    execute(args);
+    return execute(args);
 }
 
 vector<string> TestShell::parse(const string& command) {
@@ -27,14 +27,24 @@ vector<string> TestShell::parse(const string& command) {
     return args;
 }
 
-void TestShell::execute(const vector<string>& args)
-{
-    if (args.empty()) {
-        return;
-    }
+bool TestShell::validCheck(const vector<string>& args) {
 
-    if (args[0] == "write") {
-        _app->write(std::stoi(args[1]), args[2]);
+    if(args[0] == "write") {
+        if (args.size() < 3) {
+            return false;
+        }
+        if (args[1].size() != 1 || !isdigit(args[1][0])) {
+            return false;
+        }
+        const std::string& lastArg = args.back();
+        if (lastArg.size() < 3 || lastArg[0] != '0' || lastArg[1] != 'x') {
+            return false;
+        }
+        for (size_t i = 2; i < lastArg.size(); ++i) {
+            if (!isxdigit(lastArg[i])) {
+                return false;
+            }
+        }
     }
     else if (args[0] == "read")
     {
@@ -42,7 +52,7 @@ void TestShell::execute(const vector<string>& args)
     }
     else if (args[0] == "exit")
     {
-
+        return false;
     }
     else if (args[0] == "help")
     {
@@ -57,5 +67,41 @@ void TestShell::execute(const vector<string>& args)
 
     }
 
-    return;
+    return true;
+}
+
+
+bool TestShell::execute(const vector<string>& args)
+{
+    if (args.empty()) {
+        return true;
+    }
+    
+    if (validCheck(args)) return false;
+
+    if (args[0] == "write") {
+        _app->write(std::stoi(args[1]), args[2]);
+    }
+    else if (args[0] == "read")
+    {
+        cout << "READ" << endl;
+    }
+    else if (args[0] == "exit")
+    {
+        return false;
+    }
+    else if (args[0] == "help")
+    {
+
+    }
+    else if (args[0] == "fullwrite")
+    {
+
+    }
+    else if (args[0] == "fullread")
+    {
+
+    }
+
+    return true;
 }

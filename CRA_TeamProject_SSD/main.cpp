@@ -12,6 +12,6 @@ int main()
     while (true) {
         std::cout << "$ ";
         std::getline(std::cin, command);
-        shell.run(command);
+        if (shell.run(command) == false) break;
     }
 }
