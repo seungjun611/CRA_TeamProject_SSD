@@ -98,7 +98,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gmock\src\gmock_main.cc" />
+    <ClCompile Include="..\packages\gmock.1.11.0\lib\native\src\gmock\src\gmock_main.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="test.cpp" />
   </ItemGroup>
   <ItemGroup>
