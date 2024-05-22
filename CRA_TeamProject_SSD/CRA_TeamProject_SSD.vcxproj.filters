@@ -26,7 +26,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SSD.h">
+    <ClInclude Include="ISSD.h">
       <Filter>소스 파일</Filter>
     </ClInclude>
   </ItemGroup>

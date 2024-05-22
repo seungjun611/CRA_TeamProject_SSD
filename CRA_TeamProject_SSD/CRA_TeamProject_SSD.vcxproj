@@ -133,7 +133,7 @@
     <ClCompile Include="VirtualSSD.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SSD.h" />
+    <ClInclude Include="ISSD.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
