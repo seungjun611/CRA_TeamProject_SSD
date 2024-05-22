@@ -1,4 +1,4 @@
-#include "gmock/gmock.h"
+﻿#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "../CRA_TeamProject_SSD/TestShell.h"
 #include "../CRA_TeamProject_SSD/ISSD.h"
@@ -10,7 +10,7 @@ const int LBA_COUNT = MAX_LBA - MIN_LBA + 1;
 
 class MockISSD : public ISSD {
 public:
-	MOCK_METHOD(void, write, (int lba, int data), (override));
+	MOCK_METHOD(void, write, (int lba, string data), (override));
 	MOCK_METHOD(string, read, (int lba), (override));
 };
 
