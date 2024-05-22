@@ -1,4 +1,4 @@
-﻿#include "gmock/gmock.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "../CRA_TeamProject_SSD/TestShell.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
@@ -44,6 +44,7 @@ TEST(TestShell, CreateObject)
 	TestShell* shell = new TestShell();
 	EXPECT_TRUE(shell);
 }
+
 TEST_F(ISSDTestFixture, ssd_read_expect_value)
 {
 	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).WillRepeatedly(Return("0"));
@@ -68,7 +69,8 @@ TEST_F(ISSDTestFixture, SimpleWrite)
 	TestShell testShell(&mockISSD);
 
 	EXPECT_CALL(mockISSD, write(LBA_NORMAL, DATA_NORMAL))
-		.Times(1);
+		.Times(1)
+    ;
 
 	testShell.run("write " + to_string(LBA_NORMAL) + " " + DATA_NORMAL);
 }
