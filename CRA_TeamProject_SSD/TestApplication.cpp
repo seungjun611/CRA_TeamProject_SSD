@@ -24,7 +24,19 @@ public:
 
 	void help() {
 		std::cout << "************************************" << std::endl;
-		std::cout << "******************HELP**************" << std::endl;
+		std::cout << "************COMMAND HELP************" << std::endl;
+		std::cout << "************************************" << std::endl;
+		std::cout << "*** [ShellProgram commands help] ***" << std::endl;
+		std::cout << "** write: write to SSD / usage: write <LBA> <VALUE>" << std::endl;
+		std::cout << "** read: read from SSD / usage: read <LBA>" << std::endl;
+		std::cout << "** exit: exit program / usage: exit" << std::endl;
+		std::cout << "** help: help command" << std::endl;
+		std::cout << "** fullwrite: write at all LBAs / usage: fullwrite <VALUE>" << std::endl;
+		std::cout << "** fullread: read all LBAs / usage: fullread" << std::endl;
+		std::cout << "** LBA range: 0 ~ 99" << std::endl;
+		std::cout << "** VALUE range: 0x00000000 ~ 0xFFFFFFFF" << std::endl;
+		std::cout << "***********************************" << std::endl;
+		std::cout << std::endl;
 	}
 
 	void fullwrite(string data) {

@@ -67,6 +67,15 @@ void TestShell::check(const vector<string>& args)
             throw std::invalid_argument("lba 값은 0 이상 100 미만이어야 한다");
         }
     }
+    else if (args[0] == "exit") {
+        throw std::exception("EXIT PROGRAM");
+    }
+    else if (args[0] == "help") {
+        //Do nothing
+    }
+    else {
+        throw std::invalid_argument("INVALID COMMAND");
+    }
 }
 
 void TestShell::execute(const vector<string>& args)

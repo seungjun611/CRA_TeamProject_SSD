@@ -18,8 +18,10 @@ int main()
         }
         catch(std::exception e)
         {
+            if (std::string(e.what()) == "EXIT PROGRAM") {
+                return 0;
+            }
             cout << e.what() << endl;
-            return 0;
         }
     }
 }
