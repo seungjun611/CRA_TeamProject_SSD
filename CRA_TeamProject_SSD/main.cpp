@@ -12,6 +12,14 @@ int main()
     while (true) {
         std::cout << "$ ";
         std::getline(std::cin, command);
-        shell.run(command);
+        try
+        {
+            shell.run(command);
+        }
+        catch(std::exception e)
+        {
+            cout << e.what() << endl;
+            return 0;
+        }
     }
 }
