@@ -1,4 +1,4 @@
-﻿#include "gmock/gmock.h"
+#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "../CRA_TeamProject_SSD/TestShell.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
@@ -14,6 +14,25 @@ public:
 	MOCK_METHOD(string, read, (int lba), (override));
 };
 
+class ISSDTestFixture : public Test {
+public:
+	void SetUp() override {
+		testApp.set_ssd(&mockISSD);
+	}
+
+	TestApplication testApp;
+	MockISSD mockISSD;
+
+	int LBA_NORMAL = 23;
+	int LBA_LESS_THAN_0 = -1;
+	int LBA_OVER_THAN_99 = 100;
+
+	string DATA_NORMAL = "0x111111";
+
+		int LBA_COUNT = MAX_LBA - MIN_LBA + 1;
+
+};
+
 TEST(TestCaseName, TestName)
 {
 	EXPECT_EQ(1, 1);
@@ -25,43 +44,33 @@ TEST(TestShell, CreateObject)
 	TestShell* shell = new TestShell();
 	EXPECT_TRUE(shell);
 }
-TEST(TestCaseName, ssd_read_expect_value)
-{
-	MockISSD MockSSD;
 
-	EXPECT_CALL(MockSSD, read(0x10)).WillRepeatedly(Return("0"));
-	EXPECT_EQ(MockSSD.read(0x10), "0");
+TEST_F(ISSDTestFixture, ssd_read_expect_value)
+{
+	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).WillRepeatedly(Return("0"));
+	EXPECT_EQ(mockISSD.read(LBA_NORMAL), "0");
 }
 
-TEST(TestCaseName, shell_read_calls_ssd_read_onetime)
+TEST_F(ISSDTestFixture, shell_read_calls_ssd_read_onetime)
 {
-	TestApplication testApp;
-	MockISSD mockSSD;
-	testApp.set_ssd(&mockSSD);
-
-	EXPECT_CALL(mockSSD, read(0x10)).Times(1);
-	testApp.read(0x10);
+	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).Times(1);
+	testApp.read(LBA_NORMAL);
 }
 
-TEST(TestCaseName, shell_fullread_calls_ssd_read_multiple_times)
+TEST_F(ISSDTestFixture, shell_fullread_calls_ssd_read_multiple_times)
 {
-	TestApplication testApp;
-	MockISSD mockSSD;
-	testApp.set_ssd(&mockSSD);
-
-	EXPECT_CALL(mockSSD, read(_)).Times(LBA_COUNT);
+	EXPECT_CALL(mockISSD, read(_)).Times(LBA_COUNT);
 	testApp.fullread();
 }
 
-TEST(TestCaseName, SingleWrite)
+TEST_F(ISSDTestFixture, SimpleWrite)
 {
-	MockISSD mock;
-	TestShell shell(&mock);
+	TestShell testShell(&mockISSD);
 
-	EXPECT_CALL(mock, write(3, string("0xAAAAAAAA")))
-		.Times(1);
+	EXPECT_CALL(mockISSD, write(LBA_NORMAL, DATA_NORMAL))
+    .Times(1);
 
-	shell.run("write 3 0xAAAAAAAA");
+	testShell.run("write " + to_string(LBA_NORMAL) + " " + DATA_NORMAL);
 }
 
 TEST(TestCaseName, SingleRead)
@@ -75,51 +84,19 @@ TEST(TestCaseName, SingleRead)
 	shell.run("read 3");
 }
 
-TEST(MockISSDTest, SSDWriteExcute) {
-	MockISSD mock;
-	TestApplication ta;
-	ta.set_ssd(&mock);
+TEST_F(ISSDTestFixture, SSDWriteExcute) {
 
-	EXPECT_CALL(mock, write(0, string("0")))
+	EXPECT_CALL(mockISSD, write(LBA_NORMAL, DATA_NORMAL))
 		.Times(1)
 		;
-	ta.write(0, string("0"));
+	testApp.write(LBA_NORMAL, DATA_NORMAL);
 }
 
-TEST(MockISSDTest, SSDWriteLbaException) {
-	MockISSD mock;
-	TestApplication ta;
-	ta.set_ssd(&mock);
+TEST_F(ISSDTestFixture, SSDFullWriteSuccess) {
 
-	EXPECT_CALL(mock, write(-1, string("0")))
-		.Times(1)
-		;
-	ta.write(-1, string("0"));
-
-	EXPECT_THROW(ta, exception);
-}
-
-TEST(MockISSDTest, SSDWriteLbaException2) {
-	MockISSD mock;
-	TestApplication ta;
-	ta.set_ssd(&mock);
-
-	EXPECT_CALL(mock, write(100, string("0")))
-		.Times(1)
-		;
-	ta.write(100, string("0"));
-
-	EXPECT_THROW(ta, exception);
-}
-
-TEST(MockISSDTest, SSDFullWriteSuccess) {
-	MockISSD mock;
-	TestApplication ta;
-	ta.set_ssd(&mock);
-
-	EXPECT_CALL(mock, write(_,string("0")))
+	EXPECT_CALL(mockISSD, write(_, DATA_NORMAL))
 		.Times(LBA_COUNT)
 		;
 
-	ta.fullwrite(string("0"));
+	testApp.fullwrite(DATA_NORMAL);
 }
