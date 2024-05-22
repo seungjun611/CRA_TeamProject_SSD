@@ -92,6 +92,16 @@ void TestShell::check(const vector<string>& args)
     else if (args[0] == "exit") {
         throw std::exception("EXIT PROGRAM");
     }
+    else if (args[0] == "testapp1") {
+        if (args.size() != 1) {
+            throw std::invalid_argument("testapp1 command 는 1개의 argument 가 주어져야 한다");
+        }
+    }
+    else if (args[0] == "testapp2") {
+        if (args.size() != 1) {
+            throw std::invalid_argument("testapp2 command 는 1개의 argument 가 주어져야 한다");
+        }
+    }
     else
     {
         throw std::invalid_argument("지원하지 않는 command 이다");
@@ -130,6 +140,9 @@ void TestShell::execute(const vector<string>& args)
     else if (args[0] == "testapp1")
     {
         _app->runTestApp1();
+    }
+    else if (args[0] == "testapp2")
+    {
     }
 
     return;
