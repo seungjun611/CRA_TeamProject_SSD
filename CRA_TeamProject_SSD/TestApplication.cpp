@@ -45,7 +45,7 @@ public:
 		srand((unsigned int)time(NULL));
 		stringstream dataStream;
 
-		dataStream << setfill('0') << std::setw(8) << std::hex << rand() % 0xFFFFFFF;
+		dataStream << setfill('0') << std::setw(8) << std::hex << rand() % 0xFFFFFFFF;
 
 		return string("0x").append(dataStream.str());
 	}
