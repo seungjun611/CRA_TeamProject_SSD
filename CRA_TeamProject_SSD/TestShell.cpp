@@ -84,19 +84,18 @@ void TestShell::execute(const vector<string>& args)
     }
     else if (args[0] == "exit")
     {
-
     }
     else if (args[0] == "help")
     {
-
+        _app->help();
     }
     else if (args[0] == "fullwrite")
     {
-
+        _app->fullwrite(args[1]);
     }
     else if (args[0] == "fullread")
     {
-
+        _app->fullread();
     }
 
     return;
