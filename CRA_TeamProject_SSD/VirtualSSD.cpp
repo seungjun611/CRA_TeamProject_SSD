@@ -2,9 +2,11 @@
 
 using namespace std;
 
-void VirtualSSD::write(int lba, int data)
+void VirtualSSD::write(int lba, string data)
 {
-	if (cache.find(lba) != cache.end()) cache.erase(lba);
+	if (cache.find(lba) != cache.end()) {
+		cache.erase(lba);
+	}
 	cache.insert({ lba, data });
 }
 

@@ -6,12 +6,12 @@
 class VirtualSSD : public ISSD {
 public:
 	~VirtualSSD();
-	void write(int lba, int data) override;
+	void write(int lba, std::string data) override;
 	std::string read(int lba) override;
 
 private:
 	const char* NAND_FILE_NAME = "nand.txt";
-	std::map<int, int> cache;
+	std::map<int, std::string> cache;
 
 	void internalFlush();
 };
