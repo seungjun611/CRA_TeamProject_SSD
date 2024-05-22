@@ -51,10 +51,9 @@ TEST(TestCaseName, shell_fullread_calls_ssd_read_multiple_times)
 
 	EXPECT_CALL(mockSSD, read(_)).Times(LBA_COUNT);
 	testApp.fullread();
-
 }
 
-TEST(TestCaseName, SimpleWrite)
+TEST(TestCaseName, SingleWrite)
 {
 	MockISSD mock;
 	TestShell shell(&mock);
@@ -63,6 +62,17 @@ TEST(TestCaseName, SimpleWrite)
 		.Times(1);
 
 	shell.run("write 3 0xAAAAAAAA");
+}
+
+TEST(TestCaseName, SingleRead)
+{
+	MockISSD mock;
+	TestShell shell(&mock);
+
+	EXPECT_CALL(mock, read(3))
+		.Times(1);
+
+	shell.run("read 3");
 }
 
 TEST(MockISSDTest, SSDWriteExcute) {
