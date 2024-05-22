@@ -14,7 +14,8 @@ void TestShell::run()
         std::getline(std::cin, command);
 
         std::vector<std::string> args = parse(command);
-        execute(args);
+        bool execute_result = execute(args);
+        if (!execute_result) break;
     }
 }
 
@@ -28,10 +29,10 @@ vector<string> TestShell::parse(const string& command) {
     return args;
 }
 
-void TestShell::execute(const vector<string>& args)
+bool TestShell::execute(const vector<string>& args)
 {
     if (args.empty()) {
-        return;
+        return true;
     }
 
     if (args[0] == "write") {
@@ -43,7 +44,7 @@ void TestShell::execute(const vector<string>& args)
     }
     else if (args[0] == "exit")
     {
-
+        return false;
     }
     else if (args[0] == "help")
     {
@@ -58,5 +59,5 @@ void TestShell::execute(const vector<string>& args)
 
     }
 
-    return;
+    return true;
 }
