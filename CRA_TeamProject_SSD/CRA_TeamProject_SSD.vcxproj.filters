@@ -27,7 +27,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISSD.h">
-      <Filter>소스 파일</Filter>
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="VirtualSSD.h">
+      <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="TestShell.h">
       <Filter>소스 파일</Filter>
