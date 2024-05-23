@@ -103,10 +103,10 @@ public:
 	{
 		vector<int> lbas = { 0,1,2,3,4,5 };
 
-		setLbaRepeatly(lbas, "AAAABBBB", 30);
-		setLbaRepeatly(lbas, "12345678", 1);
+		setLbaRepeatly(lbas, "0xAAAABBBB", 30);
+		setLbaRepeatly(lbas, "0x12345678", 1);
 
-		if (!readVerify(lbas.front(), lbas.back(), "12345678")) {
+		if (!readVerify(lbas.front(), lbas.back(), "0x12345678")) {
 			return false;
 		}
 
