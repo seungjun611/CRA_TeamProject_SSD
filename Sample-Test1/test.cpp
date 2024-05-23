@@ -4,8 +4,10 @@
 #include "../CRA_TeamProject_SSD/TestShell.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/WriteCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/ExitCommand.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/HelpCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/ReadCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/CommandFactory.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/FullWriteCommand.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
 
 using namespace std;

@@ -61,16 +61,6 @@ void TestShell::check(const vector<string>& args)
     if (args.size() == 0) {
         return;
     }
-    else if (args[0] == "fullwrite") {
-        assertInvalidNumberOfArgument(args, "fullwrite", 2);
-        if (args[1][0] != '0' || args[1][1] != 'x') {
-            throw std::invalid_argument("data type 은 hex 여야 한다");
-        }
-
-        if (args[1].size() != 10) {
-            throw std::invalid_argument("data 의 자리수는 8이어야 한다");
-        }
-    }
     else if (args[0] == "fullread") {
         assertInvalidNumberOfArgument(args, "fullread", 1);
     }

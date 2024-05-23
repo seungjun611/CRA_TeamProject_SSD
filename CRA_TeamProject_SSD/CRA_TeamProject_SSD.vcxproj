@@ -131,6 +131,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShellCommand\CommandFactory.cpp" />
     <ClCompile Include="ShellCommand\ExitCommand.cpp" />
+    <ClCompile Include="ShellCommand\FullWriteCommand.cpp" />
     <ClCompile Include="ShellCommand\HelpCommand.cpp" />
     <ClCompile Include="ShellCommand\ReadCommand.cpp" />
     <ClCompile Include="ShellCommand\WriteCommand.cpp" />
@@ -142,6 +143,7 @@
     <ClInclude Include="ISSD.h" />
     <ClInclude Include="ShellCommand\CommandFactory.h" />
     <ClInclude Include="ShellCommand\ExitCommand.h" />
+    <ClInclude Include="ShellCommand\FullWriteCommand.h" />
     <ClInclude Include="ShellCommand\HelpCommand.h" />
     <ClInclude Include="ShellCommand\ICommand.h" />
     <ClInclude Include="ShellCommand\ReadCommand.h" />
