@@ -3,6 +3,7 @@
 #include "CommandFactory.h"
 #include "ICommand.h"
 #include "WriteCommand.h"
+#include "ReadCommand.h"
 
 using namespace std;
 
@@ -14,6 +15,9 @@ ICommand* CommandFactory::getCommand(const vector<string>& args)
 
 	if (args[0] == "write") {
 		command = new WriteCommand(_app, args);
+	}
+	else if (args[0] == "read") {
+		command = new ReadCommand(_app, args);
 	}
 
 	return command;

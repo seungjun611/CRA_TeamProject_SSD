@@ -130,6 +130,7 @@
   <ItemGroup>
     <ClCompile Include="CommandFactory.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ReadCommand.cpp" />
     <ClCompile Include="TestApplication.cpp" />
     <ClCompile Include="TestShell.cpp" />
     <ClCompile Include="VirtualSSD.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="CommandFactory.h" />
     <ClInclude Include="ICommand.h" />
     <ClInclude Include="ISSD.h" />
+    <ClInclude Include="ReadCommand.h" />
     <ClInclude Include="VirtualSSD.h" />
     <ClInclude Include="TestShell.h" />
     <ClInclude Include="WriteCommand.h" />
