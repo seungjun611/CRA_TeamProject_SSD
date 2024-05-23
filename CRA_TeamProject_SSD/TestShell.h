@@ -6,6 +6,9 @@
 
 using namespace std;
 
+class TestApplication;
+class CommandFactory;
+
 class TestShell
 {
 public:
@@ -19,4 +22,5 @@ public:
 
 private:
 	TestApplication* _app;
+	CommandFactory* _command_factory;
 };
