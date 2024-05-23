@@ -4,30 +4,28 @@
 #include <sstream>
 #include <csignal>
 
-TestShell* globalShell = nullptr;
+std::shared_ptr<TestShell> globalShell = nullptr;
 
 void signalHandler(int signum) {
-    if (globalShell != nullptr) {
-        globalShell->~TestShell();
-    }
+    globalShell.reset();
     exit(signum);
 }
 
 int main()
 {
-    VirtualSSD ssd;
-    TestShell shell(&ssd);
+    auto shell = std::make_shared<TestShell>(new VirtualSSD());
+    globalShell = shell;
 
-    globalShell = &shell;
     signal(SIGINT, signalHandler);
 
     std::string command;
     while (true) {
+        std::cin.clear();
         std::cout << "$ ";
         std::getline(std::cin, command);
         try
         {
-            shell.run(command);
+            shell->run(command);
         }
         catch(std::exception e)
         {
