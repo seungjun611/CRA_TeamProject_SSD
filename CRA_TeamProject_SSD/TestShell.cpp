@@ -140,6 +140,7 @@ void TestShell::execute(const vector<string>& args)
     }
     else if (args[0] == "testapp2")
     {
+        _app->runTestApp2();      
     }
 
     return;
