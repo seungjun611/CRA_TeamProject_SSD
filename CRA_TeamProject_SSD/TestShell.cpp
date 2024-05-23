@@ -33,7 +33,7 @@ void TestShell::run(const string& command)
             execute(args);
         }
     }
-    catch (std::invalid_argument e)
+    catch (std::exception e)
     {
         throw e;
     }
@@ -62,30 +62,6 @@ void TestShell::check(const vector<string>& args)
         return;
     }
 
-    if (args[0] == "write") {
-        assertInvalidNumberOfArgument(args, "write", 3);
-
-        int lba = std::stoi(args[1]);
-        if (lba < 0 || lba > 100) {
-            throw std::invalid_argument("lba 값은 0 이상 100 미만이어야 한다");
-        }
-
-        if (args[2][0] != '0' || args[2][1] != 'x') {
-            throw std::invalid_argument("data type 은 hex 여야 한다");
-        }
-
-        if (args[2].size() != 10) {
-            throw std::invalid_argument("data 의 자리수는 8이어야 한다");
-        }
-    }
-    else if (args[0] == "read") {
-        assertInvalidNumberOfArgument(args, "read", 2);
-
-        int lba = std::stoi(args[1]);
-        if (lba < 0 || lba > 100) {
-            throw std::invalid_argument("lba 값은 0 이상 100 미만이어야 한다");
-        }
-    }
     else if (args[0] == "help") {
         assertInvalidNumberOfArgument(args, "help", 1);
     }
@@ -107,9 +83,6 @@ void TestShell::check(const vector<string>& args)
     }
     else if (args[0] == "testapp2") {
         assertInvalidNumberOfArgument(args, "testapp2", 1);
-    }
-    else if (args[0] == "exit") {
-        assertInvalidNumberOfArgument(args, "exit", 1);
     }
     else
     {

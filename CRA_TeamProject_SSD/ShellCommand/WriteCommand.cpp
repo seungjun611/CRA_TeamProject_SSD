@@ -19,9 +19,7 @@ void WriteCommand::execute()
 
 void WriteCommand::check()
 {
-    if (_args.size() != 3) {
-        throw std::invalid_argument("write command 는 3개의 argument 가 주어져야 한다");
-    }
+    assertInvalidNumberOfArgument(_args, "write", 3);
 
     int lba = std::stoi(_args[1]);
     if (lba < 0 || lba > 100) {

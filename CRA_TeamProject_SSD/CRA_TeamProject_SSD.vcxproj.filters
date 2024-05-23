@@ -42,6 +42,9 @@
     <ClCompile Include="ShellCommand\WriteCommand.cpp">
       <Filter>소스 파일\ShellCommand</Filter>
     </ClCompile>
+    <ClCompile Include="ShellCommand\ExitCommand.cpp">
+      <Filter>소스 파일\ShellCommand</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISSD.h">
@@ -63,6 +66,9 @@
       <Filter>헤더 파일\ShellCommand</Filter>
     </ClInclude>
     <ClInclude Include="ShellCommand\WriteCommand.h">
+      <Filter>헤더 파일\ShellCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="ShellCommand\ExitCommand.h">
       <Filter>헤더 파일\ShellCommand</Filter>
     </ClInclude>
   </ItemGroup>
