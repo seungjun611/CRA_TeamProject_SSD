@@ -20,7 +20,7 @@ std::string VirtualSSD::read(int lba)
 		retCacheValue = cache[lba];
 	}
 
-	writeFile(RESULT_FILE_NAME, retCacheValue);
+	writeFile(RESULT_FILE_NAME, vector<string>{retCacheValue});
 	return retCacheValue;
 }
 
@@ -31,25 +31,22 @@ VirtualSSD::~VirtualSSD()
 
 void VirtualSSD::internalFlush()
 {
-	FILE* fp;
-	fopen_s(&fp, NAND_FILE_NAME, "w+");
-
-	if (fp == nullptr) {
-		throw exception_ptr();
-	}
+	vector<string> datas;
 
 	for (map<int, string>::iterator it = cache.begin(); it != cache.end(); it++) {
-		string line = to_string((*it).first).append(",").append((*it).second).append("\n");
-		fwrite(line.c_str(), sizeof(char), line.length(), fp);
+		datas.push_back(to_string((*it).first).append(",").append((*it).second).append("\n"));
 	}
-	fclose(fp);
+	writeFile(NAND_FILE_NAME, datas);
 }
 
 
-void VirtualSSD::writeFile(const string fileName, const string data)
+void VirtualSSD::writeFile(const string fileName, vector<string> datas)
 {
 	std::ofstream file(fileName);
-	file << data;
+
+	for (vector<string>::iterator it = datas.begin(); it != datas.end(); it++) {
+		file << (*it);
+	}
 	file.close();
 }
 

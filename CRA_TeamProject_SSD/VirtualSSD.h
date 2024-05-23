@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <string>
 #include <map>
+#include <vector>
 #include <fstream>
 #include "ISSD.h"
 
@@ -18,5 +19,5 @@ private:
 	std::map<int, std::string> cache;
 
 	void internalFlush();
-	void writeFile(const std::string fileName, const std::string data);
+	void writeFile(const std::string fileName, const std::vector<std::string> data);
 };
