@@ -11,18 +11,19 @@
 #include "../CRA_TeamProject_SSD/ShellCommand/FullReadCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/TestApp1Command.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/TestApp2Command.cpp"
+#include "../CRA_TeamProject_SSD/VirtualSSD.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
 
 using namespace std;
 using namespace testing;
 
-int LBA_NORMAL = 23;
-int LBA_LESS_THAN_0 = -1;
-int LBA_OVER_THAN_99 = 100;
+const int LBA_NORMAL = 23;
+const int LBA_LESS_THAN_0 = -1;
+const int LBA_OVER_THAN_99 = 100;
 
-string DATA_NORMAL = "0x11111111";
+const string DATA_NORMAL = "0x11111111";
 
-int LBA_COUNT = MAX_LBA - MIN_LBA + 1;
+const int LBA_COUNT = MAX_LBA - MIN_LBA + 1;
 
 class MockISSD : public ISSD {
 public:
@@ -57,6 +58,16 @@ public:
 
 		}
 	}
+};
+
+class VirtualSSDTestFixture : public Test {
+public:
+	void SetUp() override {
+		testApp.set_ssd(&virtualSSD);
+	}
+
+	TestApplication testApp;
+	VirtualSSD virtualSSD;
 
 };
 
@@ -68,19 +79,19 @@ TEST(TestShell, CreateObject)
 	EXPECT_TRUE(shell);
 }
 
-TEST_F(SSDTestFixture, ssd_read_expect_value)
+TEST_F(SSDTestFixture, ISSDTest_Read_Value_Check)
 {
 	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).WillRepeatedly(Return("0"));
 	EXPECT_EQ(mockISSD.read(LBA_NORMAL), "0");
 }
 
-TEST_F(SSDTestFixture, shell_read_calls_ssd_read_onetime)
+TEST_F(SSDTestFixture, ISSDTest_Read_Execute)
 {
 	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).Times(1);
 	testApp.read(LBA_NORMAL);
 }
 
-TEST_F(SSDTestFixture, shell_fullread_calls_ssd_read_multiple_times)
+TEST_F(SSDTestFixture, ISSDTest_FullRead_Success)
 {
 	EXPECT_CALL(mockISSD, read(_)).Times(LBA_COUNT);
 	testApp.fullread();
@@ -108,7 +119,7 @@ TEST_F(SSDTestFixture, SingleRead)
 }
 
 
-TEST_F(SSDTestFixture, ISSDTest_Write_Excute) {
+TEST_F(SSDTestFixture, ISSDTest_Write_Execute) {
 
 	EXPECT_CALL(mockISSD, write(LBA_NORMAL, DATA_NORMAL))
 		.Times(1)
@@ -175,3 +186,20 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
 	EXPECT_EQ(false, testApp.runTestApp2());
 }
 
+
+TEST_F(VirtualSSDTestFixture, VirtualSSDTest_Compare)
+{
+	VirtualSSD virtualSSD;
+	virtualSSD.write(LBA_NORMAL, DATA_NORMAL);
+	EXPECT_EQ(virtualSSD.read(LBA_NORMAL), DATA_NORMAL);
+}
+
+TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp1)
+{
+	EXPECT_TRUE(testApp.runTestApp1());
+}
+
+TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp2)
+{
+	EXPECT_TRUE(testApp.runTestApp2());
+}
