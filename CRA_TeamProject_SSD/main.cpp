@@ -4,26 +4,22 @@
 #include <sstream>
 #include <csignal>
 
-
-VirtualSSD* globalSSD = nullptr;
+TestShell* globalShell = nullptr;
 
 void signalHandler(int signum) {
-    std::cout << "\nInterrupt signal (" << signum << ") received.\n";
-    if (globalSSD) {
-        globalSSD->internalFlush();
+    if (globalShell != nullptr) {
+        globalShell->~TestShell();
     }
     exit(signum);
 }
-
 
 int main()
 {
     VirtualSSD ssd;
     TestShell shell(&ssd);
 
-    globalSSD = &ssd;
+    globalShell = &shell;
     signal(SIGINT, signalHandler);
-
 
     std::string command;
     while (true) {
