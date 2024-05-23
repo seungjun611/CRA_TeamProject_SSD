@@ -6,6 +6,7 @@
 #include "WriteCommand.h"
 #include "ReadCommand.h"
 #include "ExitCommand.h"
+#include "HelpCommand.h"
 
 using namespace std;
 
@@ -27,6 +28,13 @@ ICommand* CommandFactory::getCommand(const vector<string>& args)
 	}
 	else if (args[0] == "exit") {
 		command = new ExitCommand(args);
+	}
+	else if (args[0] == "help") {
+		command = new HelpCommand(_app, args);
+	}
+	else
+	{
+		throw std::invalid_argument("지원하지 않는 command 이다");
 	}
 
 	return command;

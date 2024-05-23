@@ -61,10 +61,6 @@ void TestShell::check(const vector<string>& args)
     if (args.size() == 0) {
         return;
     }
-
-    else if (args[0] == "help") {
-        assertInvalidNumberOfArgument(args, "help", 1);
-    }
     else if (args[0] == "fullwrite") {
         assertInvalidNumberOfArgument(args, "fullwrite", 2);
         if (args[1][0] != '0' || args[1][1] != 'x') {
