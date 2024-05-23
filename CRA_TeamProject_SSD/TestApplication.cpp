@@ -99,9 +99,10 @@ public:
 	}
 	bool runTestApp2()
 	{
-		setLbaRepeatly({ 0,1,2,3,4,5 }, "0xAAAABBBB", 30);
-		setLbaRepeatly({ 0,1,2,3,4,5 }, "0x12345678", 1);
-		for (int i = 0; i < 6; i++)
+		vector<int> lbas = { 0,1,2,3,4,5 };
+		setLbaRepeatly(lbas, "0xAAAABBBB", 30);
+		setLbaRepeatly(lbas, "0x12345678", 1);
+		for (int i = 0; i < lbas.size(); i++)
 		{
 			string readData = getLba(i);
 			if (readData != "0x12345678") {
