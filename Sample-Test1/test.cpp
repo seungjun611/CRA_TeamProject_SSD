@@ -2,6 +2,8 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "../CRA_TeamProject_SSD/TestShell.cpp"
+#include "../CRA_TeamProject_SSD/WriteCommand.cpp"
+#include "../CRA_TeamProject_SSD/CommandFactory.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
 
 
@@ -152,7 +154,8 @@ TEST(TestShellTest, ExceptionTest_ReadCommand_InvalidLba)
 
 TEST(TestShellTest, ExceptionTest_WriteCommand_InvalidArgsSize)
 {
-	TestShell testshell;
+	MockISSD mock_ssd;
+	TestShell testshell(&mock_ssd);
 
 	string command = "write 1 1 1";
 
@@ -162,7 +165,8 @@ TEST(TestShellTest, ExceptionTest_WriteCommand_InvalidArgsSize)
 
 TEST(TestShellTest, ExceptionTest_WriteCommand_InvalidLba)
 {
-	TestShell testshell;
+	MockISSD mock_ssd;
+	TestShell testshell(&mock_ssd);
 
 	string command = "write -1 0x11111111";
 
@@ -177,7 +181,8 @@ TEST(TestShellTest, ExceptionTest_WriteCommand_InvalidLba)
 
 TEST(TestShellTest, ExceptionTest_WriteCommand_InvalidData)
 {
-	TestShell testshell;
+	MockISSD mock_ssd;
+	TestShell testshell(&mock_ssd);
 
 	string command = "write 1 0x111111111";
 

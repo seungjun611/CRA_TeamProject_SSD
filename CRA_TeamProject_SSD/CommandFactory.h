@@ -8,21 +8,9 @@ using namespace std;
 class CommandFactory
 {
 public:
-	CommandFactory(TestApplication* app) : _app{ app } {}
+	CommandFactory(TestApplication* app);
 	ICommand* getCommand(const vector<string>& args);
 
 private:
 	TestApplication* _app;
 };
-
-ICommand* CommandFactory::getCommand(const vector<string>& args)
-{
-	ICommand* command = nullptr;
-
-	if (args[0] == "write") {
-		command = new WriteCommand(_app, args);
-	}
-
-	return command;
-}
-

@@ -7,7 +7,6 @@
 #include <vector>
 #include <stdexcept>
 
-#include "CommandFactory.h"
 
 TestShell::TestShell(ISSD* ssd) :
     _app{new TestApplication()},
