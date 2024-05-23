@@ -128,15 +128,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CommandFactory.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ReadCommand.cpp" />
     <ClCompile Include="TestApplication.cpp" />
     <ClCompile Include="TestShell.cpp" />
     <ClCompile Include="VirtualSSD.cpp" />
+    <ClCompile Include="WriteCommand.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommandFactory.h" />
+    <ClInclude Include="ICommand.h" />
     <ClInclude Include="ISSD.h" />
+    <ClInclude Include="ReadCommand.h" />
     <ClInclude Include="VirtualSSD.h" />
     <ClInclude Include="TestShell.h" />
+    <ClInclude Include="WriteCommand.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

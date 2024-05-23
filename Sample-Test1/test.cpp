@@ -2,8 +2,10 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "../CRA_TeamProject_SSD/TestShell.cpp"
+#include "../CRA_TeamProject_SSD/WriteCommand.cpp"
+#include "../CRA_TeamProject_SSD/ReadCommand.cpp"
+#include "../CRA_TeamProject_SSD/CommandFactory.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
-
 
 using namespace std;
 using namespace testing;
@@ -122,6 +124,7 @@ TEST_F(ISSDTestFixture, ISSDTest_FullWrite_Success) {
 
 	testApp.fullwrite(DATA_NORMAL);
 }
+
 
 TEST_F(TestShellTestFixture, ExceptionTest_Command_InvalidArgument)
 {

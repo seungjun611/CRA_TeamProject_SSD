@@ -1,13 +1,16 @@
 ﻿#include "ISSD.h"
 #include "TestShell.h"
+#include "CommandFactory.h"
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
 #include <stdexcept>
 
+
 TestShell::TestShell(ISSD* ssd) :
-    _app{new TestApplication()}
+    _app{new TestApplication()},
+    _command_factory{new CommandFactory(_app)}
 {
     _app->set_ssd(ssd);
 }
@@ -16,15 +19,23 @@ void TestShell::run(const string& command)
 {
     std::vector<std::string> args = parse(command);
 
+    ICommand* new_command = _command_factory->getCommand(args);
+
     try {
-        check(args);
+        if (new_command != nullptr)
+        {
+            new_command->execute();
+        }
+        else
+        {
+            check(args);
+            execute(args);
+        }
     }
     catch (std::invalid_argument e)
     {
         throw e;
     }
-
-    execute(args);
 }
 
 vector<string> TestShell::parse(const string& command) {
@@ -93,23 +104,11 @@ void TestShell::check(const vector<string>& args)
     else if (args[0] == "testapp1") {
         assertInvalidNumberOfArgument(args, "testapp1", 1);
     }
+    else if (args[0] == "testapp2") {
+        assertInvalidNumberOfArgument(args, "testapp2", 1);
+    }
     else if (args[0] == "exit") {
         assertInvalidNumberOfArgument(args, "exit", 1);
-    }
-    else if (args[0] == "exit") {
-        if (args.size() != 1) {
-            throw std::invalid_argument("EXIT 는 1개의 argument 가 주어져야 한다");
-        }
-    }
-    else if (args[0] == "testapp1") {
-        if (args.size() != 1) {
-            throw std::invalid_argument("testapp1 command 는 1개의 argument 가 주어져야 한다");
-        }
-    }
-    else if (args[0] == "testapp2") {
-        if (args.size() != 1) {
-            throw std::invalid_argument("testapp2 command 는 1개의 argument 가 주어져야 한다");
-        }
     }
     else
     {
@@ -152,6 +151,7 @@ void TestShell::execute(const vector<string>& args)
     }
     else if (args[0] == "testapp2")
     {
+        _app->runTestApp2();      
     }
 
     return;
