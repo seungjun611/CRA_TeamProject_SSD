@@ -143,39 +143,33 @@ TEST_F(SSDTestFixture, ExceptionTest_Command_InvalidArgument)
 
 TEST_F(SSDTestFixture, ISSDTest_TestApp1Write_Success) {
 
-	EXPECT_CALL(mockISSD, write(_, _))
+	EXPECT_CALL(mockISSD, write(_,_))
 		.Times(LBA_COUNT)
 		;
 
 	testApp.runTestApp1();
 }
 
-TEST_F(SSDTestFixture, ISSDTest_TestApp2Write_Success) {
+TEST_F(SSDTestFixture, ISSDTest_TestApp2ReadWrite_Success) {
 
 	EXPECT_CALL(mockISSD, write(_,_))
 		.Times(186)
 		;
 
-	testApp.runTestApp2();
-}
-
-TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_Sucess) {
-
 	EXPECT_CALL(mockISSD, read(_))
 		.Times(6)
-		.WillRepeatedly(Return(string("0x12345678")))
+		.WillRepeatedly(Return(string("12345678")))
 		;
 
 	EXPECT_EQ(true, testApp.runTestApp2());
 }
 
-
 TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
 
 	EXPECT_CALL(mockISSD, read(_))
 		.Times(2)
-		.WillOnce(Return(string("0xAAAABBBB")))
-		.WillOnce(Return(string("0x12345678")))
+		.WillOnce(Return(string("12345678")))
+		.WillOnce(Return(string("AAAABBBB")))
 		;
 	
 	EXPECT_EQ(false, testApp.runTestApp2());
