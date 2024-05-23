@@ -1,13 +1,17 @@
 ﻿#include "ISSD.h"
 #include "TestShell.h"
+#include "CommandFactory.h"
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
 #include <stdexcept>
 
+#include "CommandFactory.h"
+
 TestShell::TestShell(ISSD* ssd) :
-    _app{new TestApplication()}
+    _app{new TestApplication()},
+    _command_factory{new CommandFactory(_app)}
 {
     _app->set_ssd(ssd);
 }
@@ -16,15 +20,23 @@ void TestShell::run(const string& command)
 {
     std::vector<std::string> args = parse(command);
 
+    ICommand* new_command = _command_factory->getCommand(args);
+
     try {
-        check(args);
+        if (new_command != nullptr)
+        {
+            new_command->execute();
+        }
+        else
+        {
+            check(args);
+            execute(args);
+        }
     }
     catch (std::invalid_argument e)
     {
         throw e;
     }
-
-    execute(args);
 }
 
 vector<string> TestShell::parse(const string& command) {
