@@ -20,9 +20,9 @@ void TestShell::run(const string& command)
 {
     std::vector<std::string> args = parse(command);
 
-    ICommand* new_command = _command_factory->getCommand(args);
-
     try {
+        ICommand* new_command = _command_factory->getCommand(args);
+
         if (new_command != nullptr)
         {
             new_command->execute();
