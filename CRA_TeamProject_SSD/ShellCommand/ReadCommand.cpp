@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "ICommand.h"
+#include "../IApplication.h"
 #include "ReadCommand.h"
 #include "../TestApplication.cpp"
 
 using namespace std;
 
-ReadCommand::ReadCommand(TestApplication* app, const vector<string>& args) :
+ReadCommand::ReadCommand(IApplication* app, const vector<string>& args) :
     _app{ app }, _args{ args }
 {
 

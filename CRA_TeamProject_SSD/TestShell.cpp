@@ -1,7 +1,9 @@
 ﻿#include "ISSD.h"
+#include "IApplication.h"
 #include "TestShell.h"
 #include "ShellCommand/ICommand.h"
 #include "ShellCommand/CommandFactory.h"
+#include "TestApplication.cpp"
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -9,10 +11,10 @@
 #include <stdexcept>
 
 TestShell::TestShell(ISSD* ssd) :
-    _app{new TestApplication()},
+    _app{new TestApplication(ssd)},
     _command_factory{new CommandFactory(_app)}
 {
-    _app->set_ssd(ssd);
+
 }
 
 void TestShell::run(const string& command)

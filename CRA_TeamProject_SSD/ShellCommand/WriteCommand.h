@@ -4,18 +4,18 @@
 #include <vector>
 using namespace std;
 
-class TestApplication;
+class IApplication;
 
 class WriteCommand : public ICommand
 {
 public:
-	WriteCommand(TestApplication* app, const vector<string>& args);
+	WriteCommand(IApplication* app, const vector<string>& args);
 
 	void execute();
 	void check();
 
 private:
-	TestApplication* _app;
+	IApplication* _app;
 	vector<string> _args;
 
 };

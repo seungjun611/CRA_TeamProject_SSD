@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "ICommand.h"
+#include "../IApplication.h"
 #include "HelpCommand.h"
 #include "../TestApplication.cpp"
 
 using namespace std;
 
-HelpCommand::HelpCommand(TestApplication* app, const vector<string>& args) :
+HelpCommand::HelpCommand(IApplication* app, const vector<string>& args) :
     _app{ app }, _args{ args }
 {
 

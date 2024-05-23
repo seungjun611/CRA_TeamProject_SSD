@@ -2,6 +2,7 @@
 #include <string>
 #include <stdexcept>
 #include "CommandFactory.h"
+#include "../IApplication.h"
 #include "ICommand.h"
 #include "WriteCommand.h"
 #include "ReadCommand.h"
@@ -14,7 +15,7 @@
 
 using namespace std;
 
-CommandFactory::CommandFactory(TestApplication* app) : _app{ app } {}
+CommandFactory::CommandFactory(IApplication* app) : _app{ app } {}
 
 ICommand* CommandFactory::getCommand(const vector<string>& args)
 {
