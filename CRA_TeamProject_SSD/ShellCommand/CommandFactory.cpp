@@ -9,6 +9,7 @@
 #include "HelpCommand.h"
 #include "FullWriteCommand.h"
 #include "FullReadCommand.h"
+#include "TestApp1Command.h"
 
 using namespace std;
 
@@ -39,6 +40,9 @@ ICommand* CommandFactory::getCommand(const vector<string>& args)
 	}
 	else if (args[0] == "fullread") {
 		command = new FullReadCommand(_app, args);
+	}
+	else if (args[0] == "testapp1") {
+		command = new TestApp1Command(_app, args);
 	}
 	else
 	{
