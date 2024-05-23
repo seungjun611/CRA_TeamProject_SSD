@@ -49,12 +49,21 @@ vector<string> TestShell::parse(const string& command) {
     return args;
 }
 
+void assertInvalidNumberOfArgument(const vector<string>& args, string command, int numArgument) {
+    if (args.size() != numArgument) {
+        string message = command.append(" command는 ").append(to_string(numArgument)).append("개의 argument 가 주어져야 한다");
+        throw std::invalid_argument(message);
+    }
+}
+
 void TestShell::check(const vector<string>& args)
 {
+    if (args.size() == 0) {
+        return;
+    }
+
     if (args[0] == "write") {
-        if (args.size() != 3) {
-            throw std::invalid_argument("write command 는 3개의 argument 가 주어져야 한다");
-        }
+        assertInvalidNumberOfArgument(args, "write", 3);
 
         int lba = std::stoi(args[1]);
         if (lba < 0 || lba > 100) {
@@ -70,9 +79,7 @@ void TestShell::check(const vector<string>& args)
         }
     }
     else if (args[0] == "read") {
-        if (args.size() != 2) {
-            throw std::invalid_argument("read command 는 2개의 argument 가 주어져야 한다");
-        }
+        assertInvalidNumberOfArgument(args, "read", 2);
 
         int lba = std::stoi(args[1]);
         if (lba < 0 || lba > 100) {
@@ -80,14 +87,10 @@ void TestShell::check(const vector<string>& args)
         }
     }
     else if (args[0] == "help") {
-        if (args.size() != 1) {
-            throw std::invalid_argument("help command 는 1개의 argument 가 주어져야 한다");
-        }
+        assertInvalidNumberOfArgument(args, "help", 1);
     }
     else if (args[0] == "fullwrite") {
-        if (args.size() != 2) {
-            throw std::invalid_argument("fullwrite command 는 2개의 argument 가 주어져야 한다");
-        }
+        assertInvalidNumberOfArgument(args, "fullwrite", 2);
         if (args[1][0] != '0' || args[1][1] != 'x') {
             throw std::invalid_argument("data type 은 hex 여야 한다");
         }
@@ -97,9 +100,16 @@ void TestShell::check(const vector<string>& args)
         }
     }
     else if (args[0] == "fullread") {
-        if (args.size() != 1) {
-            throw std::invalid_argument("fullread command 는 1개의 argument 가 주어져야 한다");
-        }
+        assertInvalidNumberOfArgument(args, "fullread", 1);
+    }
+    else if (args[0] == "testapp1") {
+        assertInvalidNumberOfArgument(args, "testapp1", 1);
+    }
+    else if (args[0] == "testapp2") {
+        assertInvalidNumberOfArgument(args, "testapp2", 1);
+    }
+    else if (args[0] == "exit") {
+        assertInvalidNumberOfArgument(args, "exit", 1);
     }
     else
     {
@@ -139,6 +149,10 @@ void TestShell::execute(const vector<string>& args)
     else if (args[0] == "testapp1")
     {
         _app->runTestApp1();
+    }
+    else if (args[0] == "testapp2")
+    {
+        _app->runTestApp2();      
     }
 
     return;
