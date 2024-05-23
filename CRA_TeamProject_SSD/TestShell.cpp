@@ -17,7 +17,7 @@ TestShell::TestShell(ISSD* ssd) :
 
 TestShell::~TestShell()
 {
-    delete _app;
+    _app->~TestApplication();
 }
 
 void TestShell::run(const string& command)

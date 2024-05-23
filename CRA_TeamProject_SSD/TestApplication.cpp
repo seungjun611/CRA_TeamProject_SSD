@@ -119,7 +119,9 @@ public:
 	}
 
 	~TestApplication() {
-		delete ssd;
+		if (ssd != nullptr) {
+			ssd->~ISSD();
+		}
 	}
 
 	ISSD* ssd;
