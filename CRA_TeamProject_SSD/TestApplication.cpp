@@ -49,7 +49,7 @@ public:
 
 	void fullread() {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
-			cout << ssd->read(lba) << endl;
+			ssd->read(lba);
 		}
 	}
 
