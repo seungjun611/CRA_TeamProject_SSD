@@ -69,10 +69,7 @@ public:
 
 	TestApplication testApp;
 	VirtualSSD virtualSSD;
-
 };
-
-
 
 TEST(TestShell, CreateObject)
 {
@@ -170,7 +167,7 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp2ReadWrite_Success) {
 
 	EXPECT_CALL(mockISSD, read(_))
 		.Times(6)
-		.WillRepeatedly(Return(string("12345678")))
+		.WillRepeatedly(Return(string("0x12345678")))
 		;
 
 	EXPECT_EQ(true, testApp.runTestApp2());
@@ -180,8 +177,8 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
 
 	EXPECT_CALL(mockISSD, read(_))
 		.Times(2)
-		.WillOnce(Return(string("12345678")))
-		.WillOnce(Return(string("AAAABBBB")))
+		.WillOnce(Return(string("0x12345678")))
+		.WillOnce(Return(string("0xAAAABBBB")))
 		;
 	
 	EXPECT_EQ(false, testApp.runTestApp2());
