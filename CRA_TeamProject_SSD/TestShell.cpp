@@ -46,6 +46,10 @@ void assertInvalidNumberOfArgument(const vector<string>& args, string command, i
 
 void TestShell::check(const vector<string>& args)
 {
+    if (args.size() == 0) {
+        return;
+    }
+
     if (args[0] == "write") {
         assertInvalidNumberOfArgument(args, "write", 3);
 
