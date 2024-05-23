@@ -16,14 +16,6 @@
 using namespace std;
 using namespace testing;
 
-int LBA_NORMAL = 23;
-int LBA_LESS_THAN_0 = -1;
-int LBA_OVER_THAN_99 = 100;
-
-string DATA_NORMAL = "0x11111111";
-
-int LBA_COUNT = MAX_LBA - MIN_LBA + 1;
-
 class MockISSD : public ISSD {
 public:
 	MOCK_METHOD(void, write, (int lba, string data), (override));
@@ -58,9 +50,14 @@ public:
 		}
 	}
 
+	const int LBA_NORMAL = 23;
+	const int LBA_LESS_THAN_0 = -1;
+	const int LBA_OVER_THAN_99 = 100;
+
+	const string DATA_NORMAL = "0x11111111";
+
+	const int LBA_COUNT = MAX_LBA - MIN_LBA + 1;
 };
-
-
 
 TEST(TestShell, CreateObject)
 {
