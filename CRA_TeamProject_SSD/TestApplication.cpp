@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <vector>
 #include <stdexcept>
+#include <random>
 
 using namespace std;
 
@@ -52,33 +53,13 @@ public:
 		}
 	}
 
-	string makeRandomDataPattern() {
-		srand(time(nullptr));
-		stringstream dataStream;
-
-		dataStream << setfill('0') << std::setw(8) << std::hex << rand() % 0xFFFFFFFF;
-
-		return string("0x").append(dataStream.str());
-	}
-
-	bool runTestApp1() {
-		string writeData = makeRandomDataPattern();
-
-		fullwrite(writeData);
-		if (!fullReadVerify(writeData)) {
-			return false;
-		}
-
-		return true;
-	}
-
-	bool fullReadVerify(const std::string& writeData)
+	bool readVerify(const int startLBA, const int endLBA, const std::string& writeData)
 	{
 		string readData;
 
-		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
+		for (int lba = startLBA; lba <= endLBA; lba++) {
 			if ((readData = ssd->read(lba)) != writeData) {
-				cout << "[FAIL] Data mismatch. Expect = " << writeData << ", Actual = " << readData << endl;
+				cout << "[FAIL] LBA" << lba << " Data mismatch.Expect = " << writeData << ", Actual = " << readData << endl;
 				return false;
 			}
 		}
@@ -86,8 +67,13 @@ public:
 		return true;
 	}
 
-	void set_ssd(ISSD* ssd_) {
-		ssd = ssd_;
+	string makeRandomDataPattern() {
+		random_device rd;
+		stringstream dataStream;
+
+		dataStream << setfill('0') << std::setw(8) << std::hex << rd() % 0xFFFFFFFF;
+
+		return string("0x").append(dataStream.str());
 	}
 
 	void setLbaRepeatly(const std::vector<int> lbas, const string value, const int repeat)
@@ -100,48 +86,41 @@ public:
 		} while (++cnt < repeat);
 	}
 
-	bool runTestApp2()
-	{
-		vector<int> lbas = { 0,1,2,3,4,5 };
-
-		string prefillData = makeRandomDataPattern();
-		setLbaRepeatly(lbas, makeRandomDataPattern(), 30);
-
+	bool runTestApp1() {
 		string writeData = makeRandomDataPattern();
-		while (prefillData == writeData) {
-			writeData = makeRandomDataPattern();
-		}
-		setLbaRepeatly(lbas, writeData, 1);
 
-		for (int i = 0; i < lbas.size(); i++)
-		{
-			string readData = getLba(i);
-			if (readData != writeData) {
-				cout << "[FAIL] Data mismatch. Expect = " << writeData << ", Actual = " << readData << endl;
-				return false;
-			}
+		fullwrite(writeData);
+		if (!readVerify(MIN_LBA, MAX_LBA, writeData)) {
+			return false;
 		}
 
 		cout << "[SUCCESS]" << endl;
 		return true;
 	}
 
-	string getLba(const int lba)
+	bool runTestApp2()
 	{
-		ssd->read(lba);
-		string value = readFile("result.txt");
-		return value;
+		vector<int> lbas = { 0,1,2,3,4,5 };
+
+		string prefillData = makeRandomDataPattern();
+		setLbaRepeatly(lbas, prefillData, 30);
+
+		string writeData;;
+		do {
+			writeData = makeRandomDataPattern();
+		} while (prefillData == writeData);
+		setLbaRepeatly(lbas, writeData, 1);
+
+		if (!readVerify(lbas.front(), lbas.back(), writeData)) {
+			return false;
+		}
+
+		cout << "[SUCCESS]" << endl;
+		return true;
 	}
 
-	string readFile(const string fileName) {
-		std::ifstream file(fileName);
-		if (!file.is_open()) {
-			throw exception("파일을 열 수 없습니다.");
-		}
-		std::string line;
-		std::getline(file, line);
-		file.close();
-		return line;
+	void set_ssd(ISSD* ssd_) {
+		ssd = ssd_;
 	}
 
 	~TestApplication() {
