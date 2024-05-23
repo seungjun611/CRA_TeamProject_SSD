@@ -7,7 +7,6 @@
 #include "../CRA_TeamProject_SSD/ShellCommand/CommandFactory.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
 
-
 using namespace std;
 using namespace testing;
 
@@ -25,6 +24,13 @@ public:
 	MOCK_METHOD(string, read, (int lba), (override));
 };
 
+class MockTestShell : public TestShell {
+public:
+	MOCK_METHOD(void, check, (const vector<string>& args), ());
+
+};
+
+
 class ISSDTestFixture : public Test {
 public:
 	void SetUp() override {
@@ -39,20 +45,22 @@ public:
 class TestShellTestFixture : public Test {
 public:
 	void SetUp() override {
-		//TestShell testShell(&mockISSD);
+		//TestShell testshell(&mockISSD);
 	}
-
-	TestShell testShell;
 	MockISSD mockISSD;
 
+	void assertIllegalArgument(string command) {
+		TestShell testShell(&mockISSD);
+		try {
+			testShell.run(command);
+			FAIL();
+		}
+		catch (exception e) {
+
+		}
+	}
 };
 
-
-TEST(TestCaseName, TestName)
-{
-	EXPECT_EQ(1, 1);
-	EXPECT_TRUE(true);
-}
 
 TEST(TestShell, CreateObject)
 {
@@ -100,7 +108,7 @@ TEST_F(TestShellTestFixture, SingleRead)
 }
 
 
-TEST_F(ISSDTestFixture, SSDWriteExcute) {
+TEST_F(ISSDTestFixture, ISSDTest_Write_Excute) {
 
 	EXPECT_CALL(mockISSD, write(LBA_NORMAL, DATA_NORMAL))
 		.Times(1)
@@ -108,7 +116,7 @@ TEST_F(ISSDTestFixture, SSDWriteExcute) {
 	testApp.write(LBA_NORMAL, DATA_NORMAL);
 }
 
-TEST_F(ISSDTestFixture, SSDFullWriteSuccess) {
+TEST_F(ISSDTestFixture, ISSDTest_FullWrite_Success) {
 
 	EXPECT_CALL(mockISSD, write(_, DATA_NORMAL))
 		.Times(LBA_COUNT)
@@ -118,79 +126,17 @@ TEST_F(ISSDTestFixture, SSDFullWriteSuccess) {
 }
 
 
-TEST(TestShellTest, ExceptionTest_Command_InvalidCommand)
+TEST_F(TestShellTestFixture, ExceptionTest_Command_InvalidArgument)
 {
-	TestShell testshell;
-
-	string command = "InvalidCommand";
-
-	EXPECT_THROW(testshell.run(command), invalid_argument);
-}
-
-
-TEST(TestShellTest, ExceptionTest_ReadCommand_InvalidArgsSize)
-{
-	MockISSD mock_ssd;
-	TestShell testshell(&mock_ssd);
-
-	string command = "read 1 1 1";
-
-	EXPECT_THROW(testshell.run(command), invalid_argument);
-}
-
-
-TEST(TestShellTest, ExceptionTest_ReadCommand_InvalidLba)
-{
-	MockISSD mock_ssd;
-	TestShell testshell(&mock_ssd);
-
-	string command = "read -1";
-
-	EXPECT_THROW(testshell.run(command), invalid_argument);
-
-	command = "read 101";
-	EXPECT_THROW(testshell.run(command), invalid_argument);
-
-	command = "read x";
-	EXPECT_THROW(testshell.run(command), invalid_argument);
-}
-
-TEST(TestShellTest, ExceptionTest_WriteCommand_InvalidArgsSize)
-{
-	MockISSD mock_ssd;
-	TestShell testshell(&mock_ssd);
-
-	string command = "write 1 1 1";
-
-	EXPECT_THROW(testshell.run(command), invalid_argument);
-}
-
-
-TEST(TestShellTest, ExceptionTest_WriteCommand_InvalidLba)
-{
-	MockISSD mock_ssd;
-	TestShell testshell(&mock_ssd);
-
-	string command = "write -1 0x11111111";
-
-	EXPECT_THROW(testshell.run(command), invalid_argument);
-
-	command = "write 101 0x11111111";
-	EXPECT_THROW(testshell.run(command), invalid_argument);
-
-	command = "write x 0x11111111";
-	EXPECT_THROW(testshell.run(command), invalid_argument);
-}
-
-TEST(TestShellTest, ExceptionTest_WriteCommand_InvalidData)
-{
-	MockISSD mock_ssd;
-	TestShell testshell(&mock_ssd);
-
-	string command = "write 1 0x111111111";
-
-	EXPECT_THROW(testshell.run(command), invalid_argument);
-
-	command = "write 1 11111111";
-	EXPECT_THROW(testshell.run(command), invalid_argument);
+	assertIllegalArgument("InvalidCommand");
+	assertIllegalArgument("read 1 1 1");
+	assertIllegalArgument("read -1");
+	assertIllegalArgument("read 101");
+	assertIllegalArgument("read x");
+	assertIllegalArgument("write 1 1 1");
+	assertIllegalArgument("write -1 0x11111111");
+	assertIllegalArgument("write 101 0x11111111");
+	assertIllegalArgument("write x 0x11111111");
+	assertIllegalArgument("write 1 0x111111111");
+	assertIllegalArgument("write 1 11111111");
 }
