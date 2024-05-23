@@ -89,8 +89,20 @@ void TestShell::check(const vector<string>& args)
             throw std::invalid_argument("fullread command 는 1개의 argument 가 주어져야 한다");
         }
     }
-    else if (args[0] == "testapp1" || args[0] == "testapp2") {
-
+    else if (args[0] == "exit") {
+        if (args.size() != 1) {
+            throw std::invalid_argument("EXIT 는 1개의 argument 가 주어져야 한다");
+        }
+    }
+    else if (args[0] == "testapp1") {
+        if (args.size() != 1) {
+            throw std::invalid_argument("testapp1 command 는 1개의 argument 가 주어져야 한다");
+        }
+    }
+    else if (args[0] == "testapp2") {
+        if (args.size() != 1) {
+            throw std::invalid_argument("testapp2 command 는 1개의 argument 가 주어져야 한다");
+        }
     }
     else
     {
