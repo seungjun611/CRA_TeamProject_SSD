@@ -1,6 +1,7 @@
 ﻿#include "ISSD.h"
 #include "TestShell.h"
-#include "CommandFactory.h"
+#include "ShellCommand/ICommand.h"
+#include "ShellCommand/CommandFactory.h"
 #include <iostream>
 #include <string>
 #include <sstream>
