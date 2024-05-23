@@ -20,11 +20,7 @@ public:
 	}
 
 	void read(int lba) {
-		ssd->read(lba);
-	}
-
-	void exit() {
-		//TBD. cache 값 저장
+		cout << ssd->read(lba) << endl;
 	}
 
 	void help() {
@@ -52,7 +48,7 @@ public:
 
 	void fullread() {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
-			ssd->read(lba);
+			cout << ssd->read(lba) << endl;
 		}
 	}
 
