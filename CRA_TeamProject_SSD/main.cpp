@@ -2,11 +2,28 @@
 #include "VirtualSSD.h"
 #include <string>
 #include <sstream>
+#include <csignal>
+
+
+VirtualSSD* globalSSD = nullptr;
+
+void signalHandler(int signum) {
+    std::cout << "\nInterrupt signal (" << signum << ") received.\n";
+    if (globalSSD) {
+        globalSSD->internalFlush();
+    }
+    exit(signum);
+}
+
 
 int main()
 {
     VirtualSSD ssd;
     TestShell shell(&ssd);
+
+    globalSSD = &ssd;
+    signal(SIGINT, signalHandler);
+
 
     std::string command;
     while (true) {
