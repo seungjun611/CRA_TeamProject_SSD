@@ -61,23 +61,29 @@ public:
 		return string("0x").append(dataStream.str());
 	}
 
-	void runTestApp1() {
+	bool runTestApp1() {
 		string writeData = makeRandomDataPattern();
 
 		fullwrite(writeData);
-		fullReadVerify(writeData);
+		if (!fullReadVerify(writeData)) {
+			return false;
+		}
+
+		return true;
 	}
 
-	void fullReadVerify(const std::string& writeData)
+	bool fullReadVerify(const std::string& writeData)
 	{
 		string readData;
 
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
 			if ((readData = ssd->read(lba)) != writeData) {
 				cout << "[FAIL] Data mismatch. Expect = " << writeData << ", Actual = " << readData << endl;
-				return;
+				return false;
 			}
 		}
+
+		return true;
 	}
 
 	void set_ssd(ISSD* ssd_) {
