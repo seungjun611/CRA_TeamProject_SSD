@@ -35,6 +35,8 @@ public:
 		std::cout << "** help: help command" << std::endl;
 		std::cout << "** fullwrite: write at all LBAs / usage: fullwrite <VALUE>" << std::endl;
 		std::cout << "** fullread: read all LBAs / usage: fullread" << std::endl;
+		std::cout << "** testapp1: After fullwrite, check if fullread value is corrrect according to the written value." << std::endl;
+		std::cout << "** testapp2: After overwrite, read the LBA value to make sure LBA value is correct according to overwriten value" << std::endl;
 		std::cout << "** LBA range: 0 ~ 99" << std::endl;
 		std::cout << "** VALUE range: 0x00000000 ~ 0xFFFFFFFF" << std::endl;
 		std::cout << "***********************************" << std::endl;
