@@ -10,6 +10,7 @@
 #include "../CRA_TeamProject_SSD/ShellCommand/FullWriteCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/FullReadCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/TestApp1Command.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/TestApp2Command.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
 
 using namespace std;

@@ -136,6 +136,7 @@
     <ClCompile Include="ShellCommand\HelpCommand.cpp" />
     <ClCompile Include="ShellCommand\ReadCommand.cpp" />
     <ClCompile Include="ShellCommand\TestApp1Command.cpp" />
+    <ClCompile Include="ShellCommand\TestApp2Command.cpp" />
     <ClCompile Include="ShellCommand\WriteCommand.cpp" />
     <ClCompile Include="TestApplication.cpp" />
     <ClCompile Include="TestShell.cpp" />
@@ -151,6 +152,7 @@
     <ClInclude Include="ShellCommand\ICommand.h" />
     <ClInclude Include="ShellCommand\ReadCommand.h" />
     <ClInclude Include="ShellCommand\TestApp1Command.h" />
+    <ClInclude Include="ShellCommand\TestApp2Command.h" />
     <ClInclude Include="ShellCommand\WriteCommand.h" />
     <ClInclude Include="VirtualSSD.h" />
     <ClInclude Include="TestShell.h" />
