@@ -37,23 +37,15 @@ public:
 };
 
 
-class ISSDTestFixture : public Test {
+class SSDTestFixture : public Test {
 public:
 	void SetUp() override {
 		testApp.set_ssd(&mockISSD);
 	}
 
 	TestApplication testApp;
-	MockISSD mockISSD;
 
-};
-
-class TestShellTestFixture : public Test {
-public:
-	void SetUp() override {
-		//TestShell testshell(&mockISSD);
-	}
-	MockISSD mockISSD;
+	NiceMock<MockISSD> mockISSD;
 
 	void assertIllegalArgument(string command) {
 		TestShell testShell(&mockISSD);
@@ -65,7 +57,9 @@ public:
 
 		}
 	}
+
 };
+
 
 
 TEST(TestShell, CreateObject)
@@ -74,25 +68,25 @@ TEST(TestShell, CreateObject)
 	EXPECT_TRUE(shell);
 }
 
-TEST_F(ISSDTestFixture, ssd_read_expect_value)
+TEST_F(SSDTestFixture, ssd_read_expect_value)
 {
 	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).WillRepeatedly(Return("0"));
 	EXPECT_EQ(mockISSD.read(LBA_NORMAL), "0");
 }
 
-TEST_F(ISSDTestFixture, shell_read_calls_ssd_read_onetime)
+TEST_F(SSDTestFixture, shell_read_calls_ssd_read_onetime)
 {
 	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).Times(1);
 	testApp.read(LBA_NORMAL);
 }
 
-TEST_F(ISSDTestFixture, shell_fullread_calls_ssd_read_multiple_times)
+TEST_F(SSDTestFixture, shell_fullread_calls_ssd_read_multiple_times)
 {
 	EXPECT_CALL(mockISSD, read(_)).Times(LBA_COUNT);
 	testApp.fullread();
 }
 
-TEST_F(TestShellTestFixture, SimpleWrite)
+TEST_F(SSDTestFixture, SimpleWrite)
 {
 	TestShell testShell(&mockISSD);
 
@@ -103,7 +97,7 @@ TEST_F(TestShellTestFixture, SimpleWrite)
 }
 
 
-TEST_F(TestShellTestFixture, SingleRead)
+TEST_F(SSDTestFixture, SingleRead)
 {
 	TestShell testShell(&mockISSD);
 
@@ -114,7 +108,7 @@ TEST_F(TestShellTestFixture, SingleRead)
 }
 
 
-TEST_F(ISSDTestFixture, ISSDTest_Write_Excute) {
+TEST_F(SSDTestFixture, ISSDTest_Write_Excute) {
 
 	EXPECT_CALL(mockISSD, write(LBA_NORMAL, DATA_NORMAL))
 		.Times(1)
@@ -122,7 +116,7 @@ TEST_F(ISSDTestFixture, ISSDTest_Write_Excute) {
 	testApp.write(LBA_NORMAL, DATA_NORMAL);
 }
 
-TEST_F(ISSDTestFixture, ISSDTest_FullWrite_Success) {
+TEST_F(SSDTestFixture, ISSDTest_FullWrite_Success) {
 
 	EXPECT_CALL(mockISSD, write(_, DATA_NORMAL))
 		.Times(LBA_COUNT)
@@ -132,7 +126,7 @@ TEST_F(ISSDTestFixture, ISSDTest_FullWrite_Success) {
 }
 
 
-TEST_F(TestShellTestFixture, ExceptionTest_Command_InvalidArgument)
+TEST_F(SSDTestFixture, ExceptionTest_Command_InvalidArgument)
 {
 	assertIllegalArgument("InvalidCommand");
 	assertIllegalArgument("read 1 1 1");
@@ -146,3 +140,44 @@ TEST_F(TestShellTestFixture, ExceptionTest_Command_InvalidArgument)
 	assertIllegalArgument("write 1 0x111111111");
 	assertIllegalArgument("write 1 11111111");
 }
+
+TEST_F(SSDTestFixture, ISSDTest_TestApp1Write_Success) {
+
+	EXPECT_CALL(mockISSD, write(_, _))
+		.Times(LBA_COUNT)
+		;
+
+	testApp.runTestApp1();
+}
+
+TEST_F(SSDTestFixture, ISSDTest_TestApp2Write_Success) {
+
+	EXPECT_CALL(mockISSD, write(_,_))
+		.Times(186)
+		;
+
+	testApp.runTestApp2();
+}
+
+TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_Sucess) {
+
+	EXPECT_CALL(mockISSD, read(_))
+		.Times(6)
+		.WillRepeatedly(Return(string("0x12345678")))
+		;
+
+	EXPECT_EQ(true, testApp.runTestApp2());
+}
+
+
+TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
+
+	EXPECT_CALL(mockISSD, read(_))
+		.Times(2)
+		.WillOnce(Return(string("0xAAAABBBB")))
+		.WillOnce(Return(string("0x12345678")))
+		;
+	
+	EXPECT_EQ(false, testApp.runTestApp2());
+}
+
