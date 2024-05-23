@@ -4,28 +4,27 @@
 #include <sstream>
 #include <csignal>
 
-std::shared_ptr<TestShell> globalShell = nullptr;
+bool g_running = true;
 
 void signalHandler(int signum) {
-    globalShell.reset();
-    exit(signum);
+    g_running = false;
 }
 
 int main()
 {
-    auto shell = std::make_shared<TestShell>(new VirtualSSD());
-    globalShell = shell;
+    VirtualSSD ssd;
+    TestShell shell(&ssd);
 
     signal(SIGINT, signalHandler);
 
     std::string command;
-    while (true) {
+    while (g_running) {
         std::cin.clear();
         std::cout << "$ ";
         std::getline(std::cin, command);
         try
         {
-            shell->run(command);
+            shell.run(command);
         }
         catch(std::exception e)
         {
@@ -35,4 +34,6 @@ int main()
             cout << e.what() << endl;
         }
     }
+
+    return 0;
 }

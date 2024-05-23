@@ -27,6 +27,7 @@ const int LBA_COUNT = MAX_LBA - MIN_LBA + 1;
 
 class MockISSD : public ISSD {
 public:
+	~MockISSD() override {}
 	MOCK_METHOD(void, write, (int lba, string data), (override));
 	MOCK_METHOD(string, read, (int lba), (override));
 };

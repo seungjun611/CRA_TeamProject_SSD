@@ -7,7 +7,7 @@
 
 class VirtualSSD : public ISSD {
 public:
-	~VirtualSSD();
+	~VirtualSSD() override;
 	void write(int lba, std::string data) override;
 	std::string read(int lba) override;
 

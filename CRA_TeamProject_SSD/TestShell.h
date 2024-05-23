@@ -14,7 +14,7 @@ class TestShell
 public:
 	TestShell() = default;
 	TestShell(ISSD* ssd);
-	~TestShell();
+	~TestShell() = default;
 
 	void run(const string& command);
 	vector<string> parse(const string& command);
