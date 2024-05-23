@@ -53,7 +53,7 @@ public:
 	void SetUp() override {
 		//TestShell testshell(&mockISSD);
 	}
-	MockISSD mockISSD;
+	NiceMock<MockISSD> mockISSD;
 
 	void assertIllegalArgument(string command) {
 		TestShell testShell(&mockISSD);
@@ -146,3 +146,4 @@ TEST_F(TestShellTestFixture, ExceptionTest_Command_InvalidArgument)
 	assertIllegalArgument("write 1 0x111111111");
 	assertIllegalArgument("write 1 11111111");
 }
+
