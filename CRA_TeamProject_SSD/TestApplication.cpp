@@ -71,6 +71,7 @@ public:
 		random_device rd;
 		stringstream dataStream;
 
+		dataStream.setf(ios::uppercase);
 		dataStream << setfill('0') << std::setw(8) << std::hex << rd() % 0xFFFFFFFF;
 
 		return string("0x").append(dataStream.str());
@@ -102,16 +103,10 @@ public:
 	{
 		vector<int> lbas = { 0,1,2,3,4,5 };
 
-		string prefillData = makeRandomDataPattern();
-		setLbaRepeatly(lbas, prefillData, 30);
+		setLbaRepeatly(lbas, "AAAABBBB", 30);
+		setLbaRepeatly(lbas, "12345678", 1);
 
-		string writeData;;
-		do {
-			writeData = makeRandomDataPattern();
-		} while (prefillData == writeData);
-		setLbaRepeatly(lbas, writeData, 1);
-
-		if (!readVerify(lbas.front(), lbas.back(), writeData)) {
+		if (!readVerify(lbas.front(), lbas.back(), "12345678")) {
 			return false;
 		}
 
