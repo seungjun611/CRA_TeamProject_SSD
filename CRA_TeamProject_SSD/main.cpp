@@ -4,7 +4,6 @@
 #include <sstream>
 #include <csignal>
 
-std::shared_ptr<TestShell> globalShell = nullptr;
 bool g_running = true;
 
 void signalHandler(int signum) {
