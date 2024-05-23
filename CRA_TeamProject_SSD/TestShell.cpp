@@ -61,9 +61,6 @@ void TestShell::check(const vector<string>& args)
     if (args.size() == 0) {
         return;
     }
-    else if (args[0] == "fullread") {
-        assertInvalidNumberOfArgument(args, "fullread", 1);
-    }
     else if (args[0] == "testapp1") {
         assertInvalidNumberOfArgument(args, "testapp1", 1);
     }
@@ -80,30 +77,6 @@ void TestShell::execute(const vector<string>& args)
 {
     if (args.empty()) {
         return;
-    }
-
-    if (args[0] == "write") {
-        _app->write(std::stoi(args[1]), args[2]);
-    }
-    else if (args[0] == "read")
-    {
-        _app->read(std::stoi(args[1]));
-    }
-    else if (args[0] == "exit")
-    {
-        throw std::runtime_error("프로그램을 종료합니다");
-    }
-    else if (args[0] == "help")
-    {
-        _app->help();
-    }
-    else if (args[0] == "fullwrite")
-    {
-        _app->fullwrite(args[1]);
-    }
-    else if (args[0] == "fullread")
-    {
-        _app->fullread();
     }
     else if (args[0] == "testapp1")
     {

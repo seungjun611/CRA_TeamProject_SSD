@@ -51,6 +51,9 @@
     <ClCompile Include="ShellCommand\FullWriteCommand.cpp">
       <Filter>소스 파일\ShellCommand</Filter>
     </ClCompile>
+    <ClCompile Include="ShellCommand\FullReadCommand.cpp">
+      <Filter>소스 파일\ShellCommand</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ISSD.h">
@@ -81,6 +84,9 @@
       <Filter>헤더 파일\ShellCommand</Filter>
     </ClInclude>
     <ClInclude Include="ShellCommand\FullWriteCommand.h">
+      <Filter>헤더 파일\ShellCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="ShellCommand\FullReadCommand.h">
       <Filter>헤더 파일\ShellCommand</Filter>
     </ClInclude>
   </ItemGroup>

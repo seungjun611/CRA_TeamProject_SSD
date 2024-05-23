@@ -8,6 +8,7 @@
 #include "../CRA_TeamProject_SSD/ShellCommand/ReadCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/CommandFactory.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/FullWriteCommand.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/FullReadCommand.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
 
 using namespace std;

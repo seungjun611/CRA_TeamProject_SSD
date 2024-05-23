@@ -25,7 +25,7 @@ public:
             }
         }
         catch (std::exception& e) {
-            throw std::invalid_argument("lba 값은 0 이상 100 미만 정수이어야 한다");
+            throw e;
         }
     }
     static void assertInvalidDataType(string sData) {
