@@ -15,8 +15,7 @@ void signalHandler(int signum) {
 
 int main()
 {
-    VirtualSSD ssd;
-    TestShell shell(&ssd);
+    TestShell shell(new VirtualSSD());
 
     globalShell = &shell;
     signal(SIGINT, signalHandler);
