@@ -2,11 +2,24 @@
 #include "VirtualSSD.h"
 #include <string>
 #include <sstream>
+#include <csignal>
+
+TestShell* globalShell = nullptr;
+
+void signalHandler(int signum) {
+    if (globalShell != nullptr) {
+        globalShell->~TestShell();
+    }
+    exit(signum);
+}
 
 int main()
 {
     VirtualSSD ssd;
     TestShell shell(&ssd);
+
+    globalShell = &shell;
+    signal(SIGINT, signalHandler);
 
     std::string command;
     while (true) {

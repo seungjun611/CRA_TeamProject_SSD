@@ -129,5 +129,11 @@ public:
 		return line;
 	}
 
+	~TestApplication() {
+		if (ssd != nullptr) {
+			ssd->~ISSD();
+		}
+	}
+
 	ISSD* ssd;
 };
