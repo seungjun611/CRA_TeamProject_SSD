@@ -9,8 +9,6 @@ public:
 	~VirtualSSD();
 	void write(int lba, std::string data) override;
 	std::string read(int lba) override;
-	void internalFlush();
-
 
 private:
 	const char* NAND_FILE_NAME = "nand.txt";
@@ -19,5 +17,6 @@ private:
 
 	std::map<int, std::string> cache;
 
+	void internalFlush();
 	void writeFile(const std::string fileName, const std::string data);
 };

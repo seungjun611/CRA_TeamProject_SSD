@@ -12,6 +12,11 @@ TestShell::TestShell(ISSD* ssd) :
     _app->set_ssd(ssd);
 }
 
+TestShell::~TestShell()
+{
+    _app->~TestApplication();
+}
+
 void TestShell::run(const string& command)
 {
     std::vector<std::string> args = parse(command);
