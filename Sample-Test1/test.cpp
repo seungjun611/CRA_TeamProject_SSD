@@ -2,9 +2,15 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 #include "../CRA_TeamProject_SSD/TestShell.cpp"
-#include "../CRA_TeamProject_SSD/WriteCommand.cpp"
-#include "../CRA_TeamProject_SSD/ReadCommand.cpp"
-#include "../CRA_TeamProject_SSD/CommandFactory.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/WriteCommand.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/ExitCommand.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/HelpCommand.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/ReadCommand.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/CommandFactory.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/FullWriteCommand.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/FullReadCommand.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/TestApp1Command.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/TestApp2Command.cpp"
 #include "../CRA_TeamProject_SSD/ISSD.h"
 
 using namespace std;

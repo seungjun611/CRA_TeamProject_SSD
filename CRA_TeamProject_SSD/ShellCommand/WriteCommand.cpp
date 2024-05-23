@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "ICommand.h"
 #include "WriteCommand.h"
-#include "TestApplication.cpp"
+#include "../TestApplication.cpp"
 
 using namespace std;
 
