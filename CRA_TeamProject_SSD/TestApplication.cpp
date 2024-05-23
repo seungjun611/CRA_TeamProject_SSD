@@ -118,11 +118,5 @@ public:
 		ssd = ssd_;
 	}
 
-	~TestApplication() {
-		if (ssd != nullptr) {
-			ssd->~ISSD();
-		}
-	}
-
 	ISSD* ssd;
 };
