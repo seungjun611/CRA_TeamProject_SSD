@@ -53,7 +53,7 @@ public:
 	}
 
 	string makeRandomDataPattern() {
-		srand((unsigned int)time(NULL));
+		srand(time(nullptr));
 		stringstream dataStream;
 
 		dataStream << setfill('0') << std::setw(8) << std::hex << rand() % 0xFFFFFFFF;
@@ -97,18 +97,27 @@ public:
 			for (auto lba : lbas) {
 				ssd->write(lba, value);
 			}
-		} while (cnt++ < repeat);
+		} while (++cnt < repeat);
 	}
+
 	bool runTestApp2()
 	{
 		vector<int> lbas = { 0,1,2,3,4,5 };
-		setLbaRepeatly(lbas, "0xAAAABBBB", 30);
-		setLbaRepeatly(lbas, "0x12345678", 1);
+
+		string prefillData = makeRandomDataPattern();
+		setLbaRepeatly(lbas, makeRandomDataPattern(), 30);
+
+		string writeData = makeRandomDataPattern();
+		while (prefillData == writeData) {
+			writeData = makeRandomDataPattern();
+		}
+		setLbaRepeatly(lbas, writeData, 1);
+
 		for (int i = 0; i < lbas.size(); i++)
 		{
 			string readData = getLba(i);
-			if (readData != "0x12345678") {
-				cout << "[FAIL] Data mismatch. Expect = " << "0x12345678" << ", Actual = " << readData << endl;
+			if (readData != writeData) {
+				cout << "[FAIL] Data mismatch. Expect = " << writeData << ", Actual = " << readData << endl;
 				return false;
 			}
 		}
