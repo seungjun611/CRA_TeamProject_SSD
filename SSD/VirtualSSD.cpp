@@ -43,18 +43,23 @@ void VirtualSSD::write(int lba, string data)
 	cache.insert({ lba, data });
 }
 
-void VirtualSSD::erase(int lba, int size)
+bool VirtualSSD::erase(int lba, int size)
 {
-	for (int delta = 0; delta < size; delta++) {
-		cache[lba + delta] = INIT_VALUE;
+	if (size > ERASE_MAXSIZE) {
+		return false;
 	}
+
+	for (int currentLba = lba; currentLba < lba + size; currentLba++) {
+		if (cache.find(currentLba) == cache.end())
+			continue;
+		cache.erase(currentLba);
+	}
+	return true;
 }
 
-void VirtualSSD::erase_range(int startLBA, int endLBA)
+bool VirtualSSD::erase_range(int startLBA, int endLBA)
 {
-	for (int Lba = startLBA; Lba < endLBA; Lba++) {
-		cache[Lba] = INIT_VALUE;
-	}
+	return erase(startLBA, endLBA - startLBA);
 }
 
 
