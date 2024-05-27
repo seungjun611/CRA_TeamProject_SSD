@@ -14,10 +14,10 @@ bool VirtualSSD::execute(SSDCommand command)
 		}
 		else if (command.opcode == OPCODE::E) {
 			if (command.param2.empty()) {
-				// erase [LBA] [SIZE]
+				erase(command.param1, command.param3);
 			}
 			else {
-				// erase_range [Start LBA] [End LBA]
+				erase_range(command.param1, command.param3);
 			}
 			//if (isBufferFull()) internalFlush();
 		}
