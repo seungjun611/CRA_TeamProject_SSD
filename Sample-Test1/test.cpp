@@ -13,6 +13,7 @@
 #include "../CRA_TeamProject_SSD/ShellCommand/TestApp2Command.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/EraseRangeCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/EraseSizeCommand.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/FlushCommand.cpp"
 #include "../CRA_TeamProject_SSD/Application/ApplicationFactory.cpp"
 #include "../CRA_TeamProject_SSD/Application/TestApp1.cpp"
 #include "../CRA_TeamProject_SSD/Application/TestApplication.h"
