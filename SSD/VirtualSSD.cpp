@@ -72,9 +72,37 @@ std::string VirtualSSD::read(int lba)
 	return retCacheValue;
 }
 
+VirtualSSD::VirtualSSD()
+{
+	fetchDataFromNAND();
+}
+
 VirtualSSD::~VirtualSSD()
 {
 	internalFlush();
+}
+
+void VirtualSSD::fetchDataFromNAND()
+{
+	ifstream file(NAND_FILE_NAME);
+	string line;
+	int commaIdx;
+
+	if (file.is_open()) {
+		while (!file.eof()) {
+			file >> line;
+			if ((commaIdx = line.find(',')) == -1) {
+				return;
+			}
+
+			try {
+				cache.insert({ stoi(line.substr(0, commaIdx)), line.substr(commaIdx + 1, line.length() - commaIdx) });
+			}
+			catch (exception e) {
+				return;
+			}
+		}
+	}
 }
 
 bool VirtualSSD::isBufferFull()
