@@ -4,18 +4,19 @@
 #include <vector>
 using namespace std;
 
-class IApplication;
+//class IApplication;
 
-class FullWriteCommand : public ICommand
+class EraseCommand : public ICommand
 {
 public:
-	FullWriteCommand(ISSD* ssd, const vector<string>& args);
+	EraseCommand(ISSD* ssd, const vector<string>& args);
 
 	void execute();
 	void check();
-	void sendFullWriteSSDCmd(string data);
+	void sendWriteSSDCmd(int lba, string data);
 
 private:
 	ISSD* _ssd;
 	vector<string> _args;
+
 };

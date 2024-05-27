@@ -39,4 +39,16 @@ public:
             throw std::invalid_argument("data 의 자리수는 8이어야 한다");
         }
     }
+
+    static void assertMaxSize(string sLBA) {
+        try {
+            int lba = std::stoi(sLBA);
+            if (lba < 0 || lba > 10) {
+                throw std::invalid_argument("size 값은 0 이상 10 이하");
+            }
+        }
+        catch (std::exception& e) {
+            throw e;
+        }
+    }
 };

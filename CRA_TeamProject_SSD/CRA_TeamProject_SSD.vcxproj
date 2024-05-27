@@ -105,6 +105,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -132,6 +133,8 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShellCommand\CommandFactory.cpp" />
+    <ClCompile Include="ShellCommand\EraseSizeCommand.cpp" />
+    <ClCompile Include="ShellCommand\EraseRangeCommand.cpp" />
     <ClCompile Include="ShellCommand\ExitCommand.cpp" />
     <ClCompile Include="ShellCommand\FullReadCommand.cpp" />
     <ClCompile Include="ShellCommand\FullWriteCommand.cpp" />
@@ -147,6 +150,8 @@
     <ClInclude Include="Application\TestApplication.h" />
     <ClInclude Include="IApplication.h" />
     <ClInclude Include="ShellCommand\CommandFactory.h" />
+    <ClInclude Include="ShellCommand\EraseSizeCommand.h" />
+    <ClInclude Include="ShellCommand\EraseRangeCommand.h" />
     <ClInclude Include="ShellCommand\ExitCommand.h" />
     <ClInclude Include="ShellCommand\FullReadCommand.h" />
     <ClInclude Include="ShellCommand\FullWriteCommand.h" />

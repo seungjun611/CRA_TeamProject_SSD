@@ -15,7 +15,7 @@ FullWriteCommand::FullWriteCommand(ISSD* ssd, const vector<string>& args) :
 void FullWriteCommand::execute()
 {
     this->check();
-    //_app->fullwrite(_args[1]);
+    sendFullWriteSSDCmd(_args[1]);
 }
 
 void FullWriteCommand::check()
@@ -28,5 +28,15 @@ void FullWriteCommand::check()
 
     if (_args[1].size() != 10) {
         throw std::invalid_argument("data 의 자리수는 8이어야 한다");
+    }
+}
+
+void FullWriteCommand::sendFullWriteSSDCmd(string data) {
+    for (int lba = _ssd->getMinLBA(); lba <= _ssd->getMaxLBA(); lba++) {
+        SSDCommand cmd{ OPCODE::W, lba, data };
+
+        if (!_ssd->execute(cmd)) {
+            throw std::invalid_argument("sendWriteSSDCmd Failed");
+        }
     }
 }

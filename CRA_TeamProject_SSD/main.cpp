@@ -1,6 +1,7 @@
 ﻿#include "TestShell.h"
 #include "../SSD/VirtualSSD.cpp"
 #include "Application/TestApplication.h"
+#include "Logger.cpp"
 #include <string>
 #include <sstream>
 #include <csignal>
@@ -17,6 +18,9 @@ int main()
     TestShell shell(&ssd);
 
     signal(SIGINT, signalHandler);
+
+    //Logger& log = Logger::getInstance();
+    //log.checkLogFile();
 
     std::string command;
     while (g_running) {
