@@ -9,12 +9,12 @@ class IApplication;
 class FullReadCommand: public ICommand
 {
 public:
-	FullReadCommand(IApplication* app, const vector<string>& args);
+	FullReadCommand(ISSD* ssd, const vector<string>& args);
 
 	void execute();
 	void check();
 
 private:
-	IApplication* _app;
+	ISSD* _ssd;
 	vector<string> _args;
 };

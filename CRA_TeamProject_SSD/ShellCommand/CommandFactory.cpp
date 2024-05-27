@@ -15,7 +15,7 @@
 
 using namespace std;
 
-CommandFactory::CommandFactory(IApplication* app) : _app{ app } {}
+CommandFactory::CommandFactory(ISSD* ssd) : _ssd{ ssd } {}
 
 ICommand* CommandFactory::getCommand(const vector<string>& args)
 {
@@ -26,28 +26,28 @@ ICommand* CommandFactory::getCommand(const vector<string>& args)
 	}
 
 	if (args[0] == "write") {
-		command = new WriteCommand(_app, args);
+		command = new WriteCommand(_ssd, args);
 	}
 	else if (args[0] == "read") {
-		command = new ReadCommand(_app, args);
+		command = new ReadCommand(_ssd, args);
 	}
 	else if (args[0] == "exit") {
 		command = new ExitCommand(args);
 	}
 	else if (args[0] == "help") {
-		command = new HelpCommand(_app, args);
+		command = new HelpCommand(_ssd, args);
 	}
 	else if (args[0] == "fullwrite") {
-		command = new FullWriteCommand(_app, args);
+		command = new FullWriteCommand(_ssd, args);
 	}
 	else if (args[0] == "fullread") {
-		command = new FullReadCommand(_app, args);
+		command = new FullReadCommand(_ssd, args);
 	}
 	else if (args[0] == "testapp1") {
-		command = new TestApp1Command(_app, args);
+		command = new TestApp1Command(_ssd, args);
 	}
 	else if (args[0] == "testapp2") {
-		command = new TestApp2Command(_app, args);
+		command = new TestApp2Command(_ssd, args);
 	}
 	else
 	{

@@ -9,12 +9,12 @@ class IApplication;
 class TestApp1Command : public ICommand
 {
 public:
-	TestApp1Command(IApplication* app, const vector<string>& args);
+	TestApp1Command(ISSD* ssd, const vector<string>& args);
 
 	void execute();
 	void check();
 
 private:
-	IApplication* _app;
+	ISSD* _ssd;
 	vector<string> _args;
 };

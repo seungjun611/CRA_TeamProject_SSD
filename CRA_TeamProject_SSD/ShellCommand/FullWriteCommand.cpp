@@ -6,8 +6,8 @@
 
 using namespace std;
 
-FullWriteCommand::FullWriteCommand(IApplication* app, const vector<string>& args) :
-    _app{ app }, _args{ args }
+FullWriteCommand::FullWriteCommand(ISSD* ssd, const vector<string>& args) :
+    _ssd{ ssd }, _args{ args }
 {
 
 }
@@ -15,7 +15,7 @@ FullWriteCommand::FullWriteCommand(IApplication* app, const vector<string>& args
 void FullWriteCommand::execute()
 {
     this->check();
-    _app->fullwrite(_args[1]);
+    //_app->fullwrite(_args[1]);
 }
 
 void FullWriteCommand::check()
