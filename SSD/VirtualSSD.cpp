@@ -2,6 +2,39 @@
 
 using namespace std;
 
+bool VirtualSSD::execute(SSDCommand command)
+{
+	try {
+		if (command.opcode == OPCODE::W) {
+			write(command.param1, command.param2);
+			//if (isBufferFull()) internalFlush();
+		}
+		else if (command.opcode == OPCODE::R) {
+			read(command.param1);
+		}
+		else if (command.opcode == OPCODE::E) {
+			if (command.param2.empty()) {
+				// erase [LBA] [SIZE]
+			}
+			else {
+				// erase_range [Start LBA] [End LBA]
+			}
+			//if (isBufferFull()) internalFlush();
+		}
+		else if (command.opcode == OPCODE::F) {
+			internalFlush();
+		}
+		else {
+			return false;
+		}
+	}
+	catch (exception e) {
+		return false;
+	}
+
+	return true;
+}
+
 void VirtualSSD::write(int lba, string data)
 {
 	if (cache.find(lba) != cache.end()) {
@@ -39,14 +72,14 @@ std::string VirtualSSD::read(int lba)
 	return retCacheValue;
 }
 
-bool VirtualSSD::execute(SSDCommand command)
-{
-	return false;
-}
-
 VirtualSSD::~VirtualSSD()
 {
 	internalFlush();
+}
+
+bool VirtualSSD::isBufferFull()
+{
+	return (cache.size() > 9) ? true : false;
 }
 
 void VirtualSSD::internalFlush()
@@ -57,8 +90,8 @@ void VirtualSSD::internalFlush()
 		datas.push_back(to_string((*it).first).append(",").append((*it).second).append("\n"));
 	}
 	writeFile(NAND_FILE_NAME, datas);
+	//cache.clear(); // Old data will be lost
 }
-
 
 void VirtualSSD::writeFile(const string fileName, vector<string> datas)
 {
