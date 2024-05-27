@@ -38,16 +38,15 @@ public:
 
 };
 
-
 class SSDTestFixture : public Test {
 public:
 	void SetUp() override {
-		testApp.set_ssd(&mockISSD);
+
+		testApp = new TestApplication(&mockISSD);
 	}
 
-	TestApplication testApp;
-
 	NiceMock<MockISSD> mockISSD;
+	TestApplication* testApp;
 
 	void assertIllegalArgument(string command) {
 		TestShell testShell(&mockISSD);
@@ -64,18 +63,12 @@ public:
 class VirtualSSDTestFixture : public Test {
 public:
 	void SetUp() override {
-		testApp.set_ssd(&virtualSSD);
+		testApp = new TestApplication(&virtualSSD);
 	}
 
-	TestApplication testApp;
+	TestApplication* testApp;
 	VirtualSSD virtualSSD;
 };
-
-TEST(TestShell, CreateObject)
-{
-	TestShell* shell = new TestShell();
-	EXPECT_TRUE(shell);
-}
 
 TEST_F(SSDTestFixture, ISSDTest_Read_Value_Check)
 {
@@ -86,13 +79,13 @@ TEST_F(SSDTestFixture, ISSDTest_Read_Value_Check)
 TEST_F(SSDTestFixture, ISSDTest_Read_Execute)
 {
 	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).Times(1);
-	testApp.read(LBA_NORMAL);
+	testApp->read(LBA_NORMAL);
 }
 
 TEST_F(SSDTestFixture, ISSDTest_FullRead_Success)
 {
 	EXPECT_CALL(mockISSD, read(_)).Times(LBA_COUNT);
-	testApp.fullread();
+	testApp->fullread();
 }
 
 TEST_F(SSDTestFixture, SimpleWrite)
@@ -122,7 +115,7 @@ TEST_F(SSDTestFixture, ISSDTest_Write_Execute) {
 	EXPECT_CALL(mockISSD, write(LBA_NORMAL, DATA_NORMAL))
 		.Times(1)
 		;
-	testApp.write(LBA_NORMAL, DATA_NORMAL);
+	testApp->write(LBA_NORMAL, DATA_NORMAL);
 }
 
 TEST_F(SSDTestFixture, ISSDTest_FullWrite_Success) {
@@ -131,7 +124,7 @@ TEST_F(SSDTestFixture, ISSDTest_FullWrite_Success) {
 		.Times(LBA_COUNT)
 		;
 
-	testApp.fullwrite(DATA_NORMAL);
+	testApp->fullwrite(DATA_NORMAL);
 }
 
 
@@ -156,7 +149,7 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp1Write_Success) {
 		.Times(LBA_COUNT)
 		;
 
-	testApp.runTestApp1();
+	testApp->runTestApp1();
 }
 
 TEST_F(SSDTestFixture, ISSDTest_TestApp2ReadWrite_Success) {
@@ -170,7 +163,7 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp2ReadWrite_Success) {
 		.WillRepeatedly(Return(string("0x12345678")))
 		;
 
-	EXPECT_EQ(true, testApp.runTestApp2());
+	EXPECT_EQ(true, testApp->runTestApp2());
 }
 
 TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
@@ -181,7 +174,7 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
 		.WillOnce(Return(string("0xAAAABBBB")))
 		;
 	
-	EXPECT_EQ(false, testApp.runTestApp2());
+	EXPECT_EQ(false, testApp->runTestApp2());
 }
 
 
@@ -194,10 +187,10 @@ TEST_F(VirtualSSDTestFixture, VirtualSSDTest_Compare)
 
 TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp1)
 {
-	EXPECT_TRUE(testApp.runTestApp1());
+	EXPECT_TRUE(testApp->runTestApp1());
 }
 
 TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp2)
 {
-	EXPECT_TRUE(testApp.runTestApp2());
+	EXPECT_TRUE(testApp->runTestApp2());
 }

@@ -101,5 +101,8 @@
     <ClInclude Include="ShellCommand\TestApp2Command.h">
       <Filter>헤더 파일\ShellCommand</Filter>
     </ClInclude>
+    <ClInclude Include="IApplication.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

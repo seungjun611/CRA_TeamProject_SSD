@@ -143,6 +143,7 @@
     <ClCompile Include="VirtualSSD.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="IApplication.h" />
     <ClInclude Include="ISSD.h" />
     <ClInclude Include="ShellCommand\CommandFactory.h" />
     <ClInclude Include="ShellCommand\ExitCommand.h" />

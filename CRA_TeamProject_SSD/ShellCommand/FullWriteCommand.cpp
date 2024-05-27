@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "ICommand.h"
+#include "../IApplication.h"
 #include "FullWriteCommand.h"
 #include "../TestApplication.cpp"
 
 using namespace std;
 
-FullWriteCommand::FullWriteCommand(TestApplication* app, const vector<string>& args) :
+FullWriteCommand::FullWriteCommand(IApplication* app, const vector<string>& args) :
     _app{ app }, _args{ args }
 {
 

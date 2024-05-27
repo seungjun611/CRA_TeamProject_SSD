@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "ICommand.h"
+#include "../IApplication.h"
 #include "WriteCommand.h"
 #include "../TestApplication.cpp"
 
 using namespace std;
 
-WriteCommand::WriteCommand(TestApplication* app, const vector<string>& args) :
+WriteCommand::WriteCommand(IApplication* app, const vector<string>& args) :
     _app{ app }, _args{ args }
 {
 

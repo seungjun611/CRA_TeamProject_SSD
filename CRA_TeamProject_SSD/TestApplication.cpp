@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "ISSD.h"
+#include "IApplication.h"
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -14,17 +15,20 @@ using namespace std;
 const int MIN_LBA = 0;
 const int MAX_LBA = 99;
 
-class TestApplication {
+class TestApplication : public IApplication
+{
 public:
-	void write(int lba, string data) {
+	TestApplication(ISSD* ssd) : ssd{ ssd } {}
+
+	void write(int lba, string data) override {
 		ssd->write(lba, data);
 	}
 
-	void read(int lba) {
+	void read(int lba) override {
 		cout << ssd->read(lba) << endl;
 	}
 
-	void help() {
+	void help() override {
 		std::cout << "************************************" << std::endl;
 		std::cout << "************COMMAND HELP************" << std::endl;
 		std::cout << "************************************" << std::endl;
@@ -43,13 +47,13 @@ public:
 		std::cout << std::endl;
 	}
 
-	void fullwrite(string data) {
+	void fullwrite(string data) override {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
 			ssd->write(lba, data);
 		}
 	}
 
-	void fullread() {
+	void fullread() override {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
 			cout << ssd->read(lba) << endl;
 		}
@@ -89,7 +93,7 @@ public:
 		} while (++cnt < repeat);
 	}
 
-	bool runTestApp1() {
+	bool runTestApp1() override {
 		string writeData = makeRandomDataPattern();
 
 		fullwrite(writeData);
@@ -101,7 +105,7 @@ public:
 		return true;
 	}
 
-	bool runTestApp2()
+	bool runTestApp2() override
 	{
 		vector<int> lbas = { 0,1,2,3,4,5 };
 

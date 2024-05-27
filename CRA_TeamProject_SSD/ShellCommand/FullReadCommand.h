@@ -4,17 +4,17 @@
 #include <vector>
 using namespace std;
 
-class TestApplication;
+class IApplication;
 
 class FullReadCommand: public ICommand
 {
 public:
-	FullReadCommand(TestApplication* app, const vector<string>& args);
+	FullReadCommand(IApplication* app, const vector<string>& args);
 
 	void execute();
 	void check();
 
 private:
-	TestApplication* _app;
+	IApplication* _app;
 	vector<string> _args;
 };

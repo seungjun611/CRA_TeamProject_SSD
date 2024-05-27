@@ -5,12 +5,14 @@
 
 using namespace std;
 
+class IApplication;
+
 class CommandFactory
 {
 public:
-	CommandFactory(TestApplication* app);
+	CommandFactory(IApplication* app);
 	ICommand* getCommand(const vector<string>& args);
 
 private:
-	TestApplication* _app;
+	IApplication* _app;
 };

@@ -1,11 +1,12 @@
 ﻿#pragma once
 #include "ICommand.h"
+#include "../IApplication.h"
 #include "TestApp1Command.h"
 #include "../TestApplication.cpp"
 
 using namespace std;
 
-TestApp1Command::TestApp1Command(TestApplication* app, const vector<string>& args) :
+TestApp1Command::TestApp1Command(IApplication* app, const vector<string>& args) :
     _app{ app }, _args{ args }
 {
 
