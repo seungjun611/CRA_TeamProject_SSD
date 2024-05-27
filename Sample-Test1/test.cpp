@@ -13,6 +13,7 @@
 #include "../CRA_TeamProject_SSD/ShellCommand/TestApp2Command.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/EraseRangeCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/EraseSizeCommand.cpp"
+#include "../CRA_TeamProject_SSD/ShellCommand/FlushCommand.cpp"
 #include "../CRA_TeamProject_SSD/Application/ApplicationFactory.cpp"
 #include "../CRA_TeamProject_SSD/Application/TestApp1.cpp"
 #include "../CRA_TeamProject_SSD/Application/TestApplication.h"
@@ -34,6 +35,8 @@ public:
 	MOCK_METHOD(void, write, (int lba, string data), (override));
 	MOCK_METHOD(string, read, (int lba), (override));
 	MOCK_METHOD(bool, execute, (SSDCommand command), (override));
+	MOCK_METHOD(bool, erase, (int lba, int size), (override));
+	MOCK_METHOD(bool, flush, (), (override));
 };
 
 class MockTestShell : public TestShell {

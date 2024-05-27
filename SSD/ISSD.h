@@ -21,6 +21,8 @@ public:
 	virtual ~ISSD() {}
 	virtual void write(int lba, std::string data) = 0;
 	virtual std::string read(int lba) = 0;
+    virtual bool erase(int lba, int size) = 0;
+    virtual bool flush() = 0;
     virtual bool execute(SSDCommand command) = 0;
     const int getMinLBA() { return minLBA; }
     const int getMaxLBA() { return maxLBA; }

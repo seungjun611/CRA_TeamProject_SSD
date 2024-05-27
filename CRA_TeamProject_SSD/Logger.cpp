@@ -6,11 +6,11 @@
 
 using namespace std;
 namespace fs = std::filesystem;
-
-
 	
 void Logger::printLog(string func, string msg)
 {
+	checkLogFile();
+
 	if (logfile.is_open() == false)
 	{
 		logfile.open(LATEST_LOG_NAME, ios::app);
@@ -27,6 +27,7 @@ void Logger::printLog(string func, string msg)
 	cout << log;
 	logfile << log;
 }
+
 void Logger::checkLogFile() {
 
 	if (LogFileSize(LATEST_LOG_NAME) < MAX_LOG_SIZE) return;

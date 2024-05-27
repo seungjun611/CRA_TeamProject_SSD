@@ -2,6 +2,7 @@
 #include "ICommand.h"
 #include "../IApplication.h"
 #include "FlushCommand.h"
+#include "../Application/TestApplication.h"
 #include "../Logger.h"
 
 using namespace std;
