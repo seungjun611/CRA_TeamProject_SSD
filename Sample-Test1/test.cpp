@@ -11,8 +11,8 @@
 #include "../CRA_TeamProject_SSD/ShellCommand/FullReadCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/TestApp1Command.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/TestApp2Command.cpp"
-#include "../CRA_TeamProject_SSD/VirtualSSD.cpp"
-#include "../CRA_TeamProject_SSD/ISSD.h"
+#include "../SSD/VirtualSSD.cpp"
+#include "../SSD/ISSD.h"
 
 using namespace std;
 using namespace testing;
@@ -30,6 +30,7 @@ public:
 	~MockISSD() override {}
 	MOCK_METHOD(void, write, (int lba, string data), (override));
 	MOCK_METHOD(string, read, (int lba), (override));
+	MOCK_METHOD(bool, execute, (SSDCommand command), (override));
 };
 
 class MockTestShell : public TestShell {

@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include "ISSD.h"
+#include "../SSD/ISSD.h"
 #include "IApplication.h"
 #include <iostream>
 #include <sstream>
