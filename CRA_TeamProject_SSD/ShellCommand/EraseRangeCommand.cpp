@@ -24,7 +24,8 @@ void EraseRangeCommand::check()
 }
 
 void EraseRangeCommand::sendEraseRangeSSDCmd(int start_lba, int end_lba) {
-    SSDCommand cmd{ OPCODE::E, start_lba, "range", end_lba };
+    int size = end_lba - start_lba + 1;
+    SSDCommand cmd{ OPCODE::E, start_lba, "",  size};
     if (!_ssd->execute(cmd)) {
         throw std::invalid_argument("sendEraseRangeSSDCmd Failed");
     }
