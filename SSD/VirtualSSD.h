@@ -20,6 +20,6 @@ private:
 	std::map<int, std::string> cache;	
 	void erase(int lba, int size);
 	void erase_range(int startLBA, int endLBA);
-	void flush();
+	void internalFlush();
 	void writeFile(const std::string fileName, const std::vector<std::string> data);
 };

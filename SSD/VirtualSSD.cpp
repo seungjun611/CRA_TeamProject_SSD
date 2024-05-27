@@ -46,10 +46,10 @@ bool VirtualSSD::execute(SSDCommand command)
 
 VirtualSSD::~VirtualSSD()
 {
-	flush();
+	internalFlush();
 }
 
-void VirtualSSD::flush()
+void VirtualSSD::internalFlush()
 {
 	vector<string> datas;
 
