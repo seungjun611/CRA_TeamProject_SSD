@@ -24,7 +24,6 @@ private:
 	std::vector<SSDCommand> cmdBuffer;
 
 	bool erase(int lba, int size);
-	bool erase_range(int startLBA, int endLBA);
 	bool flush();
 
 	void executeGC();
@@ -33,5 +32,6 @@ private:
 	void fetchDataFromNAND();
 	bool isBufferFull();
 	void internalFlush();
+	std::string readCache(int lba);
 	void writeFile(const std::string fileName, const std::vector<std::string> data);
 };

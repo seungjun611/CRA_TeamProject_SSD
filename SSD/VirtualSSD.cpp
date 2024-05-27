@@ -2,6 +2,22 @@
 
 using namespace std;
 
+string VirtualSSD::read(int lba)
+{
+	map<int, std::string> cache_backup = cache;
+	for (SSDCommand command : cmdBuffer) {
+		if (command.opcode == OPCODE::W) {
+			write(command.param1, command.param2);
+		}
+		else if (command.opcode == OPCODE::E) {
+			erase(command.param1, command.param3);
+		}
+	}
+	string retCacheValue = readCache(lba);
+	cache = cache_backup;
+	return retCacheValue;
+}
+
 bool VirtualSSD::execute(SSDCommand command)
 {
 	try {
@@ -14,7 +30,7 @@ bool VirtualSSD::execute(SSDCommand command)
 			}
 		}
 		else if (command.opcode == OPCODE::R) {
-			read(command.param1);
+			read(command.param1);	
 		}
 		else if (command.opcode == OPCODE::F) {
 			if (!flush()) {
@@ -54,11 +70,6 @@ bool VirtualSSD::erase(int lba, int size)
 	return true;
 }
 
-bool VirtualSSD::erase_range(int startLBA, int endLBA)
-{
-	return erase(startLBA, endLBA - startLBA);
-}
-
 bool VirtualSSD::flush()
 {
 	try {
@@ -84,7 +95,7 @@ bool VirtualSSD::flush()
 	return true;
 }
 
-std::string VirtualSSD::read(int lba)
+std::string VirtualSSD::readCache(int lba)
 {
 	string retCacheValue;
 	if (cache.find(lba) == cache.end()) {
@@ -123,7 +134,7 @@ void VirtualSSD::executeGC()
 		validBitmap[idx] = { 0, };
 	}*/
 
-	getLastestData(validData);
+	getLastData(validData);
 	cmdBuffer = remakeCommand(validData);
 	//free(validBitmap);
 }
@@ -172,7 +183,7 @@ vector<SSDCommand> VirtualSSD::remakeCommand(std::string* validData)
 	return result;
 }
 
-void VirtualSSD::getLastestData(string* validData)
+void VirtualSSD::getLastData(string* validData)
 {
 	for (vector<SSDCommand>::reverse_iterator it = cmdBuffer.rbegin(); it != cmdBuffer.rend(); it++) {
 		SSDCommand cmd = *it;
