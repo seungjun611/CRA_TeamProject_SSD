@@ -18,10 +18,11 @@ public:
 private:
 	const char* NAND_FILE_NAME = "nand.txt";
 	const char* INIT_VALUE = "0x00000000";
+	const int ERASE_MAXSIZE = 10;
 
 	std::map<int, std::string> cache;	
-	void erase(int lba, int size);
-	void erase_range(int startLBA, int endLBA);
+	bool erase(int lba, int size);
+	bool erase_range(int startLBA, int endLBA);
 
 	void fetchDataFromNAND();
 	bool isBufferFull();
