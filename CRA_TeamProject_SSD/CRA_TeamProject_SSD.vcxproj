@@ -132,6 +132,8 @@
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShellCommand\CommandFactory.cpp" />
+    <ClCompile Include="ShellCommand\EraseSizeCommand.cpp" />
+    <ClCompile Include="ShellCommand\EraseRangeCommand.cpp" />
     <ClCompile Include="ShellCommand\ExitCommand.cpp" />
     <ClCompile Include="ShellCommand\FullReadCommand.cpp" />
     <ClCompile Include="ShellCommand\FullWriteCommand.cpp" />
@@ -146,6 +148,8 @@
   <ItemGroup>
     <ClInclude Include="IApplication.h" />
     <ClInclude Include="ShellCommand\CommandFactory.h" />
+    <ClInclude Include="ShellCommand\EraseSizeCommand.h" />
+    <ClInclude Include="ShellCommand\EraseRangeCommand.h" />
     <ClInclude Include="ShellCommand\ExitCommand.h" />
     <ClInclude Include="ShellCommand\FullReadCommand.h" />
     <ClInclude Include="ShellCommand\FullWriteCommand.h" />
