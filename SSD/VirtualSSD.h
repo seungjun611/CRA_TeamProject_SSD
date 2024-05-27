@@ -24,7 +24,11 @@ private:
 	std::vector<SSDCommand> cmdBuffer;
 
 	bool erase(int lba, int size);
+	bool flush();
 
+	void executeGC();
+	std::vector<SSDCommand> remakeCommand(std::string* validBitmap);
+	void getLastData(std::string* validBitmap);
 	void fetchDataFromNAND();
 	bool isBufferFull();
 	void internalFlush();
