@@ -22,4 +22,10 @@ public:
 	virtual void write(int lba, std::string data) = 0;
 	virtual std::string read(int lba) = 0;
     virtual bool execute(SSDCommand command) = 0;
+    const int getMinLBA() { return minLBA; }
+    const int getMaxLBA() { return maxLBA; }
+
+protected:
+    int minLBA;
+    int maxLBA;
 };
