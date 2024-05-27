@@ -74,6 +74,8 @@ std::string VirtualSSD::read(int lba)
 
 VirtualSSD::VirtualSSD()
 {
+	minLBA = 0;
+	maxLBA = 99;
 	fetchDataFromNAND();
 }
 

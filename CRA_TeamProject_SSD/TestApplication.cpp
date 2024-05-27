@@ -12,13 +12,13 @@
 
 using namespace std;
 
-const int MIN_LBA = 0;
-const int MAX_LBA = 99;
-
 class TestApplication : public IApplication
 {
 public:
-	TestApplication(ISSD* ssd) : ssd{ ssd } {}
+	TestApplication(ISSD* ssd) : ssd{ ssd } {
+		MIN_LBA = ssd->getMinLBA();
+		MAX_LBA = ssd->getMaxLBA();
+	}
 
 	void write(int lba, string data) override {
 		ssd->write(lba, data);
@@ -125,4 +125,6 @@ public:
 	}
 
 	ISSD* ssd;
+	int MIN_LBA;
+	int MAX_LBA;
 };

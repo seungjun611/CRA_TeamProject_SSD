@@ -23,8 +23,6 @@ const int LBA_OVER_THAN_99 = 100;
 
 const string DATA_NORMAL = "0x11111111";
 
-const int LBA_COUNT = MAX_LBA - MIN_LBA + 1;
-
 class MockISSD : public ISSD {
 public:
 	~MockISSD() override {}
@@ -42,12 +40,13 @@ public:
 class SSDTestFixture : public Test {
 public:
 	void SetUp() override {
-
 		testApp = new TestApplication(&mockISSD);
+		LBA_COUNT = mockISSD.getMaxLBA() - mockISSD.getMinLBA() + 1;
 	}
 
 	NiceMock<MockISSD> mockISSD;
 	TestApplication* testApp;
+	int LBA_COUNT;
 
 	void assertIllegalArgument(string command) {
 		TestShell testShell(&mockISSD);
