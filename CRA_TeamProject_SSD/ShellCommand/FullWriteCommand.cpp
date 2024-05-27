@@ -3,7 +3,7 @@
 #include "../IApplication.h"
 #include "FullWriteCommand.h"
 #include "../Application/TestApplication.h"
-
+#include "../Logger.h"
 using namespace std;
 
 FullWriteCommand::FullWriteCommand(ISSD* ssd, const vector<string>& args) :
@@ -32,11 +32,14 @@ void FullWriteCommand::check()
 }
 
 void FullWriteCommand::sendFullWriteSSDCmd(string data) {
+    PRINTLOG("FULL WRITE" + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) + "DATA : " + data +" START!");
     for (int lba = _ssd->getMinLBA(); lba <= _ssd->getMaxLBA(); lba++) {
         SSDCommand cmd{ OPCODE::W, lba, data };
 
         if (!_ssd->execute(cmd)) {
+            PRINTLOG("sendWriteSSDCmd FAIL!");
             throw std::invalid_argument("sendWriteSSDCmd Failed");
         }
     }
+    PRINTLOG("FULL WRITE" + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) + "DATA : " + data + " END!");
 }
