@@ -10,6 +10,21 @@ void VirtualSSD::write(int lba, string data)
 	cache.insert({ lba, data });
 }
 
+void VirtualSSD::erase(int lba, int size)
+{
+	for (int delta = 0; delta < size; delta++) {
+		cache[lba + delta] = INIT_VALUE;
+	}
+}
+
+void VirtualSSD::erase_range(int startLBA, int endLBA)
+{
+	for (int Lba = startLBA; Lba <= endLBA; Lba++) {
+		cache[Lba] = INIT_VALUE;
+	}
+}
+
+
 std::string VirtualSSD::read(int lba)
 {
 	string retCacheValue;
@@ -31,10 +46,10 @@ bool VirtualSSD::execute(SSDCommand command)
 
 VirtualSSD::~VirtualSSD()
 {
-	internalFlush();
+	flush();
 }
 
-void VirtualSSD::internalFlush()
+void VirtualSSD::flush()
 {
 	vector<string> datas;
 

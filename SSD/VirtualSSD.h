@@ -17,8 +17,9 @@ private:
 	const char* RESULT_FILE_NAME = "result.txt";
 	const char* INIT_VALUE = "0x00000000";
 
-	std::map<int, std::string> cache;
-
-	void internalFlush();
+	std::map<int, std::string> cache;	
+	void erase(int lba, int size);
+	void erase_range(int startLBA, int endLBA);
+	void flush();
 	void writeFile(const std::string fileName, const std::vector<std::string> data);
 };
