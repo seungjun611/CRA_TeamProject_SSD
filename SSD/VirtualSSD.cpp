@@ -2,6 +2,22 @@
 
 using namespace std;
 
+string VirtualSSD::read(int lba)
+{
+	map<int, std::string> cache_backup = cache;
+	for (SSDCommand command : cmdBuffer) {
+		if (command.opcode == OPCODE::W) {
+			write(command.param1, command.param2);
+		}
+		else if (command.opcode == OPCODE::E) {
+			erase(command.param1, command.param3);
+		}
+	}
+	string retCacheValue = readCache(lba);
+	cache = cache_backup;
+	return retCacheValue;
+}
+
 bool VirtualSSD::execute(SSDCommand command)
 {
 	try {
@@ -10,14 +26,14 @@ bool VirtualSSD::execute(SSDCommand command)
 			//if (isBufferFull()) internalFlush();
 		}
 		else if (command.opcode == OPCODE::R) {
-			read(command.param1);
+			read(command.param1);	
 		}
 		else if (command.opcode == OPCODE::E) {
 			if (command.param2.empty()) {
 				erase(command.param1, command.param3);
 			}
 			else {
-				erase_range(command.param1, command.param3);
+				//erase_range(command.param1, command.param3);
 			}
 			//if (isBufferFull()) internalFlush();
 		}
@@ -57,13 +73,7 @@ bool VirtualSSD::erase(int lba, int size)
 	return true;
 }
 
-bool VirtualSSD::erase_range(int startLBA, int endLBA)
-{
-	return erase(startLBA, endLBA - startLBA);
-}
-
-
-std::string VirtualSSD::read(int lba)
+std::string VirtualSSD::readCache(int lba)
 {
 	string retCacheValue;
 	if (cache.find(lba) == cache.end()) {
