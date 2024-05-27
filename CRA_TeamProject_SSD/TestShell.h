@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <string>
+#include <map>
 
 using namespace std;
 
@@ -19,6 +20,6 @@ public:
 	vector<string> parse(const string& command);
 
 private:
-	IApplication* _app;
+	map<string, IApplication*> _apps;
 	CommandFactory* _command_factory;
 };

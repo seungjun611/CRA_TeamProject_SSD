@@ -2,7 +2,7 @@
 #include "ICommand.h"
 #include "../IApplication.h"
 #include "FullReadCommand.h"
-#include "../TestApplication.cpp"
+#include "../Application/TestApplication.h"
 
 using namespace std;
 
