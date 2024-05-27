@@ -21,9 +21,15 @@ private:
 	const int ERASE_MAXSIZE = 10;
 
 	std::map<int, std::string> cache;	
+	std::vector<SSDCommand> cmdBuffer;
+
 	bool erase(int lba, int size);
 	bool erase_range(int startLBA, int endLBA);
+	bool flush();
 
+	void executeGC();
+	std::vector<SSDCommand> remakeCommand(std::string* validBitmap);
+	void getLastData(std::string* validBitmap);
 	void fetchDataFromNAND();
 	bool isBufferFull();
 	void internalFlush();
