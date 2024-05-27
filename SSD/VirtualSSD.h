@@ -21,11 +21,13 @@ private:
 	const int ERASE_MAXSIZE = 10;
 
 	std::map<int, std::string> cache;	
+	std::vector<SSDCommand> cmdBuffer;
+
 	bool erase(int lba, int size);
-	bool erase_range(int startLBA, int endLBA);
 
 	void fetchDataFromNAND();
 	bool isBufferFull();
 	void internalFlush();
+	std::string readCache(int lba);
 	void writeFile(const std::string fileName, const std::vector<std::string> data);
 };
