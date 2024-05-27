@@ -19,9 +19,6 @@ int main()
 
     signal(SIGINT, signalHandler);
 
-    //Logger& log = Logger::getInstance();
-    //log.checkLogFile();
-
     std::string command;
     while (g_running) {
         std::cin.clear();

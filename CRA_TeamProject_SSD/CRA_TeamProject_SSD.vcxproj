@@ -137,6 +137,7 @@
     <ClCompile Include="ShellCommand\EraseSizeCommand.cpp" />
     <ClCompile Include="ShellCommand\EraseRangeCommand.cpp" />
     <ClCompile Include="ShellCommand\ExitCommand.cpp" />
+    <ClCompile Include="ShellCommand\FlushCommand.cpp" />
     <ClCompile Include="ShellCommand\FullReadCommand.cpp" />
     <ClCompile Include="ShellCommand\FullWriteCommand.cpp" />
     <ClCompile Include="ShellCommand\HelpCommand.cpp" />
@@ -155,6 +156,7 @@
     <ClInclude Include="ShellCommand\EraseSizeCommand.h" />
     <ClInclude Include="ShellCommand\EraseRangeCommand.h" />
     <ClInclude Include="ShellCommand\ExitCommand.h" />
+    <ClInclude Include="ShellCommand\FlushCommand.h" />
     <ClInclude Include="ShellCommand\FullReadCommand.h" />
     <ClInclude Include="ShellCommand\FullWriteCommand.h" />
     <ClInclude Include="ShellCommand\HelpCommand.h" />
