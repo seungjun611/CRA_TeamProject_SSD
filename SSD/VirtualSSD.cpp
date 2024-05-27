@@ -30,7 +30,7 @@ bool VirtualSSD::execute(SSDCommand command)
 			}
 		}
 		else if (command.opcode == OPCODE::R) {
-			read(command.param1);	
+			read(command.param1);
 		}
 		else if (command.opcode == OPCODE::F) {
 			if (!flush()) {
