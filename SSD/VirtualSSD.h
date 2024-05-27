@@ -17,6 +17,9 @@ private:
 	const char* RESULT_FILE_NAME = "result.txt";
 	const char* INIT_VALUE = "0x00000000";
 
+	std::map<int, std::string> cache;	
+	void erase(int lba, int size);
+	void erase_range(int startLBA, int endLBA);
 	std::map<int, std::string> cache;
 
 	bool isBufferFull();
