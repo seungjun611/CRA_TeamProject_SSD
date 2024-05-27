@@ -14,6 +14,24 @@ public:
 		return instance;
 	}
 
+	void printLog(string func, string msg)
+	{
+		if (logfile.is_open() == false)
+		{
+			logfile.open(LATEST_LOG_NAME, ios::app);
+		}
+		char log[1000];
+		string funcname = func + "()";
+		time_t now = time(nullptr);
+		tm tmTime;
+		localtime_s(&tmTime, &now);
+
+		sprintf_s(log, "[%04d.%02d.%02d %02d:%02d:%02d] %-30s : %s\n",
+			tmTime.tm_year + 1900, tmTime.tm_mon + 1, tmTime.tm_mday, tmTime.tm_hour, tmTime.tm_min, tmTime.tm_sec,
+			funcname.c_str(), msg.c_str());
+		cout << log;
+		logfile << log;
+	}
 	void checkLogFile() {
 
 		if (LogFileSize(LATEST_LOG_NAME) < MAX_LOG_SIZE) return;
@@ -67,14 +85,20 @@ public:
 	}
 
 private:
-	Logger() { }
+	Logger()
+	{
+		logfile.open(LATEST_LOG_NAME);
+	}
+	~Logger()
+	{
+		logfile.close();
+	}
 	Logger& operator=(const Logger& other) = delete;
 	Logger(const Logger& other) = delete;
-
+	ofstream logfile;
+	
 	const int MAX_LOG_SIZE = 10240;
-
 	string LATEST_LOG_NAME = "latest.log";
-
 	const string LOG_PREFIX = "until_";
 	const string LOG_EXTENSION = ".log";
 	const string COMPRESS_EXTENSION = ".zip";
