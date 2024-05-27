@@ -65,12 +65,15 @@
     </ClCompile>
     <ClCompile Include="Application\ApplicationFactory.cpp">
       <Filter>소스 파일\Application</Filter>
-	</ClCompile>
+    </ClCompile>
     <ClCompile Include="ShellCommand\EraseSizeCommand.cpp">
       <Filter>소스 파일\ShellCommand</Filter>
     </ClCompile>
     <ClCompile Include="ShellCommand\EraseRangeCommand.cpp">
       <Filter>소스 파일\ShellCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\TestApp1.cpp">
+      <Filter>소스 파일\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -115,12 +118,15 @@
     </ClInclude>
     <ClInclude Include="Application\TestApplication.h">
       <Filter>헤더 파일\Application</Filter>
-	</ClInclude>
+    </ClInclude>
     <ClInclude Include="ShellCommand\EraseSizeCommand.h">
       <Filter>헤더 파일\ShellCommand</Filter>
     </ClInclude>
     <ClInclude Include="ShellCommand\EraseRangeCommand.h">
       <Filter>헤더 파일\ShellCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\TestApp1.h">
+      <Filter>헤더 파일\Application</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

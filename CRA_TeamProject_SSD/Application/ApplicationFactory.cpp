@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "ApplicationFactory.h"
 #include "TestApplication.h"
+#include "TestApp1.h"
 
 using namespace std;
 
@@ -20,5 +21,9 @@ IApplication* ApplicationFactory::getApplication(const string& app_name, ISSD* s
 	if (app_name == string("TestApplication"))
 	{
 		return new TestApplication(ssd);
+	}
+	else if (app_name == string("testapp1"))
+	{
+		return new TestApp1(ssd);
 	}
 }

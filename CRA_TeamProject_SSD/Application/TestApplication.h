@@ -20,6 +20,11 @@ public:
 		MAX_LBA = ssd->getMaxLBA();
 	}
 
+	bool run() override
+	{
+		return true;
+	}
+
 	void fullwrite(string data) {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
 			ssd->write(lba, data);
@@ -46,16 +51,6 @@ public:
 		return true;
 	}
 
-	string makeRandomDataPattern() {
-		random_device rd;
-		stringstream dataStream;
-
-		dataStream.setf(ios::uppercase);
-		dataStream << setfill('0') << std::setw(8) << std::hex << rd() % 0xFFFFFFFF;
-
-		return string("0x").append(dataStream.str());
-	}
-
 	void setLbaRepeatly(const std::vector<int> lbas, const string value, const int repeat)
 	{
 		int cnt = 0;
@@ -66,19 +61,7 @@ public:
 		} while (++cnt < repeat);
 	}
 
-	bool runTestApp1() override {
-		string writeData = makeRandomDataPattern();
-
-		fullwrite(writeData);
-		if (!readVerify(MIN_LBA, MAX_LBA, writeData)) {
-			return false;
-		}
-
-		cout << "[SUCCESS]" << endl;
-		return true;
-	}
-
-	bool runTestApp2() override
+	bool runTestApp2()
 	{
 		vector<int> lbas = { 0,1,2,3,4,5 };
 
