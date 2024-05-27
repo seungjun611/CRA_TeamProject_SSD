@@ -12,7 +12,7 @@
 
 TestShell::TestShell(ISSD* ssd) :
     _app{new TestApplication(ssd)},
-    _command_factory{new CommandFactory(_app)}
+    _command_factory{new CommandFactory(ssd)}
 {
 
 }

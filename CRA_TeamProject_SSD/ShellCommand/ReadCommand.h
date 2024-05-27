@@ -9,12 +9,13 @@ class IApplication;
 class ReadCommand : public ICommand
 {
 public:
-	ReadCommand(IApplication* app, const vector<string>& args);
+	ReadCommand(ISSD* ssd, const vector<string>& args);
 
 	void execute();
 	void check();
+	void sendReadSSDCmd(int lba);
 
 private:
-	IApplication* _app;
+	ISSD* _ssd;
 	vector<string> _args;
 };

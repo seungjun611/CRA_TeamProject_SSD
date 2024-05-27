@@ -6,8 +6,8 @@
 
 using namespace std;
 
-FullReadCommand::FullReadCommand(IApplication* app, const vector<string>& args) :
-    _app{ app }, _args{ args }
+FullReadCommand::FullReadCommand(ISSD* ssd, const vector<string>& args) :
+    _ssd{ ssd }, _args{ args }
 {
 
 }
@@ -15,7 +15,7 @@ FullReadCommand::FullReadCommand(IApplication* app, const vector<string>& args) 
 void FullReadCommand::execute()
 {
     this->check();
-    _app->fullread();
+    //_app->fullread();
 }
 
 void FullReadCommand::check()

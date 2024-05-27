@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <stdexcept>
+#include "../../SSD/ISSD.h"
 
 using namespace std;
 

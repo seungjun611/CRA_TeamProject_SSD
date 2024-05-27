@@ -6,8 +6,8 @@
 
 using namespace std;
 
-WriteCommand::WriteCommand(IApplication* app, const vector<string>& args) :
-    _app{ app }, _args{ args }
+WriteCommand::WriteCommand(ISSD* ssd, const vector<string>& args) :
+    _ssd{ ssd }, _args{ args }
 {
 
 }
@@ -15,7 +15,7 @@ WriteCommand::WriteCommand(IApplication* app, const vector<string>& args) :
 void WriteCommand::execute()
 {
     this->check();
-	_app->write(std::stoi(_args[1]), _args[2]);
+    sendWriteSSDCmd(std::stoi(_args[1]), _args[2]);
 }
 
 void WriteCommand::check()
@@ -24,4 +24,11 @@ void WriteCommand::check()
     assertInvalidLBA(_args[1]);
     assertInvalidDataType(_args[2]);
     assertInvalidDataLength(_args[2]);
+}
+
+void WriteCommand::sendWriteSSDCmd(int lba, string data) {
+	SSDCommand cmd{ OPCODE::W, lba, data };
+	if (!_ssd->execute(cmd)) {
+		throw std::invalid_argument("sendWriteSSDCmd Failed");
+	}
 }

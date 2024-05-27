@@ -6,8 +6,8 @@
 
 using namespace std;
 
-TestApp2Command::TestApp2Command(IApplication* app, const vector<string>& args) :
-    _app{ app }, _args{ args }
+TestApp2Command::TestApp2Command(ISSD* ssd, const vector<string>& args) :
+    _ssd{ ssd }, _args{ args }
 {
 
 }
@@ -15,7 +15,7 @@ TestApp2Command::TestApp2Command(IApplication* app, const vector<string>& args) 
 void TestApp2Command::execute()
 {
     this->check();
-    _app->runTestApp2();
+    //_app->runTestApp2();
 }
 
 void TestApp2Command::check()

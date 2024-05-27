@@ -4,18 +4,19 @@
 #include <vector>
 using namespace std;
 
-class IApplication;
+//class IApplication;
 
 class WriteCommand : public ICommand
 {
 public:
-	WriteCommand(IApplication* app, const vector<string>& args);
+	WriteCommand(ISSD* ssd, const vector<string>& args);
 
 	void execute();
 	void check();
+	void sendWriteSSDCmd(int lba, string data);
 
 private:
-	IApplication* _app;
+	ISSD* _ssd;
 	vector<string> _args;
 
 };
