@@ -4,6 +4,8 @@
 
 using namespace std;
 
+#define PRINTLOG(msg) Logger::getInstance().printLog(__FUNCTION__, msg);
+
 class Logger {
 public:
 	static Logger& getInstance() {
