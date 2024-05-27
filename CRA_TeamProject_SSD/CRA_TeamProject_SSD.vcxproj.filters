@@ -57,6 +57,9 @@
     <ClCompile Include="ShellCommand\TestApp2Command.cpp">
       <Filter>소스 파일\ShellCommand</Filter>
     </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestShell.h">

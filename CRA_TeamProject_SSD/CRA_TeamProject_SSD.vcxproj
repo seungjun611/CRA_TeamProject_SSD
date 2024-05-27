@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShellCommand\CommandFactory.cpp" />
     <ClCompile Include="ShellCommand\ExitCommand.cpp" />
