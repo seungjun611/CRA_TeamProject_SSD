@@ -1,70 +1,82 @@
 ﻿#include <iostream>
 #include <fstream>
 #include <string>
-#include <sstream>
 #include <ctime>
-#include <regex>
 #include <filesystem>
 
 using namespace std;
+namespace fs = std::filesystem;
 
 class Logger {
 public:
-    static Logger& getInstance() {
-        static Logger instance{}; // 지연된 초기화 
-        return instance;
-    }
+	static Logger& getInstance() {
+		static Logger instance{}; // 지연된 초기화 
+		return instance;
+	}
 
-    void checkLogFile() {
-        ifstream file("latest.log", ios::binary | ios::ate); 
+	void checkLogFile() {
 
-        int maxSize = 1;
-        if (file.is_open()) {
+		if (LogFileSize(LATEST_LOG_NAME) < MAX_LOG_SIZE) return;
 
-            streampos fileSize = file.tellg();
-            file.close();
+		makeBackupLogFileToCompressFile();
 
-            if (fileSize > maxSize) {              
+		makeLatestFileToBackupFile();
+	}
 
-                // until_*.log 파일을 찾아 .zip 파일로 변경
-                string prefix = "until_";
-                string old_extension = ".log";
-                string new_extension = ".zip"; 
-                for (const auto& entry : filesystem::directory_iterator(".")) {
-                    if (entry.is_regular_file() && entry.path().filename().string().find(prefix) == 0 && entry.path().extension() == old_extension) {
-                        filesystem::path new_path = entry.path().parent_path() / (prefix + entry.path().filename().string().substr(prefix.length(), entry.path().filename().string().length() - prefix.length() - old_extension.length()) + new_extension);
-                        filesystem::rename(entry.path(), new_path);
-                        cout << "Renamed: " << entry.path() << " -> " << new_path << endl;
-                    }
-                }
+	void makeLatestFileToBackupFile()
+	{
+		time_t now = time(nullptr);
+		struct tm timeinfo;
+		char NowTime[80];
 
-                // 파일 크기가 maxSize를 초과하면 새 파일 이름 생성
-                time_t now = time(nullptr);
-                struct tm timeinfo;
-                char buffer[80];
+		time(&now);
+		localtime_s(&timeinfo, &now);
+		strftime(NowTime, sizeof(NowTime), "%y%m%d_%Hh_%Mm_%Ss", &timeinfo);
 
-                time(&now);
-                localtime_s(&timeinfo, &now);
-                strftime(buffer, sizeof(buffer), "%y%m%d_%Hh_%Mm_%Ss", &timeinfo);
+		fs::rename(LATEST_LOG_NAME, LOG_PREFIX + string(NowTime) + LOG_EXTENSION);
+	}
 
-                ostringstream backupFilename;
-                backupFilename << "until_" << buffer << ".log"; //until_240527_10h_50m_11s.log
+	void makeBackupLogFileToCompressFile()
+	{
+		for (const auto& entry : fs::directory_iterator(".")) {
+			if (!(entry.is_regular_file()) || entry.path().filename().string().find(LOG_PREFIX) != 0 && entry.path().extension() != LOG_EXTENSION)  continue;
+			
+			fs::rename(entry.path(), entry.path().parent_path() / (LOG_PREFIX + entry.path().filename().string().substr(LOG_PREFIX.length(), entry.path().filename().string().length() - LOG_PREFIX.length() - LOG_EXTENSION.length()) + COMPRESS_EXTENSION));
+		}
+	}
 
-                if (rename("latest.log", backupFilename.str().c_str()) != 0) {
-                    cerr << "Error renaming file." << endl;
-                }
-                else {
-                    cout << "File renamed to: " << backupFilename.str() << endl;
-                }
-            }
-        }
-        else {
-            cout << "Error opening file." << endl;
-        }
-    }
+	uintmax_t LogFileSize(string& LogName)
+	{
+		try {
+			fs::path latest_log_path = fs::current_path() / LogName;
+
+			if (!fs::exists(latest_log_path)) {
+
+				ofstream file(latest_log_path);
+				if (!file.is_open()) {
+					throw runtime_error("Failed to create 'latest.log' file.");
+				}
+				file.close();
+			}
+
+			return fs::file_size(latest_log_path);
+		}
+		catch (exception& e) {
+			throw("LogFileSize Check Error!!!");
+		}
+	}
 
 private:
-    Logger() { }
-    Logger& operator=(const Logger& other) = delete;
-    Logger(const Logger& other) = delete;
+	Logger() { }
+	Logger& operator=(const Logger& other) = delete;
+	Logger(const Logger& other) = delete;
+
+	const int MAX_LOG_SIZE = 10240;
+
+	string LATEST_LOG_NAME = "latest.log";
+
+	const string LOG_PREFIX = "until_";
+	const string LOG_EXTENSION = ".log";
+	const string COMPRESS_EXTENSION = ".zip";
+
 };
