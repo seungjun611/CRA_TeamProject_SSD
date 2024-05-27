@@ -45,7 +45,7 @@ string TestApp1::makeRandomDataPattern() {
 	return string("0x").append(dataStream.str());
 }
 
-bool TestApp1::run() {
+bool TestApp1::run(const std::vector<std::string>& args) {
 	string writeData = makeRandomDataPattern();
 
 	fullwrite(writeData);
