@@ -22,6 +22,7 @@ TestShell::TestShell(ISSD* ssd) :
     _apps.insert({ string("TestApplication"), app_factory->getApplication(string("TestApplication"), ssd) });
     _apps.insert({ string("testapp1"), app_factory->getApplication(string("testapp1"), ssd) });
     _apps.insert({ string("testapp2"), app_factory->getApplication(string("testapp2"), ssd) });
+    _apps.insert({ string("runner"), app_factory->getApplication(string("runner"), ssd) });
 }
 
 void TestShell::run(const string& command)

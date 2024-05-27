@@ -3,6 +3,7 @@
 #include "TestApplication.h"
 #include "TestApp1.h"
 #include "TestApp2.h"
+#include "Runner.h"
 
 using namespace std;
 
@@ -30,5 +31,9 @@ IApplication* ApplicationFactory::getApplication(const string& app_name, ISSD* s
 	else if (app_name == string("testapp2"))
 	{
 		return new TestApp2(ssd);
+	}
+	else if (app_name == string("runner"))
+	{
+		return new Runner(ssd);
 	}
 }

@@ -84,6 +84,9 @@
     <ClCompile Include="Application\FullWriteReadCompare.cpp">
       <Filter>소스 파일\Application</Filter>
     </ClCompile>
+    <ClCompile Include="Application\Runner.cpp">
+      <Filter>소스 파일\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestShell.h">
@@ -144,6 +147,9 @@
       <Filter>헤더 파일\Application</Filter>
     </ClInclude>
     <ClInclude Include="Application\FullWriteReadCompare.h">
+      <Filter>헤더 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Runner.h">
       <Filter>헤더 파일\Application</Filter>
     </ClInclude>
   </ItemGroup>
