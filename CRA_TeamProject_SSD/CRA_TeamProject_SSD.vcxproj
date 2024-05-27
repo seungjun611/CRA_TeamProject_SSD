@@ -130,6 +130,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Application\ApplicationFactory.cpp" />
+    <ClCompile Include="Application\FullWriteReadCompare.cpp" />
     <ClCompile Include="Application\TestApp1.cpp" />
     <ClCompile Include="Application\TestApp2.cpp" />
     <ClCompile Include="Logger.cpp" />
@@ -150,6 +151,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application\ApplicationFactory.h" />
+    <ClInclude Include="Application\FullWriteReadCompare.h" />
     <ClInclude Include="Application\TestApp1.h" />
     <ClInclude Include="Application\TestApp2.h" />
     <ClInclude Include="Application\TestApplication.h" />
