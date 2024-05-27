@@ -1,5 +1,5 @@
 ﻿#include "TestShell.h"
-#include "VirtualSSD.h"
+#include "../SSD/VirtualSSD.cpp"
 #include "TestApplication.cpp"
 #include <string>
 #include <sstream>

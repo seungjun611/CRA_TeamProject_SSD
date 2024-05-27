@@ -21,10 +21,9 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{c1bbfc29-dbf4-49af-a4cc-9333943caf46}</ProjectGuid>
-    <RootNamespace>CRATeamProjectSSD</RootNamespace>
+    <ProjectGuid>{bc3db235-cb4a-406f-8518-a00662ab276e}</ProjectGuid>
+    <RootNamespace>SSD</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>CRA_TeamProject_SSD</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -128,32 +127,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="ShellCommand\CommandFactory.cpp" />
-    <ClCompile Include="ShellCommand\ExitCommand.cpp" />
-    <ClCompile Include="ShellCommand\FullReadCommand.cpp" />
-    <ClCompile Include="ShellCommand\FullWriteCommand.cpp" />
-    <ClCompile Include="ShellCommand\HelpCommand.cpp" />
-    <ClCompile Include="ShellCommand\ReadCommand.cpp" />
-    <ClCompile Include="ShellCommand\TestApp1Command.cpp" />
-    <ClCompile Include="ShellCommand\TestApp2Command.cpp" />
-    <ClCompile Include="ShellCommand\WriteCommand.cpp" />
-    <ClCompile Include="TestApplication.cpp" />
-    <ClCompile Include="TestShell.cpp" />
+    <ClInclude Include="ISSD.h" />
+    <ClInclude Include="VirtualSSD.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="IApplication.h" />
-    <ClInclude Include="ShellCommand\CommandFactory.h" />
-    <ClInclude Include="ShellCommand\ExitCommand.h" />
-    <ClInclude Include="ShellCommand\FullReadCommand.h" />
-    <ClInclude Include="ShellCommand\FullWriteCommand.h" />
-    <ClInclude Include="ShellCommand\HelpCommand.h" />
-    <ClInclude Include="ShellCommand\ICommand.h" />
-    <ClInclude Include="ShellCommand\ReadCommand.h" />
-    <ClInclude Include="ShellCommand\TestApp1Command.h" />
-    <ClInclude Include="ShellCommand\TestApp2Command.h" />
-    <ClInclude Include="ShellCommand\WriteCommand.h" />
-    <ClInclude Include="TestShell.h" />
+    <ClCompile Include="ssd_main.cpp" />
+    <ClCompile Include="VirtualSSD.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

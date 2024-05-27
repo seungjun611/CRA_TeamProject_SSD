@@ -24,6 +24,11 @@ std::string VirtualSSD::read(int lba)
 	return retCacheValue;
 }
 
+bool VirtualSSD::execute(SSDCommand command)
+{
+	return false;
+}
+
 VirtualSSD::~VirtualSSD()
 {
 	internalFlush();
