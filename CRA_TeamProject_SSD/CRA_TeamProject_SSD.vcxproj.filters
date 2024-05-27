@@ -60,6 +60,12 @@
     <ClCompile Include="Logger.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="ShellCommand\EraseSizeCommand.cpp">
+      <Filter>소스 파일\ShellCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="ShellCommand\EraseRangeCommand.cpp">
+      <Filter>소스 파일\ShellCommand</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestShell.h">
@@ -97,6 +103,12 @@
     </ClInclude>
     <ClInclude Include="IApplication.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ShellCommand\EraseSizeCommand.h">
+      <Filter>헤더 파일\ShellCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="ShellCommand\EraseRangeCommand.h">
+      <Filter>헤더 파일\ShellCommand</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

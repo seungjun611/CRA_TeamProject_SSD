@@ -13,6 +13,7 @@ public:
 
 	void execute();
 	void check();
+	void sendFullReadSSDCmd();
 
 private:
 	ISSD* _ssd;

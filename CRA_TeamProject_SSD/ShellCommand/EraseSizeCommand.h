@@ -6,16 +6,17 @@ using namespace std;
 
 class IApplication;
 
-class FullWriteCommand : public ICommand
+class EraseSizeCommand : public ICommand
 {
 public:
-	FullWriteCommand(ISSD* ssd, const vector<string>& args);
+	EraseSizeCommand(ISSD* ssd, const vector<string>& args);
 
 	void execute();
 	void check();
-	void sendFullWriteSSDCmd(string data);
+	void sendEraseSizeSSDCmd(int lba, int size);
 
 private:
 	ISSD* _ssd;
 	vector<string> _args;
+
 };
