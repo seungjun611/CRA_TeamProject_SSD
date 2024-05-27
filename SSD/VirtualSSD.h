@@ -19,6 +19,7 @@ private:
 
 	std::map<int, std::string> cache;
 
+	bool isBufferFull();
 	void internalFlush();
 	void writeFile(const std::string fileName, const std::vector<std::string> data);
 };
