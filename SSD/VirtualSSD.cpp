@@ -19,7 +19,7 @@ void VirtualSSD::erase(int lba, int size)
 
 void VirtualSSD::erase_range(int startLBA, int endLBA)
 {
-	for (int Lba = startLBA; Lba <= endLBA; Lba++) {
+	for (int Lba = startLBA; Lba < endLBA; Lba++) {
 		cache[Lba] = INIT_VALUE;
 	}
 }
