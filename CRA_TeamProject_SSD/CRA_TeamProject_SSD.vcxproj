@@ -128,6 +128,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\ApplicationFactory.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShellCommand\CommandFactory.cpp" />
@@ -139,10 +140,11 @@
     <ClCompile Include="ShellCommand\TestApp1Command.cpp" />
     <ClCompile Include="ShellCommand\TestApp2Command.cpp" />
     <ClCompile Include="ShellCommand\WriteCommand.cpp" />
-    <ClCompile Include="TestApplication.cpp" />
     <ClCompile Include="TestShell.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\ApplicationFactory.h" />
+    <ClInclude Include="Application\TestApplication.h" />
     <ClInclude Include="IApplication.h" />
     <ClInclude Include="ShellCommand\CommandFactory.h" />
     <ClInclude Include="ShellCommand\ExitCommand.h" />

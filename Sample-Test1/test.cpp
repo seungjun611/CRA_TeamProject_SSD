@@ -11,6 +11,7 @@
 #include "../CRA_TeamProject_SSD/ShellCommand/FullReadCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/TestApp1Command.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/TestApp2Command.cpp"
+#include "../CRA_TeamProject_SSD/Application/ApplicationFactory.cpp"
 #include "../SSD/VirtualSSD.cpp"
 #include "../SSD/ISSD.h"
 

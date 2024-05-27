@@ -19,15 +19,18 @@
     <Filter Include="헤더 파일\ShellCommand">
       <UniqueIdentifier>{f0bccbc6-1bc3-4851-8d5c-fb67c35f8e93}</UniqueIdentifier>
     </Filter>
+    <Filter Include="소스 파일\Application">
+      <UniqueIdentifier>{42597cec-d1cf-4133-9f40-e5fe983ca7af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="헤더 파일\Application">
+      <UniqueIdentifier>{d76ad02a-532a-4a74-924a-1a55beb0ed75}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="TestShell.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="TestApplication.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ShellCommand\CommandFactory.cpp">
@@ -59,6 +62,9 @@
     </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\ApplicationFactory.cpp">
+      <Filter>소스 파일\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +103,12 @@
     </ClInclude>
     <ClInclude Include="IApplication.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\ApplicationFactory.h">
+      <Filter>헤더 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\TestApplication.h">
+      <Filter>헤더 파일\Application</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -3,18 +3,23 @@
 #include "TestShell.h"
 #include "ShellCommand/ICommand.h"
 #include "ShellCommand/CommandFactory.h"
-#include "TestApplication.cpp"
+#include "Application/TestApplication.h"
 #include <iostream>
 #include <string>
 #include <sstream>
 #include <vector>
 #include <stdexcept>
+#include <map>
+#include "Application/ApplicationFactory.h"
+
+using namespace std;
 
 TestShell::TestShell(ISSD* ssd) :
-    _app{new TestApplication(ssd)},
+    _apps{},
     _command_factory{new CommandFactory(ssd)}
 {
-
+    ApplicationFactory* app_factory = ApplicationFactory::getInstance();
+    _apps.insert({ string("TestApplication"), app_factory->getApplication(string("TestApplication"), ssd) });
 }
 
 void TestShell::run(const string& command)

@@ -1,6 +1,6 @@
 ﻿#include "TestShell.h"
 #include "../SSD/VirtualSSD.cpp"
-#include "TestApplication.cpp"
+#include "Application/TestApplication.h"
 #include <string>
 #include <sstream>
 #include <csignal>
