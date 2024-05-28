@@ -11,7 +11,6 @@ public:
 	~VirtualSSD() override;
 	bool execute(SSDCommand command) override;
 	const char* getReadFileName() override;
-	std::string getReadData();
 
 private:
 	const char* RESULT_FILE_NAME = "result.txt";
@@ -22,7 +21,6 @@ private:
 
 	std::map<int, std::string> cache;	
 	std::vector<SSDCommand> cmdBuffer;
-	std::string readData;
 
 	void write(int lba, std::string data) override;
 	std::string read(int lba) override;

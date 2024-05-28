@@ -26,8 +26,7 @@ void EraseSizeCommand::check()
 
 void EraseSizeCommand::sendEraseSizeSSDCmd(int lba, int size) {
     PRINTLOG("ERASE Start LBA : " + to_string(lba) + " Size : " + to_string(size) +" START!");
-    SSDCommand cmd{ OPCODE::E, lba, "", size };
-    if (!_ssd->execute(cmd)) {
+    if (!_ssd->ERASE(lba, size)) {
         throw std::invalid_argument("sendEraseSizeSSDCmd Failed");
     }
     PRINTLOG("ERASE Start LBA : " + to_string(lba) + " Size : " + to_string(size) + " END!");

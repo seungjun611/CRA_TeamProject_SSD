@@ -17,12 +17,26 @@ TestApp1::TestApp1(ISSD* ssd) : ssd{ ssd } {
 	_command_factory = CommandFactory::getInstance(ssd);
 }
 
+void TestApp1::fullwrite(string data) {
+	for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
+		ssd->WRITE(lba, data);
+	}
+}
+
+void TestApp1::fullread() {
+	for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
+		ssd->READ(lba);
+		cout << ssd->getReadData() << endl;
+	}
+}
+
 bool TestApp1::readVerify(const int startLBA, const int endLBA, const std::string& writeData)
 {
 	string readData;
 
 	for (int lba = startLBA; lba <= endLBA; lba++) {
-		if ((readData = read(lba)) != writeData) {
+		ssd->READ(lba);
+		if ((readData = ssd->getReadData()) != writeData) {
 			cout << "[FAIL] LBA" << lba << " Data mismatch.Expect = " << writeData << ", Actual = " << readData << endl;
 			return false;
 		}
@@ -43,7 +57,7 @@ string TestApp1::makeRandomDataPattern() {
 
 bool TestApp1::run(const std::vector<std::string>& args) {
 	string writeData = makeRandomDataPattern();
-	PRINTLOG("[Step 1] MAKE RANDOM PATTERN : "+writeData);
+	PRINTLOG("[Step 1] MAKE RANDOM PATTERN : " + writeData);
 	fullwrite(writeData);
 	PRINTLOG("[Step 2] FULL WRITE");
 	if (!readVerify(MIN_LBA, MAX_LBA, writeData)) {

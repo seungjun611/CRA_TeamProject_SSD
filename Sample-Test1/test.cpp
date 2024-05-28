@@ -20,6 +20,7 @@
 #include "../CRA_TeamProject_SSD/Application/TestApplication.h"
 #include "../SSD/VirtualSSD.cpp"
 #include "../SSD/ISSD.h"
+#include "../CRA_TeamProject_SSD/Logger.cpp"
 
 using namespace std;
 using namespace testing;

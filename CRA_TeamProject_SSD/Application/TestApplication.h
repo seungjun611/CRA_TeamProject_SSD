@@ -26,15 +26,16 @@ public:
 		return true;
 	}
 
-	void fullwrite(string data) {
+	void fullwrite(string data) override {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
-			ssd->write(lba, data);
+			ssd->WRITE(lba, data);
 		}
 	}
 
-	void fullread() {
+	void fullread() override {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
-			cout << ssd->read(lba) << endl;
+			ssd->READ(lba);
+			cout << ssd->getReadData() << endl;
 		}
 	}
 

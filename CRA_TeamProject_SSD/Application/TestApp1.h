@@ -22,6 +22,8 @@ public:
 	string makeRandomDataPattern();
 
 	bool run(const std::vector<std::string>& args) override;
+	void fullwrite(string data) override;
+	void fullread() override;
 
 	ISSD* ssd;
 	int MIN_LBA;
