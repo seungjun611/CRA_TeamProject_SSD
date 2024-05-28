@@ -21,7 +21,7 @@ void TestApp2::setLbaRepeatly(const std::vector<int> lbas, const string value, c
 	int cnt = 0;
 	do {
 		for (auto lba : lbas) {
-			ssd->write(lba, value);
+			ssd->WRITE(lba, value);
 		}
 	} while (++cnt < repeat);
 }
@@ -31,7 +31,8 @@ bool TestApp2::readVerify(const int startLBA, const int endLBA, const std::strin
 	string readData;
 
 	for (int lba = startLBA; lba <= endLBA; lba++) {
-		if ((readData = ssd->read(lba)) != writeData) {
+		ssd->READ(lba);
+		if ((readData = ssd->getReadData()) != writeData) {
 			cout << "[FAIL] LBA" << lba << " Data mismatch.Expect = " << writeData << ", Actual = " << readData << endl;
 			return false;
 		}

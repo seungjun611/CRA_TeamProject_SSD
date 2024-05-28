@@ -18,7 +18,7 @@ FullWriteReadCompare::FullWriteReadCompare(ISSD* ssd) : ssd{ ssd } {
 
 void FullWriteReadCompare::fullwrite(string data) {
 	for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
-		ssd->write(lba, data);
+		ssd->WRITE(lba, data);
 	}
 }
 
@@ -27,7 +27,8 @@ bool FullWriteReadCompare::readVerify(const int startLBA, const int endLBA, cons
 	string readData;
 
 	for (int lba = startLBA; lba <= endLBA; lba++) {
-		if ((readData = ssd->read(lba)) != writeData) {
+		ssd->READ(lba);
+		if ((readData = ssd->getReadData()) != writeData) {
 			cout << "[FAIL] LBA" << lba << " Data mismatch.Expect = " << writeData << ", Actual = " << readData << endl;
 			return false;
 		}
