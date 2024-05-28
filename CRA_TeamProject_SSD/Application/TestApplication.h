@@ -44,7 +44,8 @@ public:
 		string readData;
 
 		for (int lba = startLBA; lba <= endLBA; lba++) {
-			if ((readData = ssd->READ(lba)) != writeData) {
+			ssd->READ(lba);
+			if ((readData = ssd->getReadData()) != writeData) {
 				cout << "[FAIL] LBA" << lba << " Data mismatch.Expect = " << writeData << ", Actual = " << readData << endl;
 				return false;
 			}
