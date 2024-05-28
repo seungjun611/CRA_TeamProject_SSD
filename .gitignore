@@ -400,3 +400,4 @@ FodyWeavers.xsd
 # file after test
 nand.txt
 result.txt
+*.zip
