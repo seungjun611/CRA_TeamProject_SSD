@@ -1,4 +1,4 @@
-﻿#pragma once
+#pragma once
 #include "ICommand.h"
 #include "../IApplication.h"
 #include "FlushCommand.h"

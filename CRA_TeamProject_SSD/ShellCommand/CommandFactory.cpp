@@ -20,6 +20,11 @@ using namespace std;
 
 CommandFactory::CommandFactory(ISSD* ssd) : _ssd{ ssd } {}
 
+CommandFactory* CommandFactory::getInstance(ISSD* ssd) {
+	static CommandFactory instance(ssd);
+	return &instance;
+}
+
 ICommand* CommandFactory::getCommand(const vector<string>& args)
 {
 	ICommand* command = nullptr;
