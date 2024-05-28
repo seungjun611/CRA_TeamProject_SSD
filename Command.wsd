@@ -1,0 +1,68 @@
+@startuml
+
+class TestShell {
+  + main(args: String[]): void
+  + parse(input: String): void
+}
+
+interface ICommand {
+  + execute() : void
+}
+
+TestShell ---> ICommand
+
+class WriteCommand {
+  + execute() : void
+  + check() : void
+  + sendWriteSSDCmd() : void
+}
+
+class ReadCommand {
+  + execute() : void
+  + check() : void
+  + sendReadSSDCmd() : void
+}
+
+class EraseSizeCommand {
+  + execute() : void
+  + check() : void
+  + sendEraseSizeSSDCmd() : void
+}
+
+class EraseRangeCommand {
+  + execute() : void
+  + check() : void
+  + sendEraseRangeSSDCmd() : void
+}
+
+class CommandFactory {
+  + createCommand(commandType: String): ICommand
+}
+
+ICommand <.. CommandFactory : creates
+ICommand <|-- ExitCommand
+ICommand <|-- FlushCommand
+ICommand <|-- HelpCommand
+
+class ExitCommand {
+  + execute() : void
+  + check() : void
+}
+
+class FlushCommand {
+  + execute() : void
+  + check() : void
+  + sendFlushSSDCmd() : void
+}
+
+class HelpCommand {
+  + execute() : void
+  + check() : void
+}
+
+EraseSizeCommand --|> ICommand
+EraseRangeCommand --|> ICommand
+ReadCommand --|> ICommand
+WriteCommand --|> ICommand
+
+@enduml

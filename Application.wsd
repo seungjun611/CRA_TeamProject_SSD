@@ -1,0 +1,97 @@
+@startuml
+
+class TestShell {
+  + run() : void
+}
+TestShell ---> IApplication
+
+class ApplicationFactory {
+  + getApplication(app_name: String): IApplication
+}
+
+IApplication <.. ApplicationFactory : creates
+
+interface IApplication {
+    + run(): bool
+}
+
+interface ICommand {
+  + execute() : void
+}
+
+TestApp2 --|> IApplication
+TestApp1 --|> IApplication
+TestApplication --|> IApplication
+IApplication --> ICommand
+
+class FullRead10AndCompare {
+  + run(): bool
+  + MIN_LBA : int
+  + MAX_LBA : int
+  + fullwrite() : void
+  + readVerify() : bool
+  + makeRandomDataPattern() : string
+}
+
+class FullWriteReadCompare {
+      + run(): bool
+  + MIN_LBA : int
+  + MAX_LBA : int
+  + fullwrite() : void
+  + readVerify() : bool
+  + makeRandomDataPattern() : string
+}
+
+class Loop_WriteAndReadCompare {
+      + run(): bool
+  + MIN_LBA : int
+  + MAX_LBA : int
+  + fullwrite() : void
+  + readVerify() : bool
+  + makeRandomDataPattern() : string
+}
+
+class Write10AndCompare {
+      + run(): bool
+  + MIN_LBA : int
+  + MAX_LBA : int
+  + fullwrite() : void
+  + readVerify() : bool
+  + makeRandomDataPattern() : string
+}
+
+IApplication <|--- Loop_WriteAndReadCompare
+IApplication <|--- FullWriteReadCompare
+IApplication <|--- FullRead10AndCompare
+IApplication <|--- Write10AndCompare
+
+class Runner {
+      + run(): bool
+      - _apps : map<string, IApplication*>
+}
+Runner --|> IApplication
+
+class TestApp1 {
+  + run(): bool
+  + MIN_LBA : int
+  + MAX_LBA : int
+  + readVerify() : bool
+  + makeRandomDataPattern() : string
+}
+
+class TestApp2 {
+  + run(): bool
+  + MIN_LBA : int
+  + MAX_LBA : int
+  + setLbaRepeatly() : void
+  + readVerify() : bool
+}
+
+class TestApplication {
+  + run(): bool
+  + MIN_LBA : int
+  + MAX_LBA : int
+}
+
+
+@enduml
