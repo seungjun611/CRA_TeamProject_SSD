@@ -5,6 +5,14 @@ using namespace std;
 string VirtualSSD::read(int lba)
 {
 	map<int, std::string> cache_backup = cache;
+	executeBufferCmd();
+	readData = readCache(lba);
+	cache = cache_backup;
+	return readData;
+}
+
+void VirtualSSD::executeBufferCmd()
+{
 	for (SSDCommand command : cmdBuffer) {
 		if (command.opcode == OPCODE::W) {
 			write(command.param1, command.param2);
@@ -12,10 +20,10 @@ string VirtualSSD::read(int lba)
 		else if (command.opcode == OPCODE::E) {
 			erase(command.param1, command.param3);
 		}
+		else {
+			throw exception("Invalid opcode");
+		}
 	}
-	readData = readCache(lba);
-	cache = cache_backup;
-	return readData;
 }
 
 bool VirtualSSD::execute(SSDCommand command)
@@ -93,19 +101,9 @@ bool VirtualSSD::flush()
 {
 	try {
 		executeGC();
-
-		for (SSDCommand command : cmdBuffer) {
-			if (command.opcode == OPCODE::W) {
-				write(command.param1, command.param2);
-			}
-			else if (command.opcode == OPCODE::E) {
-				erase(command.param1, command.param3);
-			}
-			else {
-				throw exception("Invalid opcode");
-			}
-		}
+		executeBufferCmd();
 		cmdBuffer.clear();
+		flushToNAND();
 	}
 	catch (exception e) {
 		return false;
@@ -137,7 +135,7 @@ VirtualSSD::VirtualSSD()
 
 VirtualSSD::~VirtualSSD()
 {
-	internalFlush();
+	flushToNAND();
 }
 
 void VirtualSSD::executeGC()
@@ -254,11 +252,9 @@ bool VirtualSSD::isBufferFull()
 	return (cmdBuffer.size() < CMD_BUFFER_SIZE) ? false : true;
 }
 
-void VirtualSSD::internalFlush()
+void VirtualSSD::flushToNAND()
 {
 	vector<string> datas;
-
-	flush();
 
 	for (map<int, string>::iterator it = cache.begin(); it != cache.end(); it++) {
 		datas.push_back(to_string((*it).first).append(",").append((*it).second).append("\n"));

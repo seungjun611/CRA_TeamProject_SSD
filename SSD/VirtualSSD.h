@@ -33,7 +33,8 @@ private:
 	void getLastData(std::string* validBitmap);
 	void fetchDataFromNAND();
 	bool isBufferFull();
-	void internalFlush();
+	void executeBufferCmd();
+	void flushToNAND();
 	std::string readCache(int lba);
 	void writeFile(const std::string fileName, const std::vector<std::string> data);
 	std::vector<std::string> cmd_buffer_to_string(std::vector<SSDCommand> cmds);
