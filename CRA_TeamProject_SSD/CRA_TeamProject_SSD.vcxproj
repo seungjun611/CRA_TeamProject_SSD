@@ -24,7 +24,7 @@
     <ProjectGuid>{c1bbfc29-dbf4-49af-a4cc-9333943caf46}</ProjectGuid>
     <RootNamespace>CRATeamProjectSSD</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>CRA_TeamProject_SSD</ProjectName>
+    <ProjectName>Shell</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
