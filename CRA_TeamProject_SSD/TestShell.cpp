@@ -11,13 +11,15 @@
 #include <stdexcept>
 #include <map>
 #include "Application/ApplicationFactory.h"
+#include "Logger.h"
 
 using namespace std;
 
 TestShell::TestShell(ISSD* ssd) :
-    _apps{},
-    _command_factory{new CommandFactory(ssd)}
+    _apps{}
 {
+    _command_factory = CommandFactory::getInstance(ssd);
+
     ApplicationFactory* app_factory = ApplicationFactory::getInstance();
     _apps.insert({ string("TestApplication"), app_factory->getApplication(string("TestApplication"), ssd) });
     _apps.insert({ string("testapp1"), app_factory->getApplication(string("testapp1"), ssd) });
@@ -34,17 +36,19 @@ void TestShell::run(const string& command)
         if (app != _apps.end())
         {
             app->second->run(args);
-            return;
         }
-
-        ICommand* new_command = _command_factory->getCommand(args);
-
-        if (new_command != nullptr)
+        else
         {
-            new_command->execute();
+            ICommand* new_command = _command_factory->getCommand(args);
+
+            if (new_command != nullptr)
+            {
+                PRINTLOG(command);
+                new_command->execute();
+            }
         }
     }
-    catch (std::exception e)
+    catch (std::exception& e)
     {
         throw e;
     }

@@ -11,9 +11,13 @@ class IApplication;
 class CommandFactory
 {
 public:
-	CommandFactory(ISSD* ssd);
+	static CommandFactory* getInstance(ISSD* ssd);
+	CommandFactory(const CommandFactory&) = delete;
+	CommandFactory& operator=(const CommandFactory&) = delete;
 	ICommand* getCommand(const vector<string>& args);
 
 private:
+	CommandFactory(ISSD* ssd);
+
 	ISSD* _ssd;
 };

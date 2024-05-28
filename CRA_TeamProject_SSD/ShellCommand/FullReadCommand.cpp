@@ -3,7 +3,7 @@
 #include "../IApplication.h"
 #include "FullReadCommand.h"
 #include "../Application/TestApplication.h"
-
+#include "../Logger.h"
 using namespace std;
 
 FullReadCommand::FullReadCommand(ISSD* ssd, const vector<string>& args) :
@@ -26,13 +26,14 @@ void FullReadCommand::check()
 }
 
 void FullReadCommand::sendFullReadSSDCmd() {
+	PRINTLOG("FULL READ" + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) +" START!");
     for (int lba = _ssd->getMinLBA(); lba <= _ssd->getMaxLBA(); lba++) {
         SSDCommand cmd{ OPCODE::R, lba };
 		if (!_ssd->execute(cmd)) {
 			throw std::invalid_argument("sendFullReadSSDCmd Failed");
 		}
 		else {
-			string filename = "result.txt";
+			string filename = _ssd->getReadFileName();
 			std::ifstream file(filename);
 			if (!file) {
 				std::cerr << "Failed to open file: " << filename << std::endl;
@@ -44,5 +45,5 @@ void FullReadCommand::sendFullReadSSDCmd() {
 			}
 		}
     }
-
+	PRINTLOG("FULL READ" + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) + " END!");
 }

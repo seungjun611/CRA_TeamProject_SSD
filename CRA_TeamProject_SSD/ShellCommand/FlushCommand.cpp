@@ -3,6 +3,7 @@
 #include "../IApplication.h"
 #include "FlushCommand.h"
 #include "../Application/TestApplication.h"
+#include "../Logger.h"
 
 using namespace std;
 
@@ -24,8 +25,10 @@ void FlushCommand::check()
 }
 
 void FlushCommand::sendFlushSSDCmd() {
+	PRINTLOG("FLUSH START!");
 	SSDCommand cmd{ OPCODE::F};
 	if (!_ssd->execute(cmd)) {
 		throw std::invalid_argument("sendFlushSSDCmd  Failed");
 	}
+	PRINTLOG("FLUSH END!");
 }

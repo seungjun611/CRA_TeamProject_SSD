@@ -17,8 +17,6 @@ class TestApp1 : public IApplication
 public:
 	TestApp1(ISSD* ssd);
 
-	void fullwrite(string data);
-
 	bool readVerify(const int startLBA, const int endLBA, const std::string& writeData);
 
 	string makeRandomDataPattern();

@@ -3,6 +3,7 @@
 #include "../IApplication.h"
 #include "EraseRangeCommand.h"
 #include "../Application/TestApplication.h"
+#include "../Logger.h"
 
 using namespace std;
 
@@ -24,9 +25,11 @@ void EraseRangeCommand::check()
 }
 
 void EraseRangeCommand::sendEraseRangeSSDCmd(int start_lba, int end_lba) {
+    PRINTLOG("ERASE "+to_string(start_lba) + " ~ " + to_string(end_lba) + " START!");
     int size = end_lba - start_lba;
     SSDCommand cmd{ OPCODE::E, start_lba, "",  size};
     if (!_ssd->execute(cmd)) {
         throw std::invalid_argument("sendEraseRangeSSDCmd Failed");
     }
+    PRINTLOG("ERASE " + to_string(start_lba) + " ~ " + to_string(end_lba) +" END!");
 }

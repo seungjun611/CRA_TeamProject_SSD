@@ -11,7 +11,7 @@ void readTest(VirtualSSD& ssd, int lba) {
 	cmd.param1 = lba;
 	ssd.execute(cmd);
 
-	ifstream file(ssd.RESULT_FILE_NAME);
+	ifstream file(ssd.getReadFileName());
 	string ret;
 	file >> ret;
 	cout << "Result : " << ret << endl;
@@ -35,4 +35,11 @@ int main() {
 	writeTest(ssd, 5, "0x12345678");
 	readTest(ssd, 0);
 	readTest(ssd, 5);
+	ssd.execute(SSDCommand{ OPCODE::E, 0, "", 3 });
+	writeTest(ssd, 1, "0xAAAAAAAA");
+	ssd.execute(SSDCommand{OPCODE::F, 0, "", 0});
+
+	for (int lba = 11; lba < 25; lba++) {
+		writeTest(ssd, lba, "0xBBBBBBBB");
+	}
 }
