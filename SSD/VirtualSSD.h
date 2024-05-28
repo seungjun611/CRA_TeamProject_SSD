@@ -18,6 +18,7 @@ private:
 	const char* BUFFER_FILE_NAME = "buffer.txt";
 	const char* INIT_VALUE = "0x00000000";
 	const int ERASE_MAXSIZE = 10;
+	const int CMD_BUFFER_SIZE = 10;
 
 	std::map<int, std::string> cache;	
 	std::vector<SSDCommand> cmdBuffer;
@@ -35,4 +36,5 @@ private:
 	void internalFlush();
 	std::string readCache(int lba);
 	void writeFile(const std::string fileName, const std::vector<std::string> data);
+	std::vector<std::string> cmd_buffer_to_string(std::vector<SSDCommand> cmds);
 };
