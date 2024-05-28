@@ -129,6 +129,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\AlwaysFail.cpp" />
     <ClCompile Include="Application\ApplicationFactory.cpp" />
     <ClCompile Include="Application\FullRead10AndCompare.cpp" />
     <ClCompile Include="Application\FullWriteReadCompare.cpp" />
@@ -152,6 +153,7 @@
     <ClCompile Include="TestShell.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\AlwaysFail.h" />
     <ClInclude Include="Application\ApplicationFactory.h" />
     <ClInclude Include="Application\FullRead10AndCompare.h" />
     <ClInclude Include="Application\FullWriteReadCompare.h" />

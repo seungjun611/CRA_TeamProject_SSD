@@ -19,6 +19,7 @@
 #include "../CRA_TeamProject_SSD/Application/FullRead10AndCompare.cpp"
 #include "../CRA_TeamProject_SSD/Application/Write10AndCompare.cpp"
 #include "../CRA_TeamProject_SSD/Application/Loop_WriteAndReadCompare.cpp"
+#include "../CRA_TeamProject_SSD/Application/AlwaysFail.cpp"
 #include "../CRA_TeamProject_SSD/Application/Runner.cpp"
 #include "../CRA_TeamProject_SSD/Application/TestApplication.h"
 #include "../SSD/VirtualSSD.cpp"

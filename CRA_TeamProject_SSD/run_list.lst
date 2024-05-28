@@ -2,3 +2,4 @@ FullWriteReadCompare
 FullRead10AndCompare
 Write10AndCompare
 Loop_WriteAndReadCompare
+AlwaysFail
