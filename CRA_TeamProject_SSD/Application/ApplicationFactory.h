@@ -10,6 +10,7 @@ class ApplicationFactory
 public:
 	IApplication* getApplication(const std::string& app_name, ISSD* ssd);
 	static ApplicationFactory* getInstance();
+	static void resetInstance();
 	CommandFactory* _command_factory;
 
 private:

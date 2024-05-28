@@ -23,6 +23,12 @@ ApplicationFactory* ApplicationFactory::getInstance()
 	return _instance;
 }
 
+void ApplicationFactory::resetInstance()
+{
+	delete _instance;
+	_instance = nullptr;
+}
+
 IApplication* ApplicationFactory::getApplication(const string& app_name, ISSD* ssd)
 {
 	if (app_name == string("TestApplication"))
