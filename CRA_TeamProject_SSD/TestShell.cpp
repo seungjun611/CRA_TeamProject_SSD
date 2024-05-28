@@ -28,6 +28,8 @@ TestShell::TestShell(ISSD* ssd) :
 void TestShell::run(const string& command)
 {
     std::vector<std::string> args = parse(command);
+    if (args.size() == 0) return;
+
     auto app = _apps.find(args[0]);
 
     if (app != _apps.end())
