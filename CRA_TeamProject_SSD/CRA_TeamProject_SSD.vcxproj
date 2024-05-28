@@ -135,6 +135,7 @@
     <ClCompile Include="Application\Runner.cpp" />
     <ClCompile Include="Application\TestApp1.cpp" />
     <ClCompile Include="Application\TestApp2.cpp" />
+    <ClCompile Include="Application\Write10AndCompare.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShellCommand\CommandFactory.cpp" />
@@ -157,6 +158,7 @@
     <ClInclude Include="Application\TestApp1.h" />
     <ClInclude Include="Application\TestApp2.h" />
     <ClInclude Include="Application\TestApplication.h" />
+    <ClInclude Include="Application\Write10AndCompare.h" />
     <ClInclude Include="IApplication.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="ShellCommand\CommandFactory.h" />
