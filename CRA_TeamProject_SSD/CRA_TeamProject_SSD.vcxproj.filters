@@ -54,12 +54,6 @@
     <ClCompile Include="ShellCommand\FullReadCommand.cpp">
       <Filter>소스 파일\ShellCommand</Filter>
     </ClCompile>
-    <ClCompile Include="ShellCommand\TestApp1Command.cpp">
-      <Filter>소스 파일\ShellCommand</Filter>
-    </ClCompile>
-    <ClCompile Include="ShellCommand\TestApp2Command.cpp">
-      <Filter>소스 파일\ShellCommand</Filter>
-    </ClCompile>
     <ClCompile Include="Logger.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -77,6 +71,15 @@
     </ClCompile>
     <ClCompile Include="ShellCommand\FlushCommand.cpp">
       <Filter>소스 파일\ShellCommand</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\TestApp2.cpp">
+      <Filter>소스 파일\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\FullWriteReadCompare.cpp">
+      <Filter>소스 파일\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Runner.cpp">
+      <Filter>소스 파일\Application</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -107,12 +110,6 @@
     <ClInclude Include="ShellCommand\FullReadCommand.h">
       <Filter>헤더 파일\ShellCommand</Filter>
     </ClInclude>
-    <ClInclude Include="ShellCommand\TestApp1Command.h">
-      <Filter>헤더 파일\ShellCommand</Filter>
-    </ClInclude>
-    <ClInclude Include="ShellCommand\TestApp2Command.h">
-      <Filter>헤더 파일\ShellCommand</Filter>
-    </ClInclude>
     <ClInclude Include="IApplication.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -133,6 +130,15 @@
     </ClInclude>
     <ClInclude Include="ShellCommand\FlushCommand.h">
       <Filter>헤더 파일\ShellCommand</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\TestApp2.h">
+      <Filter>헤더 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\FullWriteReadCompare.h">
+      <Filter>헤더 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Runner.h">
+      <Filter>헤더 파일\Application</Filter>
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>헤더 파일</Filter>

@@ -28,7 +28,6 @@ bool VirtualSSD::execute(SSDCommand command)
 					return false;
 				}
 			}
-
 		}
 		else if (command.opcode == OPCODE::R) {
 			read(command.param1);
@@ -217,7 +216,7 @@ void VirtualSSD::fetchDataFromNAND()
 {
 	ifstream file(NAND_FILE_NAME);
 	string line;
-	int commaIdx;
+	size_t commaIdx;
 
 	if (file.is_open()) {
 		while (!file.eof()) {

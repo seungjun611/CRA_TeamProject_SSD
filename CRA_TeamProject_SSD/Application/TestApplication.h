@@ -21,62 +21,22 @@ public:
 		_command_factory = CommandFactory::getInstance(ssd);
 	}
 
-	bool run() override
+	bool run(const std::vector<std::string>& args) override
 	{
 		return true;
 	}
 
-	void fullwrite(string data) {
+	void fullwrite(string data) override {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
 			ssd->WRITE(lba, data);
 		}
 	}
 
-	void fullread() {
+	void fullread() override {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
 			ssd->READ(lba);
 			cout << ssd->getReadData() << endl;
 		}
-	}
-
-	bool readVerify(const int startLBA, const int endLBA, const std::string& writeData)
-	{
-		string readData;
-
-		for (int lba = startLBA; lba <= endLBA; lba++) {
-			ssd->READ(lba);
-			if ((readData = ssd->getReadData()) != writeData) {
-				cout << "[FAIL] LBA" << lba << " Data mismatch.Expect = " << writeData << ", Actual = " << readData << endl;
-				return false;
-			}
-		}
-
-		return true;
-	}
-
-	void setLbaRepeatly(const std::vector<int> lbas, const string value, const int repeat)
-	{
-		int cnt = 0;
-		do {
-			for (auto lba : lbas) {
-				ssd->WRITE(lba, value);
-			}
-		} while (++cnt < repeat);
-	}
-
-	bool runTestApp2()
-	{
-		vector<int> lbas = { 0,1,2,3,4,5 };
-
-		setLbaRepeatly(lbas, "0xAAAABBBB", 30);
-		setLbaRepeatly(lbas, "0x12345678", 1);
-
-		if (!readVerify(lbas.front(), lbas.back(), "0x12345678")) {
-			return false;
-		}
-
-		cout << "[SUCCESS]" << endl;
-		return true;
 	}
 
 	void set_ssd(ISSD* ssd_) {

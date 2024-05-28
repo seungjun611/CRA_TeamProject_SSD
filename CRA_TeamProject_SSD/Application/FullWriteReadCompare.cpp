@@ -2,35 +2,27 @@
 
 #include "../../SSD/ISSD.h"
 #include "../IApplication.h"
-#include "TestApp1.h"
+#include "../ShellCommand/ICommand.h"
+#include "FullWriteReadCompare.h"
 #include <iostream>
 #include <sstream>
 #include <iomanip>
 #include <random>
-#include "../Logger.h"
 
 using namespace std;
 
-TestApp1::TestApp1(ISSD* ssd) : ssd{ ssd } {
+FullWriteReadCompare::FullWriteReadCompare(ISSD* ssd) : ssd{ ssd } {
 	MIN_LBA = ssd->getMinLBA();
 	MAX_LBA = ssd->getMaxLBA();
-	_command_factory = CommandFactory::getInstance(ssd);
 }
 
-void TestApp1::fullwrite(string data) {
+void FullWriteReadCompare::fullwrite(string data) {
 	for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
 		ssd->WRITE(lba, data);
 	}
 }
 
-void TestApp1::fullread() {
-	for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
-		ssd->READ(lba);
-		cout << ssd->getReadData() << endl;
-	}
-}
-
-bool TestApp1::readVerify(const int startLBA, const int endLBA, const std::string& writeData)
+bool FullWriteReadCompare::readVerify(const int startLBA, const int endLBA, const std::string& writeData)
 {
 	string readData;
 
@@ -45,7 +37,7 @@ bool TestApp1::readVerify(const int startLBA, const int endLBA, const std::strin
 	return true;
 }
 
-string TestApp1::makeRandomDataPattern() {
+string FullWriteReadCompare::makeRandomDataPattern() {
 	random_device rd;
 	stringstream dataStream;
 
@@ -55,18 +47,14 @@ string TestApp1::makeRandomDataPattern() {
 	return string("0x").append(dataStream.str());
 }
 
-
-	
-
-bool TestApp1::run(const std::vector<std::string>& args) {
-  PRINTLOG("[Step 1] MAKE RANDOM PATTERN");
+bool FullWriteReadCompare::run(const std::vector<std::string>& args)
+{
 	string writeData = makeRandomDataPattern();
-	PRINTLOG("[Step 2] FULL WRITE (PATTERN = " + writeData +")");
+
 	fullwrite(writeData);
-	PRINTLOG("[Step 3] READ VERIFY");
 	if (!readVerify(MIN_LBA, MAX_LBA, writeData)) {
 		return false;
 	}
-	cout << "[SUCCESS]" << endl;
+
 	return true;
 }

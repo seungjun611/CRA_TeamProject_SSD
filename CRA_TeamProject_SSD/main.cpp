@@ -11,12 +11,28 @@ void signalHandler(int signum) {
     g_running = false;
 }
 
-int main()
+int main(int argc, char* argv[])
 {
     VirtualSSD ssd;
     TestShell shell(&ssd);
 
     signal(SIGINT, signalHandler);
+
+    if (argc == 2)
+    {
+        std::string filename = argv[1];
+        std::string command = "runner " + filename;
+        try
+        {
+            shell.run(command);
+        }
+        catch (std::exception& e)
+        {
+            std::cout << string(e.what()) << endl;
+            return 1;
+        }
+        return 0;
+    }
 
     std::string command;
     while (g_running) {

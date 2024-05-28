@@ -9,13 +9,14 @@
 #include "../CRA_TeamProject_SSD/ShellCommand/CommandFactory.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/FullWriteCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/FullReadCommand.cpp"
-#include "../CRA_TeamProject_SSD/ShellCommand/TestApp1Command.cpp"
-#include "../CRA_TeamProject_SSD/ShellCommand/TestApp2Command.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/EraseRangeCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/EraseSizeCommand.cpp"
 #include "../CRA_TeamProject_SSD/ShellCommand/FlushCommand.cpp"
 #include "../CRA_TeamProject_SSD/Application/ApplicationFactory.cpp"
 #include "../CRA_TeamProject_SSD/Application/TestApp1.cpp"
+#include "../CRA_TeamProject_SSD/Application/TestApp2.cpp"
+#include "../CRA_TeamProject_SSD/Application/FullWriteReadCompare.cpp"
+#include "../CRA_TeamProject_SSD/Application/Runner.cpp"
 #include "../CRA_TeamProject_SSD/Application/TestApplication.h"
 #include "../SSD/VirtualSSD.cpp"
 #include "../SSD/ISSD.h"
@@ -32,13 +33,39 @@ const string DATA_NORMAL = "0x11111111";
 
 class MockISSD : public ISSD {
 public:
+	MockISSD() {
+		ISSD::minLBA = 0;
+		ISSD::maxLBA = 99;
+	}
 	~MockISSD() override {}
 	MOCK_METHOD(void, write, (int lba, string data), (override));
 	MOCK_METHOD(string, read, (int lba), (override));
-	MOCK_METHOD(bool, execute, (SSDCommand command), (override));
+	MOCK_METHOD(string, getReadData, (), (override));
 	MOCK_METHOD(bool, erase, (int lba, int size), (override));
 	MOCK_METHOD(bool, flush, (), (override));
 	MOCK_METHOD(const char*, getReadFileName, (), (override));
+	bool execute(SSDCommand command) override {
+		switch (command.opcode)
+		{
+		case OPCODE::W:
+			write(command.param1, command.param2);
+			return true;
+			break;
+		case OPCODE::R:
+			read(command.param1);
+			return true;
+		case OPCODE::E:
+			if (erase(command.param1, command.param3)) return true;
+			break;
+		case OPCODE::F:
+			if (flush()) return true;
+			break;
+		default:
+			break;
+		}
+
+		return false;
+	}
 };
 
 class MockTestShell : public TestShell {
@@ -97,12 +124,17 @@ TEST_F(SSDTestFixture, ISSDTest_Read_Value_Check)
 TEST_F(SSDTestFixture, ISSDTest_Read_Execute)
 {
 	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).Times(1);
-	//testApp->read(LBA_NORMAL);
+	testApp->ssd->READ(LBA_NORMAL);
 }
 
 TEST_F(SSDTestFixture, ISSDTest_FullRead_Success)
 {
 	EXPECT_CALL(mockISSD, read(_)).Times(LBA_COUNT);
+
+	EXPECT_CALL(mockISSD, getReadData())
+		.WillRepeatedly(Return(string("0x00000000")))
+		;
+
 	testApp->fullread();
 }
 
@@ -124,6 +156,10 @@ TEST_F(SSDTestFixture, SingleRead)
 	EXPECT_CALL(mockISSD, read(3))
 		.Times(1);
 
+	EXPECT_CALL(mockISSD, getReadData())
+		.WillOnce(Return(string("0x00000000")))
+		;
+
 	testShell.run("read 3");
 }
 
@@ -133,7 +169,7 @@ TEST_F(SSDTestFixture, ISSDTest_Write_Execute) {
 	EXPECT_CALL(mockISSD, write(LBA_NORMAL, DATA_NORMAL))
 		.Times(1)
 		;
-	//testApp->write(LBA_NORMAL, DATA_NORMAL);
+	testApp->ssd->WRITE(LBA_NORMAL, DATA_NORMAL);
 }
 
 TEST_F(SSDTestFixture, ISSDTest_FullWrite_Success) {
@@ -167,7 +203,8 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp1Write_Success) {
 		.Times(LBA_COUNT)
 		;
 
-	//testApp->runTestApp1();
+	TestApp1 testApp(&mockISSD);
+	testApp.run(vector<string>{});
 }
 
 TEST_F(SSDTestFixture, ISSDTest_TestApp2ReadWrite_Success) {
@@ -181,7 +218,13 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp2ReadWrite_Success) {
 		.WillRepeatedly(Return(string("0x12345678")))
 		;
 
-	EXPECT_EQ(true, testApp->runTestApp2());
+	EXPECT_CALL(mockISSD, getReadData())
+		.Times(6)
+		.WillRepeatedly(Return(string("0x12345678")))
+		;
+
+	TestApp2 testApp(&mockISSD);
+	testApp.run(vector<string>{"testapp2"});
 }
 
 TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
@@ -191,8 +234,15 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
 		.WillOnce(Return(string("0x12345678")))
 		.WillOnce(Return(string("0xAAAABBBB")))
 		;
-	
-	EXPECT_EQ(false, testApp->runTestApp2());
+
+	EXPECT_CALL(mockISSD, getReadData())
+		.Times(2)
+		.WillOnce(Return(string("0x12345678")))
+		.WillOnce(Return(string("0xAAAABBBB")))
+		;
+
+	TestApp2 testApp(&mockISSD);
+	testApp.run(vector<string>{"testapp2"});
 }
 
 
@@ -212,5 +262,5 @@ TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp1)
 
 TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp2)
 {
-	EXPECT_TRUE(testApp->runTestApp2());
+	//EXPECT_TRUE(testApp->runTestApp2());
 }

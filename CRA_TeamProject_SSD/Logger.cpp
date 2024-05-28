@@ -73,7 +73,8 @@ void Logger::makeLatestFileToBackupFile()
 void Logger::makeBackupLogFileToCompressFile()
 {
 	for (const auto& entry : fs::directory_iterator(".")) {
-		if (!(entry.is_regular_file()) || entry.path().filename().string().find(LOG_PREFIX) != 0 && entry.path().extension() != LOG_EXTENSION)  continue;
+		if(!(entry.is_regular_file())) continue;
+		if(entry.path().filename().string().find(LOG_PREFIX) != 0 || entry.path().extension() != LOG_EXTENSION)  continue;
 		
 		fs::rename(entry.path(), entry.path().parent_path() / (LOG_PREFIX + entry.path().filename().string().substr(LOG_PREFIX.length(), entry.path().filename().string().length() - LOG_PREFIX.length() - LOG_EXTENSION.length()) + COMPRESS_EXTENSION));
 	}

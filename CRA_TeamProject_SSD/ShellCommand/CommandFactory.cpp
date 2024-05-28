@@ -13,8 +13,6 @@
 #include "FlushCommand.h"
 #include "FullWriteCommand.h"
 #include "FullReadCommand.h"
-#include "TestApp1Command.h"
-#include "TestApp2Command.h"
 
 using namespace std;
 
@@ -59,12 +57,6 @@ ICommand* CommandFactory::getCommand(const vector<string>& args)
 	}
 	else if (args[0] == "flush") {
 		command = new FlushCommand(_ssd, args);
-	}
-	else if (args[0] == "testapp1") {
-		command = new TestApp1Command(_ssd, args);
-	}
-	else if (args[0] == "testapp2") {
-		command = new TestApp2Command(_ssd, args);
 	}
 	else
 	{

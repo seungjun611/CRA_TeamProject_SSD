@@ -31,17 +31,7 @@ void ReadCommand::sendReadSSDCmd(int lba) {
 		throw std::invalid_argument("sendReadSSDCmd Failed");
 	}
 	else {
-		string filename = _ssd->getReadFileName();
-		std::ifstream file(filename);
-		if (!file) {
-			std::cerr << "Failed to open file: " << filename << std::endl;
-			return;
-		}
-		std::string line;
-		while (std::getline(file, line)) {
-			std::cout << line << std::endl;
-		}
-		file.close();
+		std::cout << _ssd->getReadData() << std::endl;
 	}
 	PRINTLOG("READ LBA : " + to_string(lba) + " END!");
 }

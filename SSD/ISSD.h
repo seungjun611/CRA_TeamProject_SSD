@@ -6,14 +6,14 @@
 #define ERASE(x, y) execute(SSDCommand{OPCODE::E, x, "", y})
 #define FLUSH() execute(SSDCommand{OPCODE::F, 0, "", 0})
 
-static enum OPCODE {
+enum OPCODE {
     W = 0,  // Write
     R,  // Read
     E,  // Erase
     F,  // Flush
 };
 
-typedef struct SSDCommand {
+struct SSDCommand {
     OPCODE opcode;
     int param1;
     std::string param2;
@@ -27,7 +27,7 @@ public:
     virtual bool execute(SSDCommand command) = 0;
     const int getMinLBA() { return minLBA; }
     const int getMaxLBA() { return maxLBA; }
-    std::string getReadData() { return readData; }
+    virtual std::string getReadData() { return readData; }
     virtual const char* getReadFileName() = 0;
 
 protected:
