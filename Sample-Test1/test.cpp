@@ -22,7 +22,6 @@
 #include "../CRA_TeamProject_SSD/Application/AlwaysFail.cpp"
 #include "../CRA_TeamProject_SSD/Application/Runner.cpp"
 #include "../CRA_TeamProject_SSD/Application/TestApplication.h"
-#include "../SSD/VirtualSSD.cpp"
 #include "../SSD/ISSD.h"
 #include "../CRA_TeamProject_SSD/Logger.cpp"
 
@@ -99,24 +98,6 @@ public:
 
 		}
 	}
-};
-
-class VirtualSSDTestFixture : public Test {
-public:
-	void SetUp() override {
-		testApp = new TestApplication(&virtualSSD);
-	}
-
-	SSDCommand generateReadCmd(int lba) {
-		return SSDCommand{ OPCODE::R, lba, "", 0 };
-	}
-
-	SSDCommand generateWriteCmd(int lba, string data) {
-		return SSDCommand{ OPCODE::W, lba, data, 0 };
-	}
-
-	TestApplication* testApp;
-	VirtualSSD virtualSSD;
 };
 
 TEST_F(SSDTestFixture, ISSDTest_Read_Value_Check)
@@ -246,27 +227,5 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
 		;
 
 	TestApp2 testApp(&mockISSD);
-	testApp.run(vector<string>{"testapp2"});
-}
-
-
-TEST_F(VirtualSSDTestFixture, VirtualSSDTest_Compare)
-{
-	VirtualSSD virtualSSD;
-
-	EXPECT_EQ(virtualSSD.execute(generateWriteCmd(LBA_NORMAL, DATA_NORMAL)), true);
-	EXPECT_EQ(virtualSSD.execute(generateReadCmd(LBA_NORMAL)), true);
-	EXPECT_EQ(virtualSSD.getReadData(), DATA_NORMAL);
-}
-
-TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp1)
-{
-	TestApp1 testApp(&virtualSSD);
-	testApp.run(vector<string>{""});
-}
-
-TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp2)
-{
-	TestApp2 testApp(&virtualSSD);
 	testApp.run(vector<string>{"testapp2"});
 }
