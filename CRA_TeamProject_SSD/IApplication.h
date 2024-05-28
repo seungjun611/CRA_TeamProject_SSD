@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <string>
+#include <vector>
 #include "ShellCommand/CommandFactory.h"
 #include <iostream>
 #include <fstream>
@@ -10,9 +11,9 @@ class IApplication
 {
 public:
 	virtual ~IApplication() = default;
-	virtual bool run() = 0;
-	virtual void fullwrite(string data) = 0;
-	virtual void fullread() = 0;
+	virtual bool run(const std::vector<std::string>& args) = 0;
+	virtual void fullwrite(string data) {}
+	virtual void fullread() {}
 
 	CommandFactory* _command_factory;
 };

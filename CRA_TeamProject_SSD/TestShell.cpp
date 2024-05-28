@@ -23,6 +23,8 @@ TestShell::TestShell(ISSD* ssd) :
     ApplicationFactory* app_factory = ApplicationFactory::getInstance();
     _apps.insert({ string("TestApplication"), app_factory->getApplication(string("TestApplication"), ssd) });
     _apps.insert({ string("testapp1"), app_factory->getApplication(string("testapp1"), ssd) });
+    _apps.insert({ string("testapp2"), app_factory->getApplication(string("testapp2"), ssd) });
+    _apps.insert({ string("runner"), app_factory->getApplication(string("runner"), ssd) });
 }
 
 void TestShell::run(const string& command)
@@ -32,13 +34,13 @@ void TestShell::run(const string& command)
 
     auto app = _apps.find(args[0]);
 
-    if (app != _apps.end())
-    {
-        app->second->run();
-    }
-    else
-    {
-        try {
+    try {
+        if (app != _apps.end())
+        {
+            app->second->run(args);
+        }
+        else
+        {
             ICommand* new_command = _command_factory->getCommand(args);
 
             if (new_command != nullptr)
@@ -47,10 +49,10 @@ void TestShell::run(const string& command)
                 new_command->execute();
             }
         }
-        catch (std::exception e)
-        {
-            throw e;
-        }
+    }
+    catch (std::exception& e)
+    {
+        throw e;
     }
 }
 
