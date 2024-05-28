@@ -8,6 +8,7 @@
 #include <sstream>
 #include <iomanip>
 #include <random>
+#include "../Logger.h"
 
 using namespace std;
 
@@ -51,9 +52,11 @@ bool Loop_WriteAndReadCompare::run(const std::vector<std::string>& args)
 {
 	for (int i = 0; i < 10; i++)
 	{
+		PRINTLOG("#"+to_string(i)+" [Step 1] MAKE RANDOM PATTERN");
 		string writeData = makeRandomDataPattern();
+		PRINTLOG("#" + to_string(i) + " [Step 2] FULL WRITE (PATTERN = " + writeData + ")");
 		fullwrite(writeData);
-
+		PRINTLOG("#" + to_string(i) + " [Step 3] READ VERIFY");
 		if (!readVerify(MIN_LBA, MAX_LBA, writeData))
 		{
 			return false;
