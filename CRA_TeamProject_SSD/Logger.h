@@ -12,7 +12,12 @@ public:
 		static Logger instance{}; // 지연된 초기화 
 		return instance;
 	}
+
+	void openLogFile();
+	void closeLogFile();
 	void printLog(string func, string msg);
+	void makeLog(string func, string msg, char* const log);
+	void printOut(char* const log);
 	void checkLogFile();
 	void makeLatestFileToBackupFile();
 	void makeBackupLogFileToCompressFile();

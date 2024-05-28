@@ -6,27 +6,46 @@
 
 using namespace std;
 namespace fs = std::filesystem;
-	
+
 void Logger::printLog(string func, string msg)
 {
 	checkLogFile();
 
+	openLogFile();
+	const int LOG_MSG_SIZE = 1000;
+	char log[LOG_MSG_SIZE] = { 0, };
+	makeLog(func, msg, log);
+	printOut(log);
+	closeLogFile();
+}
+void Logger::openLogFile()
+{
+	logfile.open(LATEST_LOG_NAME, ios::app);
 	if (logfile.is_open() == false)
 	{
-		logfile.open(LATEST_LOG_NAME, ios::app);
+		throw runtime_error("Failed to create 'latest.log' file.");
 	}
-	char log[1000];
+}
+void Logger::closeLogFile()
+{
+	logfile.close();
+}
+void Logger::makeLog(string func, string msg, char* const log)
+{
 	string funcname = func + "()";
 	time_t now = time(nullptr);
 	tm tmTime;
 	localtime_s(&tmTime, &now);
-
-	sprintf_s(log, "[%04d.%02d.%02d %02d:%02d:%02d] %-30s : %s\n",
+	sprintf_s(log, 1000,"[%04d.%02d.%02d %02d:%02d:%02d] %-50s : %s\n",
 		tmTime.tm_year + 1900, tmTime.tm_mon + 1, tmTime.tm_mday, tmTime.tm_hour, tmTime.tm_min, tmTime.tm_sec,
 		funcname.c_str(), msg.c_str());
+	return;
+}
+
+void Logger::printOut(char* const log)
+{
 	cout << log;
 	logfile << log;
-	logfile.close();
 }
 
 void Logger::checkLogFile() {
@@ -67,12 +86,7 @@ uintmax_t Logger::LogFileSize(string& LogName)
 		fs::path latest_log_path = fs::current_path() / LogName;
 
 		if (!fs::exists(latest_log_path)) {
-
-			ofstream file(latest_log_path);
-			if (!file.is_open()) {
-				throw runtime_error("Failed to create 'latest.log' file.");
-			}
-			file.close();
+			return 0;
 		}
 
 		return fs::file_size(latest_log_path);

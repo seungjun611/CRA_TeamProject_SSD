@@ -32,12 +32,12 @@ void FullWriteCommand::check()
 }
 
 void FullWriteCommand::sendFullWriteSSDCmd(string data) {
-    PRINTLOG("FULL WRITE" + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) + "DATA : " + data +" START!");
+    PRINTLOG("FULL WRITE " + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) + " DATA : " + data +" START!");
     for (int lba = _ssd->getMinLBA(); lba <= _ssd->getMaxLBA(); lba++) {
         if (!_ssd->WRITE(lba, data)) {
             PRINTLOG("sendWriteSSDCmd FAIL!");
             throw std::invalid_argument("sendWriteSSDCmd Failed");
         }
     }
-    PRINTLOG("FULL WRITE" + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) + "DATA : " + data + " END!");
+    PRINTLOG("FULL WRITE " + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) + " DATA : " + data + " END!");
 }
