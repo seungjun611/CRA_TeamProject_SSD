@@ -43,7 +43,7 @@ string TestApp1::makeRandomDataPattern() {
 
 bool TestApp1::run() {
 	string writeData = makeRandomDataPattern();
-	PRINTLOG("[Step 1] MAKE RANDOM PATTERN : "+writeData);
+	PRINTLOG("[Step 1] MAKE RANDOM PATTERN : " + writeData);
 	fullwrite(writeData);
 	PRINTLOG("[Step 2] FULL WRITE");
 	if (!readVerify(MIN_LBA, MAX_LBA, writeData)) {

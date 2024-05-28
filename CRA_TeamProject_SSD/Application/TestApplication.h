@@ -28,13 +28,14 @@ public:
 
 	void fullwrite(string data) {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
-			ssd->write(lba, data);
+			ssd->WRITE(lba, data);
 		}
 	}
 
 	void fullread() {
 		for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
-			cout << ssd->read(lba) << endl;
+			ssd->READ(lba);
+			cout << ssd->getReadData() << endl;
 		}
 	}
 
@@ -43,7 +44,7 @@ public:
 		string readData;
 
 		for (int lba = startLBA; lba <= endLBA; lba++) {
-			if ((readData = ssd->read(lba)) != writeData) {
+			if ((readData = ssd->READ(lba)) != writeData) {
 				cout << "[FAIL] LBA" << lba << " Data mismatch.Expect = " << writeData << ", Actual = " << readData << endl;
 				return false;
 			}
@@ -57,7 +58,7 @@ public:
 		int cnt = 0;
 		do {
 			for (auto lba : lbas) {
-				ssd->write(lba, value);
+				ssd->WRITE(lba, value);
 			}
 		} while (++cnt < repeat);
 	}

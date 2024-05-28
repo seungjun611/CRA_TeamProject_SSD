@@ -54,11 +54,6 @@ const char* VirtualSSD::getReadFileName()
 	return RESULT_FILE_NAME;
 }
 
-std::string VirtualSSD::getReadData()
-{
-	return readData;
-}
-
 void VirtualSSD::write(int lba, string data)
 {
 	if (cache.find(lba) != cache.end()) {
