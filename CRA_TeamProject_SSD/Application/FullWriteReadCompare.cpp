@@ -55,6 +55,5 @@ bool FullWriteReadCompare::run(const std::vector<std::string>& args)
 		return false;
 	}
 
-	cout << "[SUCCESS]" << endl;
 	return true;
 }

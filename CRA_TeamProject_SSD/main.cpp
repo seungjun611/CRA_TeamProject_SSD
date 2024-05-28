@@ -23,7 +23,15 @@ int main(int argc, char* argv[])
     {
         std::string filename = argv[1];
         std::string command = "runner " + filename;
-        shell.run(command);
+        try
+        {
+            shell.run(command);
+        }
+        catch (std::exception& e)
+        {
+            std::cout << string(e.what()) << endl;
+            return 1;
+        }
         return 0;
     }
 
