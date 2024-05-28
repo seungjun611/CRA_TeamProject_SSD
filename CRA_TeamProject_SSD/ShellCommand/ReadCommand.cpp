@@ -34,7 +34,6 @@ void ReadCommand::sendReadSSDCmd(int lba) {
 		string filename = _ssd->getReadFileName();
 		std::ifstream file(filename);
 		if (!file) {
-			PRINTLOG(filename + " OPEN FAIL!");
 			std::cerr << "Failed to open file: " << filename << std::endl;
 			return;
 		}

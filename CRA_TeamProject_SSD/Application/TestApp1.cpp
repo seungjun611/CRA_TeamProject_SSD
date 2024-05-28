@@ -42,14 +42,14 @@ string TestApp1::makeRandomDataPattern() {
 }
 
 bool TestApp1::run() {
+	PRINTLOG("[Step 1] MAKE RANDOM PATTERN");
 	string writeData = makeRandomDataPattern();
-	PRINTLOG("[Step 1] MAKE RANDOM PATTERN : " + writeData);
+	PRINTLOG("[Step 2] FULL WRITE (PATTERN = " + writeData +")");
 	fullwrite(writeData);
-	PRINTLOG("[Step 2] FULL WRITE");
+	PRINTLOG("[Step 3] READ VERIFY");
 	if (!readVerify(MIN_LBA, MAX_LBA, writeData)) {
 		return false;
 	}
-	PRINTLOG("[Step 3] READ VERIFY");
 	cout << "[SUCCESS]" << endl;
 	return true;
 }

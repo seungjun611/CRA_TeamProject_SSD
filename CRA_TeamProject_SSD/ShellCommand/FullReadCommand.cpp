@@ -26,7 +26,7 @@ void FullReadCommand::check()
 }
 
 void FullReadCommand::sendFullReadSSDCmd() {
-	PRINTLOG("FULL READ" + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) +" START!");
+	PRINTLOG("FULL READ " + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) +" START!");
     for (int lba = _ssd->getMinLBA(); lba <= _ssd->getMaxLBA(); lba++) {
 		if (!_ssd->READ(lba)) {
 			throw std::invalid_argument("sendFullReadSSDCmd Failed");
@@ -44,5 +44,5 @@ void FullReadCommand::sendFullReadSSDCmd() {
 			}
 		}
     }
-	PRINTLOG("FULL READ" + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) + " END!");
+	PRINTLOG("FULL READ " + to_string(_ssd->getMinLBA()) + " ~ " + to_string(_ssd->getMaxLBA()) + " END!");
 }
