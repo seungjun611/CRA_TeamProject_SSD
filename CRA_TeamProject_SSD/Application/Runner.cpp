@@ -19,6 +19,7 @@ Runner::Runner(ISSD* ssd)
 	_apps.insert({ string("FullWriteReadCompare"), app_factory->getApplication(string("FullWriteReadCompare"), ssd) });
 	_apps.insert({ string("FullRead10AndCompare"), app_factory->getApplication(string("FullRead10AndCompare"), ssd) });
 	_apps.insert({ string("Write10AndCompare"), app_factory->getApplication(string("Write10AndCompare"), ssd) });
+	_apps.insert({ string("Loop_WriteAndReadCompare"), app_factory->getApplication(string("Loop_WriteAndReadCompare"), ssd) });
 }
 
 vector<string> Runner::_getScriptList(const vector<string>& args)
