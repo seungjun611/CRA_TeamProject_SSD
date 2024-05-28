@@ -17,12 +17,26 @@ TestApp1::TestApp1(ISSD* ssd) : ssd{ ssd } {
 	_command_factory = CommandFactory::getInstance(ssd);
 }
 
+void TestApp1::fullwrite(string data) {
+	for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
+		ssd->WRITE(lba, data);
+	}
+}
+
+void TestApp1::fullread() {
+	for (int lba = MIN_LBA; lba <= MAX_LBA; lba++) {
+		ssd->READ(lba);
+		cout << ssd->getReadData() << endl;
+	}
+}
+
 bool TestApp1::readVerify(const int startLBA, const int endLBA, const std::string& writeData)
 {
 	string readData;
 
 	for (int lba = startLBA; lba <= endLBA; lba++) {
-		if ((readData = read(lba)) != writeData) {
+		ssd->READ(lba);
+		if ((readData = ssd->getReadData()) != writeData) {
 			cout << "[FAIL] LBA" << lba << " Data mismatch.Expect = " << writeData << ", Actual = " << readData << endl;
 			return false;
 		}
