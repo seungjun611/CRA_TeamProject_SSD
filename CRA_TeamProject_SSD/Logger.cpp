@@ -26,6 +26,7 @@ void Logger::printLog(string func, string msg)
 		funcname.c_str(), msg.c_str());
 	cout << log;
 	logfile << log;
+	logfile.close();
 }
 
 void Logger::checkLogFile() {

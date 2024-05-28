@@ -20,11 +20,9 @@ public:
 private:
 	Logger()
 	{
-		logfile.open(LATEST_LOG_NAME);
 	}
 	~Logger()
 	{
-		logfile.close();
 	}
 	Logger& operator=(const Logger& other) = delete;
 	Logger(const Logger& other) = delete;
