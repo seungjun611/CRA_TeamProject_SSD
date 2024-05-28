@@ -140,23 +140,16 @@ VirtualSSD::~VirtualSSD()
 
 void VirtualSSD::executeGC()
 {
-	string validData[100] = { "", };
-
 	if (maxLBA - minLBA < 0) {
 		return;
 	}
 
-	/*validBitmap = (char**)malloc(sizeof(char*) * (maxLBA - minLBA + 1));
-	for (int idx = 0; idx < maxLBA - minLBA + 1; idx++) {
-		validBitmap[idx] = { 0, };
-	}*/
-
+	vector<string> validData(maxLBA - minLBA + 1);
 	getLastData(validData);
 	cmdBuffer = remakeCommand(validData);
-	//free(validBitmap);
 }
 
-vector<SSDCommand> VirtualSSD::remakeCommand(std::string* validData)
+vector<SSDCommand> VirtualSSD::remakeCommand(vector<string>& validData)
 {
 	vector<SSDCommand> result;
 	SSDCommand candidateCommand{};
@@ -167,7 +160,7 @@ vector<SSDCommand> VirtualSSD::remakeCommand(std::string* validData)
 		if (validData[idx] == "" && candidateCommand.opcode != OPCODE::E) continue;
 
 		if (validData[idx] == INIT_VALUE) {
-			if (idx == validData->size() - 1) {
+			if (idx == validData.size() - 1) {
 				candidateCommand.param3 = size;
 				result.push_back(candidateCommand);
 			}
@@ -200,7 +193,7 @@ vector<SSDCommand> VirtualSSD::remakeCommand(std::string* validData)
 	return result;
 }
 
-void VirtualSSD::getLastData(string* validData)
+void VirtualSSD::getLastData(vector<string>& validData)
 {
 	for (vector<SSDCommand>::reverse_iterator it = cmdBuffer.rbegin(); it != cmdBuffer.rend(); it++) {
 		SSDCommand cmd = *it;

@@ -29,8 +29,8 @@ private:
 	bool flush();
 
 	void executeGC();
-	std::vector<SSDCommand> remakeCommand(std::string* validBitmap);
-	void getLastData(std::string* validBitmap);
+	std::vector<SSDCommand> remakeCommand(std::vector<std::string>& validBitmap);
+	void getLastData(std::vector<std::string>& validBitmap);
 	void fetchDataFromNAND();
 	bool isBufferFull();
 	void executeBufferCmd();
