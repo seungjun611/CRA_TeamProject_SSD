@@ -11,7 +11,7 @@ void readTest(VirtualSSD& ssd, int lba) {
 	cmd.param1 = lba;
 	ssd.execute(cmd);
 
-	ifstream file(ssd.RESULT_FILE_NAME);
+	ifstream file(ssd.getReadFileName());
 	string ret;
 	file >> ret;
 	cout << "Result : " << ret << endl;

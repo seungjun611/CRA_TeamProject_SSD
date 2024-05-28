@@ -13,9 +13,9 @@ string VirtualSSD::read(int lba)
 			erase(command.param1, command.param3);
 		}
 	}
-	string retCacheValue = readCache(lba);
+	readData = readCache(lba);
 	cache = cache_backup;
-	return retCacheValue;
+	return readData;
 }
 
 bool VirtualSSD::execute(SSDCommand command)
@@ -28,6 +28,7 @@ bool VirtualSSD::execute(SSDCommand command)
 					return false;
 				}
 			}
+
 		}
 		else if (command.opcode == OPCODE::R) {
 			read(command.param1);
@@ -46,6 +47,16 @@ bool VirtualSSD::execute(SSDCommand command)
 	}
 
 	return true;
+}
+
+const char* VirtualSSD::getReadFileName()
+{
+	return RESULT_FILE_NAME;
+}
+
+std::string VirtualSSD::getReadData()
+{
+	return readData;
 }
 
 void VirtualSSD::write(int lba, string data)

@@ -37,6 +37,7 @@ public:
 	MOCK_METHOD(bool, execute, (SSDCommand command), (override));
 	MOCK_METHOD(bool, erase, (int lba, int size), (override));
 	MOCK_METHOD(bool, flush, (), (override));
+	MOCK_METHOD(const char*, getReadFileName, (), (override));
 };
 
 class MockTestShell : public TestShell {
@@ -72,6 +73,14 @@ class VirtualSSDTestFixture : public Test {
 public:
 	void SetUp() override {
 		testApp = new TestApplication(&virtualSSD);
+	}
+
+	SSDCommand generateReadCmd(int lba) {
+		return SSDCommand{ OPCODE::R, lba, "", 0 };
+	}
+
+	SSDCommand generateWriteCmd(int lba, string data) {
+		return SSDCommand{ OPCODE::W, lba, data, 0 };
 	}
 
 	TestApplication* testApp;
@@ -189,8 +198,10 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
 TEST_F(VirtualSSDTestFixture, VirtualSSDTest_Compare)
 {
 	VirtualSSD virtualSSD;
-	virtualSSD.write(LBA_NORMAL, DATA_NORMAL);
-	EXPECT_EQ(virtualSSD.read(LBA_NORMAL), DATA_NORMAL);
+
+	EXPECT_EQ(virtualSSD.execute(generateWriteCmd(LBA_NORMAL, DATA_NORMAL)), true);
+	EXPECT_EQ(virtualSSD.execute(generateReadCmd(LBA_NORMAL)), true);
+	EXPECT_EQ(virtualSSD.getReadData(), DATA_NORMAL);
 }
 
 TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp1)
