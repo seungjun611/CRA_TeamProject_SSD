@@ -28,6 +28,7 @@ bool VirtualSSD::execute(SSDCommand command)
 					return false;
 				}
 			}
+			writeFile(BUFFER_FILE_NAME, cmd_buffer_to_string(cmdBuffer));
 		}
 		else if (command.opcode == OPCODE::R) {
 			read(command.param1);
@@ -46,6 +47,19 @@ bool VirtualSSD::execute(SSDCommand command)
 	}
 
 	return true;
+}
+
+vector<string> VirtualSSD::cmd_buffer_to_string(vector<SSDCommand> cmds)
+{
+	vector<string> datas;
+	for (SSDCommand cmd : cmds) {
+		if (cmd.opcode == OPCODE::W)
+			datas.push_back("W " + to_string(cmd.param1) + " " + cmd.param2 + "\n");
+		else if (cmd.opcode == OPCODE::E)
+			datas.push_back("E " + to_string(cmd.param1) + " " + to_string(cmd.param3) + "\n");
+	}
+
+	return datas;
 }
 
 const char* VirtualSSD::getReadFileName()
@@ -200,7 +214,7 @@ void VirtualSSD::getLastData(string* validData)
 			}
 			break;
 		case OPCODE::E:
-			for (int lba = cmd.param1; lba < cmd.param3; lba++) {
+			for (int lba = cmd.param1; lba < cmd.param1 + cmd.param3; lba++) {
 				if (validData[lba] == "") {
 					validData[lba] = INIT_VALUE;
 				}
@@ -237,7 +251,7 @@ void VirtualSSD::fetchDataFromNAND()
 
 bool VirtualSSD::isBufferFull()
 {
-	return (cmdBuffer.size() > 9) ? true : false;
+	return (cmdBuffer.size() < CMD_BUFFER_SIZE) ? false : true;
 }
 
 void VirtualSSD::internalFlush()

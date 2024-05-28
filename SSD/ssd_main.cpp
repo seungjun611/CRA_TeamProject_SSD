@@ -4,42 +4,42 @@
 
 using namespace std;
 
-void readTest(VirtualSSD& ssd, int lba) {
-	SSDCommand cmd;
-
-	cmd.opcode = OPCODE::R;
-	cmd.param1 = lba;
-	ssd.execute(cmd);
-
-	ifstream file(ssd.getReadFileName());
-	string ret;
-	file >> ret;
-	cout << "Result : " << ret << endl;
-}
-
-void writeTest(VirtualSSD& ssd, int lba, string data) {
-	SSDCommand cmd;
-
-	cmd.opcode = OPCODE::W;
-	cmd.param1 = lba;
-	cmd.param2 = data;
-	ssd.execute(cmd);
+void readAndDisplay(VirtualSSD& ssd, int lba) {
+	ssd.READ(lba);
+	cout << "Result : " << ssd.getReadData() << endl;
 }
 
 int main() {
 	VirtualSSD ssd;
 
-	readTest(ssd, 0);
-	readTest(ssd, 5);
-	writeTest(ssd, 0, "0x11111111");
-	writeTest(ssd, 5, "0x12345678");
-	readTest(ssd, 0);
-	readTest(ssd, 5);
-	ssd.execute(SSDCommand{ OPCODE::E, 0, "", 3 });
-	writeTest(ssd, 1, "0xAAAAAAAA");
-	ssd.execute(SSDCommand{OPCODE::F, 0, "", 0});
+	readAndDisplay(ssd, 0);
+	readAndDisplay(ssd, 5);
+	ssd.WRITE(0, "0x11111111");
+	ssd.WRITE(5, "0x12345678");
+	readAndDisplay(ssd, 0);
+	readAndDisplay(ssd, 5);
+	ssd.ERASE(0, 3);
+	ssd.WRITE(1, "0xAAAAAAAA");
+	ssd.FLUSH();
 
 	for (int lba = 11; lba < 25; lba++) {
-		writeTest(ssd, lba, "0xBBBBBBBB");
+		ssd.WRITE(lba, "0xBBBBBBBB");
+	}
+
+	for (int lba = ssd.getMinLBA(); lba <= ssd.getMaxLBA(); lba++) {
+		ssd.ERASE(lba, 1);
+	}
+	ssd.FLUSH();
+
+	string dataPattern = "0xAAABBCCDD";
+	for (int lba = ssd.getMinLBA(); lba <= ssd.getMaxLBA(); lba++) {
+		ssd.WRITE(lba, dataPattern);
+	}
+	for (int lba = ssd.getMinLBA(); lba <= ssd.getMaxLBA(); lba += 10) {
+		ssd.ERASE(lba, 5);
+	}
+	dataPattern = "0xFFFFFFF";
+	for (int lba = ssd.getMinLBA(); lba <= ssd.getMaxLBA(); lba += 2) {
+		ssd.WRITE(lba, dataPattern);
 	}
 }
