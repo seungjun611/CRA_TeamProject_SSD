@@ -27,7 +27,7 @@ public:
     virtual bool execute(SSDCommand command) = 0;
     const int getMinLBA() { return minLBA; }
     const int getMaxLBA() { return maxLBA; }
-    std::string getReadData() { return readData; }
+    virtual std::string getReadData() { return readData; }
     virtual const char* getReadFileName() = 0;
 
 protected:
