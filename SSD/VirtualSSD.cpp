@@ -28,7 +28,6 @@ bool VirtualSSD::execute(SSDCommand command)
 					return false;
 				}
 			}
-
 		}
 		else if (command.opcode == OPCODE::R) {
 			read(command.param1);
