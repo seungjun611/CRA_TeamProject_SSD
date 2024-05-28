@@ -28,12 +28,6 @@
 using namespace std;
 using namespace testing;
 
-const int LBA_NORMAL = 23;
-const int LBA_LESS_THAN_0 = -1;
-const int LBA_OVER_THAN_99 = 100;
-
-const string DATA_NORMAL = "0x11111111";
-
 class SuppressOutput {
 public:
 	SuppressOutput() {		
@@ -89,11 +83,6 @@ public:
 	}
 };
 
-class MockTestShell : public TestShell {
-public:
-	MOCK_METHOD(void, check, (const vector<string>& args), ());
-};
-
 class SSDTestFixture : public Test {
 public:
 	void SetUp() override {
@@ -101,8 +90,6 @@ public:
 
 		testApp = new TestApplication(&mockISSD);
 		testShell = new TestShell(&mockISSD);
-
-		LBA_COUNT = mockISSD.getMaxLBA() - mockISSD.getMinLBA() + 1;
 	}
 
 	void TearDown() override {
@@ -111,13 +98,11 @@ public:
 		ApplicationFactory::resetInstance();
 	}
 
+	SuppressOutput* suppressor;
+
 	NiceMock<MockISSD> mockISSD;
 	TestApplication* testApp;
 	TestShell* testShell;
-
-	SuppressOutput* suppressor;
-
-	int LBA_COUNT;
 
 	void assertIllegalArgument(string command) {
 		TestShell testShell(&mockISSD);
@@ -129,26 +114,47 @@ public:
 
 		}
 	}
+
+	const int LBA_COUNT = mockISSD.getMaxLBA() - mockISSD.getMinLBA() + 1;
+
+	const int LBA_NORMAL = 23;
+	const int LBA_LESS_THAN_0 = -1;
+	const int LBA_OVER_THAN_99 = 100;
+
+	const int TESTAPP2_LBA_COUNT = 6;
+	const int TESTAPP2_WRITE_COUNT = 30;
+	const int TESTAPP2_OVERWRITE_COUNT = 1;
+
+	const string DATA_NORMAL = "0x11111111";
+	const string TESTAPP2_DATA_NORMAL = "0x12345678";
+	const string TESTAPP2_DATA_ABNORMAL = "0xAAAABBBB";
 };
 
 TEST_F(SSDTestFixture, ISSDTest_Read_Value_Check)
 {
-	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).WillRepeatedly(Return("0"));
-	EXPECT_EQ(mockISSD.read(LBA_NORMAL), "0");
+	EXPECT_CALL(mockISSD, read(LBA_NORMAL))
+		.WillRepeatedly(Return(DATA_NORMAL));
+
+	EXPECT_EQ(mockISSD.read(LBA_NORMAL), DATA_NORMAL);
 }
 
 TEST_F(SSDTestFixture, ISSDTest_Read_Execute)
 {
-	EXPECT_CALL(mockISSD, read(LBA_NORMAL)).Times(1);
+	EXPECT_CALL(mockISSD, read(LBA_NORMAL))
+		.Times(1);
+
 	testApp->ssd->READ(LBA_NORMAL);
 }
 
 TEST_F(SSDTestFixture, ISSDTest_FullRead_Success)
 {
-	EXPECT_CALL(mockISSD, read(_)).Times(LBA_COUNT);
+	EXPECT_CALL(mockISSD, read(_))
+		.Times(LBA_COUNT)
+		;
 
 	EXPECT_CALL(mockISSD, getReadData())
-		.WillRepeatedly(Return(string("0x00000000")))
+		.Times(LBA_COUNT)
+		.WillRepeatedly(Return(string(DATA_NORMAL)))
 		;
 
 	testApp->fullread();
@@ -165,14 +171,14 @@ TEST_F(SSDTestFixture, SimpleWrite)
 
 TEST_F(SSDTestFixture, SingleRead)
 {
-	EXPECT_CALL(mockISSD, read(3))
+	EXPECT_CALL(mockISSD, read(LBA_NORMAL))
 		.Times(1);
 
 	EXPECT_CALL(mockISSD, getReadData())
-		.WillOnce(Return(string("0x00000000")))
+		.WillOnce(Return(string(DATA_NORMAL)))
 		;
 
-	testShell->run("read 3");
+	testShell->run("read " + to_string(LBA_NORMAL));
 }
 
 
@@ -222,37 +228,34 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp1Write_Success) {
 TEST_F(SSDTestFixture, ISSDTest_TestApp2ReadWrite_Success) {
 
 	EXPECT_CALL(mockISSD, write(_,_))
-		.Times(186)
+		.Times(TESTAPP2_LBA_COUNT*(TESTAPP2_WRITE_COUNT+TESTAPP2_OVERWRITE_COUNT))
 		;
 
 	EXPECT_CALL(mockISSD, read(_))
-		.Times(6)
-		.WillRepeatedly(Return(string("0x12345678")))
+		.Times(TESTAPP2_LBA_COUNT)
 		;
 
 	EXPECT_CALL(mockISSD, getReadData())
-		.Times(6)
-		.WillRepeatedly(Return(string("0x12345678")))
+		.Times(TESTAPP2_LBA_COUNT)
+		.WillRepeatedly(Return(string(TESTAPP2_DATA_NORMAL)))
 		;
 
 	TestApp2 testApp(&mockISSD);
-	testApp.run(vector<string>{"testapp2"});
+	EXPECT_EQ(true,testApp.run(vector<string>{"testapp2"}));
 }
 
 TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
 
 	EXPECT_CALL(mockISSD, read(_))
 		.Times(2)
-		.WillOnce(Return(string("0x12345678")))
-		.WillOnce(Return(string("0xAAAABBBB")))
 		;
 
 	EXPECT_CALL(mockISSD, getReadData())
 		.Times(2)
-		.WillOnce(Return(string("0x12345678")))
-		.WillOnce(Return(string("0xAAAABBBB")))
+		.WillOnce(Return(string(TESTAPP2_DATA_NORMAL)))
+		.WillOnce(Return(string(TESTAPP2_DATA_ABNORMAL)))
 		;
 
 	TestApp2 testApp(&mockISSD);
-	testApp.run(vector<string>{"testapp2"});
+	EXPECT_EQ(false, testApp.run(vector<string>{"testapp2"}));
 }
