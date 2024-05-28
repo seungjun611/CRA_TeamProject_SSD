@@ -84,6 +84,11 @@ public:
 		LBA_COUNT = mockISSD.getMaxLBA() - mockISSD.getMinLBA() + 1;
 	}
 
+	void TearDown() override {
+		CommandFactory::resetInstance();
+		ApplicationFactory::resetInstance();
+	}
+
 	NiceMock<MockISSD> mockISSD;
 	TestApplication* testApp;
 	int LBA_COUNT;
