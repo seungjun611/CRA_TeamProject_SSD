@@ -34,6 +34,24 @@ const int LBA_OVER_THAN_99 = 100;
 
 const string DATA_NORMAL = "0x11111111";
 
+class SuppressOutput {
+public:
+	SuppressOutput() {		
+		original_cout_buffer = cout.rdbuf();
+		temp_cout_buffer.open("/dev/null");
+		cout.rdbuf(temp_cout_buffer.rdbuf());
+	}
+
+	~SuppressOutput() {
+		cout.rdbuf(original_cout_buffer);
+		temp_cout_buffer.close();
+	}
+
+private:
+	streambuf* original_cout_buffer;
+	ofstream temp_cout_buffer;
+};
+
 class MockISSD : public ISSD {
 public:
 	MockISSD() {
@@ -74,23 +92,31 @@ public:
 class MockTestShell : public TestShell {
 public:
 	MOCK_METHOD(void, check, (const vector<string>& args), ());
-
 };
 
 class SSDTestFixture : public Test {
 public:
 	void SetUp() override {
+		suppressor = new SuppressOutput();
+
 		testApp = new TestApplication(&mockISSD);
+		testShell = new TestShell(&mockISSD);
+
 		LBA_COUNT = mockISSD.getMaxLBA() - mockISSD.getMinLBA() + 1;
 	}
 
 	void TearDown() override {
+		delete suppressor;
 		CommandFactory::resetInstance();
 		ApplicationFactory::resetInstance();
 	}
 
 	NiceMock<MockISSD> mockISSD;
 	TestApplication* testApp;
+	TestShell* testShell;
+
+	SuppressOutput* suppressor;
+
 	int LBA_COUNT;
 
 	void assertIllegalArgument(string command) {
@@ -130,19 +156,15 @@ TEST_F(SSDTestFixture, ISSDTest_FullRead_Success)
 
 TEST_F(SSDTestFixture, SimpleWrite)
 {
-	TestShell testShell(&mockISSD);
-
 	EXPECT_CALL(mockISSD, write(LBA_NORMAL, DATA_NORMAL))
     .Times(1);
 
-	testShell.run("write " + to_string(LBA_NORMAL) + " " + DATA_NORMAL);
+	testShell->run("write " + to_string(LBA_NORMAL) + " " + DATA_NORMAL);
 }
 
 
 TEST_F(SSDTestFixture, SingleRead)
 {
-	TestShell testShell(&mockISSD);
-
 	EXPECT_CALL(mockISSD, read(3))
 		.Times(1);
 
@@ -150,7 +172,7 @@ TEST_F(SSDTestFixture, SingleRead)
 		.WillOnce(Return(string("0x00000000")))
 		;
 
-	testShell.run("read 3");
+	testShell->run("read 3");
 }
 
 
