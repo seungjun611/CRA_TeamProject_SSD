@@ -7,6 +7,7 @@
 #include <sstream>
 #include <iomanip>
 #include <random>
+#include "../Logger.h"
 
 using namespace std;
 
@@ -42,12 +43,13 @@ string TestApp1::makeRandomDataPattern() {
 
 bool TestApp1::run() {
 	string writeData = makeRandomDataPattern();
-
+	PRINTLOG("[Step 1] MAKE RANDOM PATTERN : "+writeData);
 	fullwrite(writeData);
+	PRINTLOG("[Step 2] FULL WRITE");
 	if (!readVerify(MIN_LBA, MAX_LBA, writeData)) {
 		return false;
 	}
-
+	PRINTLOG("[Step 3] READ VERIFY");
 	cout << "[SUCCESS]" << endl;
 	return true;
 }

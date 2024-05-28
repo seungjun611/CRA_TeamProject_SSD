@@ -11,6 +11,7 @@
 #include <stdexcept>
 #include <map>
 #include "Application/ApplicationFactory.h"
+#include "Logger.h"
 
 using namespace std;
 
@@ -40,6 +41,7 @@ void TestShell::run(const string& command)
 
             if (new_command != nullptr)
             {
+                PRINTLOG(command);
                 new_command->execute();
             }
         }

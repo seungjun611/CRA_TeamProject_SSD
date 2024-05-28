@@ -2,7 +2,7 @@
 #include "ICommand.h"
 #include "../IApplication.h"
 #include "EraseSizeCommand.h"
-
+#include "../Logger.h"
 using namespace std;
 
 EraseSizeCommand::EraseSizeCommand(ISSD* ssd, const vector<string>& args) :
@@ -25,8 +25,10 @@ void EraseSizeCommand::check()
 }
 
 void EraseSizeCommand::sendEraseSizeSSDCmd(int lba, int size) {
+    PRINTLOG("ERASE Start LBA : " + to_string(lba) + " Size : " + to_string(size) +" START!");
     SSDCommand cmd{ OPCODE::E, lba, "", size };
     if (!_ssd->execute(cmd)) {
         throw std::invalid_argument("sendEraseSizeSSDCmd Failed");
     }
+    PRINTLOG("ERASE Start LBA : " + to_string(lba) + " Size : " + to_string(size) + " END!");
 }

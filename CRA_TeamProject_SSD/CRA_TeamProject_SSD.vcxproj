@@ -152,6 +152,7 @@
     <ClInclude Include="Application\TestApp1.h" />
     <ClInclude Include="Application\TestApplication.h" />
     <ClInclude Include="IApplication.h" />
+    <ClInclude Include="Logger.h" />
     <ClInclude Include="ShellCommand\CommandFactory.h" />
     <ClInclude Include="ShellCommand\EraseSizeCommand.h" />
     <ClInclude Include="ShellCommand\EraseRangeCommand.h" />

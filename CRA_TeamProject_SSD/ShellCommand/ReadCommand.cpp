@@ -3,6 +3,7 @@
 #include "../IApplication.h"
 #include "ReadCommand.h"
 #include "../Application/TestApplication.h"
+#include "../Logger.h"
 
 using namespace std;
 
@@ -26,13 +27,15 @@ void ReadCommand::check()
 
 void ReadCommand::sendReadSSDCmd(int lba) {
 	SSDCommand cmd{ OPCODE::R, lba };
+	PRINTLOG("READ LBA : " + to_string(lba)+ " START!");
 	if (!_ssd->execute(cmd)) {
 		throw std::invalid_argument("sendReadSSDCmd Failed");
 	}
 	else {
-		string filename = "result.txt";
+		string filename = _ssd->getReadFileName();
 		std::ifstream file(filename);
 		if (!file) {
+			PRINTLOG(filename + " OPEN FAIL!");
 			std::cerr << "Failed to open file: " << filename << std::endl;
 			return;
 		}
@@ -42,4 +45,5 @@ void ReadCommand::sendReadSSDCmd(int lba) {
 		}
 		file.close();
 	}
+	PRINTLOG("READ LBA : " + to_string(lba) + " END!");
 }

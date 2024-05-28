@@ -27,6 +27,9 @@ void HelpCommand::execute()
 	std::cout << "** fullread: read all LBAs / usage: fullread" << std::endl;
 	std::cout << "** testapp1: After fullwrite, check if fullread value is corrrect according to the written value./ usage: testapp1" << std::endl;
 	std::cout << "** testapp2: After overwrite, read the LBA value to make sure LBA value is correct according to overwriten value/ usage: testapp2" << std::endl;
+	std::cout << "** erase: erase LBAs by the size / usage: erase <LBA> <SIZE>" << std::endl;
+	std::cout << "** erase_range: erase LBAs from the StartLBA to just before the EndLBA / usage: erase_range <StartLBA> <EndLBA>" << std::endl;
+	std::cout << "** flush: All commands in the Command Buffer are executed to empty the entire Buffer. / usage: flush" << std::endl;
 	std::cout << "** LBA range: 0 ~ 99" << std::endl;
 	std::cout << "** VALUE range: 0x00000000 ~ 0xFFFFFFFF" << std::endl;
 	std::cout << "***********************************" << std::endl;
