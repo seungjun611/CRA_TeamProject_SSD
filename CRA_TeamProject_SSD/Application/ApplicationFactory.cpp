@@ -41,4 +41,8 @@ IApplication* ApplicationFactory::getApplication(const string& app_name, ISSD* s
 	{
 		return new FullWriteReadCompare(ssd);
 	}
+	else
+	{
+		return nullptr;
+	}
 }
