@@ -33,7 +33,7 @@ void FullReadCommand::sendFullReadSSDCmd() {
 			throw std::invalid_argument("sendFullReadSSDCmd Failed");
 		}
 		else {
-			string filename = "result.txt";
+			string filename = _ssd->getReadFileName();
 			std::ifstream file(filename);
 			if (!file) {
 				std::cerr << "Failed to open file: " << filename << std::endl;
