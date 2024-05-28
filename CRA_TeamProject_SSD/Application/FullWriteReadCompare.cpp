@@ -8,6 +8,7 @@
 #include <sstream>
 #include <iomanip>
 #include <random>
+#include "../Logger.h"
 
 using namespace std;
 
@@ -49,9 +50,11 @@ string FullWriteReadCompare::makeRandomDataPattern() {
 
 bool FullWriteReadCompare::run(const std::vector<std::string>& args)
 {
+	PRINTLOG("[Step 1] MAKE RANDOM PATTERN");
 	string writeData = makeRandomDataPattern();
-
+	PRINTLOG("[Step 2] FULL WRITE (PATTERN = " + writeData + ")");
 	fullwrite(writeData);
+	PRINTLOG("[Step 3] READ VERIFY");
 	if (!readVerify(MIN_LBA, MAX_LBA, writeData)) {
 		return false;
 	}

@@ -12,27 +12,23 @@ public:
 		static Logger instance{}; // 지연된 초기화 
 		return instance;
 	}
+	void printLog(string func, string msg);
+
+private:
+	Logger() {}
+	~Logger() {}
+	Logger& operator=(const Logger& other) = delete;
+	Logger(const Logger& other) = delete;
 
 	void openLogFile();
 	void closeLogFile();
-	void printLog(string func, string msg);
 	void makeLog(string func, string msg, char* const log);
 	void printOut(char* const log);
 	void checkLogFile();
 	void makeLatestFileToBackupFile();
 	void makeBackupLogFileToCompressFile();
 	uintmax_t LogFileSize(string& LogName);
-private:
-	Logger()
-	{
-	}
-	~Logger()
-	{
-	}
-	Logger& operator=(const Logger& other) = delete;
-	Logger(const Logger& other) = delete;
 	ofstream logfile;
-
 	const int MAX_LOG_SIZE = 10240;
 	string LATEST_LOG_NAME = "latest.log";
 	const string LOG_PREFIX = "until_";
