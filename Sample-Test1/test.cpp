@@ -257,10 +257,12 @@ TEST_F(VirtualSSDTestFixture, VirtualSSDTest_Compare)
 
 TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp1)
 {
-	//EXPECT_TRUE(testApp->runTestApp1());
+	TestApp1 testApp(&virtualSSD);
+	testApp.run(vector<string>{""});
 }
 
 TEST_F(VirtualSSDTestFixture, VirtualSSDTest_TestApp2)
 {
-	//EXPECT_TRUE(testApp->runTestApp2());
+	TestApp2 testApp(&virtualSSD);
+	testApp.run(vector<string>{"testapp2"});
 }
