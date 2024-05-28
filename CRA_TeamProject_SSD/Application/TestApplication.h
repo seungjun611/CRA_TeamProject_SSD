@@ -18,6 +18,7 @@ public:
 	TestApplication(ISSD* ssd) : ssd{ ssd } {
 		MIN_LBA = ssd->getMinLBA();
 		MAX_LBA = ssd->getMaxLBA();
+		_command_factory = CommandFactory::getInstance(ssd);
 	}
 
 	bool run() override

@@ -15,9 +15,10 @@
 using namespace std;
 
 TestShell::TestShell(ISSD* ssd) :
-    _apps{},
-    _command_factory{new CommandFactory(ssd)}
+    _apps{}
 {
+    _command_factory = CommandFactory::getInstance(ssd);
+
     ApplicationFactory* app_factory = ApplicationFactory::getInstance();
     _apps.insert({ string("TestApplication"), app_factory->getApplication(string("TestApplication"), ssd) });
     _apps.insert({ string("testapp1"), app_factory->getApplication(string("testapp1"), ssd) });
