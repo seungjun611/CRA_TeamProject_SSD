@@ -26,9 +26,8 @@ void ReadCommand::check()
 }
 
 void ReadCommand::sendReadSSDCmd(int lba) {
-	SSDCommand cmd{ OPCODE::R, lba };
 	PRINTLOG("READ LBA : " + to_string(lba)+ " START!");
-	if (!_ssd->execute(cmd)) {
+	if (!_ssd->READ(lba)) {
 		throw std::invalid_argument("sendReadSSDCmd Failed");
 	}
 	else {

@@ -26,8 +26,7 @@ void FlushCommand::check()
 
 void FlushCommand::sendFlushSSDCmd() {
 	PRINTLOG("FLUSH START!");
-	SSDCommand cmd{ OPCODE::F};
-	if (!_ssd->execute(cmd)) {
+	if (!_ssd->FLUSH()) {
 		throw std::invalid_argument("sendFlushSSDCmd  Failed");
 	}
 	PRINTLOG("FLUSH END!");

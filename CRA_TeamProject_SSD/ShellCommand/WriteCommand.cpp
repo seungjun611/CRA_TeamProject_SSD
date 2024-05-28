@@ -28,8 +28,7 @@ void WriteCommand::check()
 
 void WriteCommand::sendWriteSSDCmd(int lba, string data) {
     PRINTLOG("WRITE LBA : " + to_string(lba) + " DATA : " + data +  " START!");
-	SSDCommand cmd{ OPCODE::W, lba, data };
-	if (!_ssd->execute(cmd)) {
+	if (!_ssd->WRITE(lba, data)) {
 		throw std::invalid_argument("sendWriteSSDCmd Failed");
 	}
     PRINTLOG("WRITE LBA : " + to_string(lba) + " DATA : " + data + " END!");
