@@ -129,11 +129,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Application\AlwaysFail.cpp" />
     <ClCompile Include="Application\ApplicationFactory.cpp" />
+    <ClCompile Include="Application\FullRead10AndCompare.cpp" />
     <ClCompile Include="Application\FullWriteReadCompare.cpp" />
+    <ClCompile Include="Application\Loop_WriteAndReadCompare.cpp" />
     <ClCompile Include="Application\Runner.cpp" />
     <ClCompile Include="Application\TestApp1.cpp" />
     <ClCompile Include="Application\TestApp2.cpp" />
+    <ClCompile Include="Application\Write10AndCompare.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ShellCommand\CommandFactory.cpp" />
@@ -149,12 +153,16 @@
     <ClCompile Include="TestShell.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Application\AlwaysFail.h" />
     <ClInclude Include="Application\ApplicationFactory.h" />
+    <ClInclude Include="Application\FullRead10AndCompare.h" />
     <ClInclude Include="Application\FullWriteReadCompare.h" />
+    <ClInclude Include="Application\Loop_WriteAndReadCompare.h" />
     <ClInclude Include="Application\Runner.h" />
     <ClInclude Include="Application\TestApp1.h" />
     <ClInclude Include="Application\TestApp2.h" />
     <ClInclude Include="Application\TestApplication.h" />
+    <ClInclude Include="Application\Write10AndCompare.h" />
     <ClInclude Include="IApplication.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="ShellCommand\CommandFactory.h" />

@@ -81,6 +81,18 @@
     <ClCompile Include="Application\Runner.cpp">
       <Filter>소스 파일\Application</Filter>
     </ClCompile>
+    <ClCompile Include="Application\FullRead10AndCompare.cpp">
+      <Filter>소스 파일\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Write10AndCompare.cpp">
+      <Filter>소스 파일\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\Loop_WriteAndReadCompare.cpp">
+      <Filter>소스 파일\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="Application\AlwaysFail.cpp">
+      <Filter>소스 파일\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="TestShell.h">
@@ -142,6 +154,18 @@
     </ClInclude>
     <ClInclude Include="Logger.h">
       <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\FullRead10AndCompare.h">
+      <Filter>헤더 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Write10AndCompare.h">
+      <Filter>헤더 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\Loop_WriteAndReadCompare.h">
+      <Filter>헤더 파일\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="Application\AlwaysFail.h">
+      <Filter>헤더 파일\Application</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

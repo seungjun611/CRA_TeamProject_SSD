@@ -4,6 +4,10 @@
 #include "TestApp1.h"
 #include "TestApp2.h"
 #include "FullWriteReadCompare.h"
+#include "FullRead10AndCompare.h"
+#include "Write10AndCompare.h"
+#include "Loop_WriteAndReadCompare.h"
+#include "AlwaysFail.h"
 #include "Runner.h"
 
 using namespace std;
@@ -40,6 +44,22 @@ IApplication* ApplicationFactory::getApplication(const string& app_name, ISSD* s
 	else if (app_name == string("FullWriteReadCompare"))
 	{
 		return new FullWriteReadCompare(ssd);
+	}
+	else if (app_name == string("FullRead10AndCompare"))
+	{
+		return new FullRead10AndCompare(ssd);
+	}
+	else if (app_name == string("Write10AndCompare"))
+	{
+		return new Write10AndCompare(ssd);
+	}
+	else if (app_name == string("Loop_WriteAndReadCompare"))
+	{
+		return new Loop_WriteAndReadCompare(ssd);
+	}
+	else if (app_name == string("AlwaysFail"))
+	{
+		return new AlwaysFail(ssd);
 	}
 	else
 	{
