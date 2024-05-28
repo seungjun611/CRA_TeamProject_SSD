@@ -59,7 +59,7 @@ string TestApp1::makeRandomDataPattern() {
 	
 
 bool TestApp1::run(const std::vector<std::string>& args) {
-  PRINTLOG("[Step 1] MAKE RANDOM PATTERN");
+	PRINTLOG("[Step 1] MAKE RANDOM PATTERN");
 	string writeData = makeRandomDataPattern();
 	PRINTLOG("[Step 2] FULL WRITE (PATTERN = " + writeData +")");
 	fullwrite(writeData);

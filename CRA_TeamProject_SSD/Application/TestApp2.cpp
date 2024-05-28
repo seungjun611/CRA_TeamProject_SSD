@@ -8,6 +8,7 @@
 #include <sstream>
 #include <iomanip>
 #include <random>
+#include "../Logger.h"
 
 using namespace std;
 
@@ -45,10 +46,11 @@ bool TestApp2::run(const std::vector<std::string>& args) {
 	ICommand::assertInvalidNumberOfArgument(args, "testapp2", 1);
 
 	vector<int> lbas = { 0,1,2,3,4,5 };
-
+	PRINTLOG("[Step 1] WRITE 0xAAAABBBBB 30 times");
 	setLbaRepeatly(lbas, "0xAAAABBBB", 30);
+	PRINTLOG("[Step 2] WRITE 0x12345678 1 time");
 	setLbaRepeatly(lbas, "0x12345678", 1);
-
+	PRINTLOG("[Step 3] READ VERIFY");
 	if (!readVerify(lbas.front(), lbas.back(), "0x12345678")) {
 		return false;
 	}
