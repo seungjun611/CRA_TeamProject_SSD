@@ -259,3 +259,15 @@ TEST_F(SSDTestFixture, ISSDTest_TestApp2Read_False) {
 	TestApp2 testApp(&mockISSD);
 	EXPECT_EQ(false, testApp.run(vector<string>{"testapp2"}));
 }
+
+TEST_F(SSDTestFixture, VirtualSSDTest_TestApp1)
+{
+	TestApp1 testApp(&mockISSD);
+	testApp.run(vector<string>{""});
+}
+
+TEST_F(SSDTestFixture, VirtualSSDTest_TestApp2)
+{
+	TestApp2 testApp(&mockISSD);
+	testApp.run(vector<string>{"testapp2"});
+}

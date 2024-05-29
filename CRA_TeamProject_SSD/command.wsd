@@ -1,0 +1,44 @@
+@startuml
+
+interface IApplication {
+  + run(): void
+}
+
+interface ICommand {
+  + execute(): void
+}
+
+class TestShell {
+  + main(args: String[]): void
+  + parse(input: String): void
+}
+
+class Runner {
+  + run(): void
+}
+
+class TestApp2 {
+  + run(): void
+}
+
+class TestApp1 {
+  + run(): void
+}
+
+class WriteCommand {
+    + execute() : void
+}
+
+class ReadCommand {
+    + execute() : void
+}
+
+Runner --|> IApplication : implements
+TestApp2 --|> IApplication : implements
+TestApp1 --|> IApplication : implements
+TestShell --> ICommand : uses
+WriteCommand --|> ICommand
+ReadCommand --|> ICommand
+TestShell --> IApplication : uses
+
+@enduml
